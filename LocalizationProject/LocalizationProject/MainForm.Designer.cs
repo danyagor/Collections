@@ -49,7 +49,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(193, 279);
+            this.button1.Location = new System.Drawing.Point(190, 133);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(219, 23);
             this.button1.TabIndex = 1;
@@ -106,7 +106,7 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Язык";
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -119,7 +119,7 @@
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lbStrings);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Программа локализации Коллекций";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
