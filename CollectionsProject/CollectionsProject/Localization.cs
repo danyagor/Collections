@@ -27,5 +27,6 @@ namespace CollectionsProject
         public static string FILE { get { return GetValue("FILE"); } }
         public static string CREATE_BASE { get { return GetValue("CREATE_BASE"); } }
         public static string OPEN_BASE { get { return GetValue("OPEN_BASE"); } }
+        public static string SAVE_BASE { get { return GetValue("SAVE_BASE"); } }
     }
 }
