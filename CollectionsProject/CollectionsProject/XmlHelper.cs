@@ -6,6 +6,25 @@ namespace CollectionsProject
 {
     class XmlHelper
     {
+        #region Создание служебных файлов
+
+        public static void CreateCollectionsFile()
+        {
+
+        }
+
+        public static void CreateLastFilesFile()
+        {
+
+        }
+
+        public static void CreateLanguageFile()
+        {
+
+        }
+
+        #endregion Создание служебных файлов
+
         #region Коллекции
 
         /// <summary>
