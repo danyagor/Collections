@@ -23,6 +23,8 @@ namespace CollectionsProject.Forms
         Image[] images;
         string[] comments;
 
+        #region Конструкторы
+
         // Конструктор для добавления предмета
         public ItemPropertiesForm(MainForm mf, int typeId, string collectionName, string foreignTableName = "")
         {
@@ -75,6 +77,12 @@ namespace CollectionsProject.Forms
             btnEditItem.Text = "Изменить данные о предмете";
         }
 
+        #endregion Конструкторы
+
+
+
+        #region Методы
+
         // Создание текстовых полей
         private void AddTextFields()
         {
@@ -90,7 +98,7 @@ namespace CollectionsProject.Forms
                     // Получение во внешней таблице значений и вывод в текущий ComboBox
                     TextField tf = new TextField(field.ProgramName + reqStr, field.BaseName, true);
                     DataTable dt = new DataTable();
-                    dt = mf.CurrentDatabase.GetDataFromForeignTable(typeId, collectionName, field.ForeignTable);
+                    dt = mf.CurrentDatabase.GetNameFields(typeId, field.ForeignTable);
                     //dt.Rows.Add("-1", "Добавить новый элемент...");
                     tf.CB.DataSource = dt;
                     tf.CB.ValueMember = "id";
@@ -112,16 +120,7 @@ namespace CollectionsProject.Forms
                 }
             }
         }
-
-        private void CB_SelectedValueChanged(object sender, EventArgs e)
-        {
-            ComboBox cb = (ComboBox)sender;
-            //if (cb.SelectedValue.ToString() == "-1")
-            //{
-            //    ItemPropertiesForm ifp = new ItemPropertiesForm(mf, typeId, collectionName, )
-            //}
-        }
-
+        
         // Вставление данных о предмете
         private void InsertDataInTextFields()
         {
@@ -131,7 +130,7 @@ namespace CollectionsProject.Forms
                 if (foreignTableName == "")
                     itemData = mf.CurrentDatabase.GetItemFromCollection(typeId, itemId, collectionName);
                 else
-                    itemData = mf.CurrentDatabase.GetItemFromCollection(typeId, itemId, collectionName, foreignTableName);
+                    itemData = mf.CurrentDatabase.GetItemFromCollection(typeId, itemId, "", foreignTableName);
 
                 int textFieldsCounter = 0;
                 for (int i = 0; i < itemData.ItemArray.Length; i++)
@@ -158,7 +157,7 @@ namespace CollectionsProject.Forms
                     }
                 }
 
-                
+                // Получение дополнительной информации о предмете (описание, фотографии, комментарии к фотографиям)
                 for (int i = 0; i < itemData.Table.Columns.Count; i++)
                 {
                     // Описание
@@ -166,66 +165,21 @@ namespace CollectionsProject.Forms
                         tbNote.Text = itemData.ItemArray[i].ToString();
 
                     // Фотографии
-                    if (itemData.Table.Columns[i].ColumnName == "photo1")
-                        if (itemData.ItemArray[i].ToString() != "")
-                            images[0] = ByteToImage((byte[])itemData.ItemArray[i]);
-                    if (itemData.Table.Columns[i].ColumnName == "photo2")
-                        if (itemData.ItemArray[i].ToString() != "")
-                            images[1] = ByteToImage((byte[])itemData.ItemArray[i]);
-                    if (itemData.Table.Columns[i].ColumnName == "photo3")
-                        if (itemData.ItemArray[i].ToString() != "")
-                            images[2] = ByteToImage((byte[])itemData.ItemArray[i]);
-                    if (itemData.Table.Columns[i].ColumnName == "photo4")
-                        if (itemData.ItemArray[i].ToString() != "")
-                            images[3] = ByteToImage((byte[])itemData.ItemArray[i]);
+                    for (int j = 0; j < 4; j++)
+                        if (itemData.Table.Columns[i].ColumnName == "photo" + (j + 1))
+                            if (itemData.ItemArray[i].ToString() != "")
+                                images[j] = ByteToImage((byte[])itemData.ItemArray[i]);
 
                     // Комментарии
-                    if (itemData.Table.Columns[i].ColumnName == "comment1")
-                        comments[0] = itemData.ItemArray[i].ToString();
-                    if (itemData.Table.Columns[i].ColumnName == "comment2")
-                        comments[1] = itemData.ItemArray[i].ToString();
-                    if (itemData.Table.Columns[i].ColumnName == "comment3")
-                        comments[2] = itemData.ItemArray[i].ToString();
-                    if (itemData.Table.Columns[i].ColumnName == "comment4")
-                        comments[3] = itemData.ItemArray[i].ToString();
+                    for (int j = 0; j < 4; j++)
+                        if (itemData.Table.Columns[i].ColumnName == "comment" + (j + 1))
+                            comments[j] = itemData.ItemArray[i].ToString();
                 }
             }
-        }
-
-        // Конвертирует массив байтов в картинку
-        public Image ByteToImage(byte[] imageBytes)
-        {
-            if (imageBytes.Length == 0)
-                return null;
-
-            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
-            ms.Write(imageBytes, 0, imageBytes.Length);
-            Image image = new Bitmap(ms);
-            return image;
-        }
-
-        private ItemImage[] GetItemImages()
-        {
-            List<ItemImage> itemImages = new List<ItemImage>();
-            for (int i = 0; i < images.Length; i++)
-            {
-                //Image resizedImage = ResizeImage(images[i], 400, 400);
-                if (images[i] != null)
-                {
-                    MemoryStream ms = new MemoryStream();
-                    images[i].Save(ms, ImageFormat.Jpeg);
-                    byte[] bytes = ms.ToArray();
-                    itemImages.Add(new ItemImage(bytes, comments[i]));
-                }
-                else
-                    itemImages.Add(new ItemImage(null, ""));
-            }
-
-            return itemImages.ToArray();
         }
 
         // Редактирование предмета
-        private void btnEditItem_Click(object sender, EventArgs e)
+        private void EditItem()
         {
             string[] userText = new string[textFields.Count];
 
@@ -258,14 +212,14 @@ namespace CollectionsProject.Forms
                     if (foreignTableName == "")
                         mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, collectionName, "", GetItemImages());
                     else
-                        mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, collectionName, foreignTableName);
+                        mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, "", foreignTableName);
                 }
                 else // Обновление
                 {
                     if (foreignTableName == "")
                         mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, collectionName, "", GetItemImages());
                     else
-                        mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, collectionName, foreignTableName);
+                        mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, "", foreignTableName);
                 }
 
                 Close();
@@ -274,12 +228,66 @@ namespace CollectionsProject.Forms
                 MessageBox.Show("Введены не все обязательные поля");
         }
 
+        #endregion Методы
+
+
+
+        #region Вспомогательные методы
+
+        // Конвертирует массив байтов в картинку
+        public Image ByteToImage(byte[] imageBytes)
+        {
+            if (imageBytes.Length == 0)
+                return null;
+
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = new Bitmap(ms);
+            return image;
+        }
+
+        // Возвращает информацию о картинках
+        private ItemImage[] GetItemImages()
+        {
+            List<ItemImage> itemImages = new List<ItemImage>();
+            for (int i = 0; i < images.Length; i++)
+            {
+                // TODO: Добавить резайз картинки
+                //Image resizedImage = ResizeImage(images[i], 400, 400);
+                if (images[i] != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    images[i].Save(ms, ImageFormat.Jpeg);
+                    byte[] bytes = ms.ToArray();
+                    itemImages.Add(new ItemImage(bytes, comments[i]));
+                }
+                else
+                    itemImages.Add(new ItemImage(null, ""));
+            }
+
+            return itemImages.ToArray();
+        }
+
+        #endregion Вспомогательные методы
+
+
+
+        #region События
+
+        // Редактирование предмета
+        private void btnEditItem_Click(object sender, EventArgs e)
+        {
+            EditItem();
+        }
+
+        // Смена картинки и его комменария
         private void lbPhotos_SelectedIndexChanged(object sender, EventArgs e)
         {
             pbPhoto.Image = images[lbPhotos.SelectedIndex];
             tbComment.Text = comments[lbPhotos.SelectedIndex];
         }
 
+        // Клик на кнопку "Назначить"
         private void btnAssign_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -291,6 +299,7 @@ namespace CollectionsProject.Forms
             }
         }
 
+        // Клик на кнопку "Очистить"
         private void btnClear_Click(object sender, EventArgs e)
         {
             images[lbPhotos.SelectedIndex] = null;
@@ -300,15 +309,29 @@ namespace CollectionsProject.Forms
             tbComment.Text = "";
         }
 
+        // Смена фокуса с поля с комментарием
         private void tbComment_Leave(object sender, EventArgs e)
         {
             comments[lbPhotos.SelectedIndex] = tbComment.Text;
         }
 
+        // Смена вкладки
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl.SelectedTab.Text == "Фотографии")
                 lbPhotos.SelectedIndex = 0;
         }
+
+        // UNDONE: Клик на "Добавить новый предмет..."
+        private void CB_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            //if (cb.SelectedValue.ToString() == "-1")
+            //{
+            //    ItemPropertiesForm ifp = new ItemPropertiesForm(mf, typeId, collectionName, )
+            //}
+        }
+
+        #endregion События
     }
 }

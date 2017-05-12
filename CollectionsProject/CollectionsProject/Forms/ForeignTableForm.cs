@@ -8,34 +8,59 @@ namespace CollectionsProject.Forms
     {
         MainForm mf;
         int collectionType;
-        string collectionName;
 
-        int collectionNumber;
-
-        private int SelectedCollectionId
-        {
-            get
-            {
-                if (treeView.SelectedNode.Parent != null)
-                    return int.Parse(treeView.SelectedNode.Tag.ToString());
-
-                return 0;
-            }
-        }
-
-        public ForeignTableForm(MainForm mf, int collectionType, string collectionName = "")
+        // Конструктор
+        public ForeignTableForm(MainForm mf, int collectionType)
         {
             InitializeComponent();
             this.mf = mf;
             this.collectionType = collectionType;
-            this.collectionName = collectionName;
-
-            if (collectionName != "")
-                collectionNumber = mf.CurrentDatabase.GetCollectionNumber(collectionName);
 
             Text = "Редактор справочников";
         }
 
+        #region Свойства
+
+        // Выделенный ID коллекции в TreeView
+        private int SelectedCollectionId
+        {
+            get
+            {
+                if (treeView.SelectedNode.Parent == null)
+                    return int.Parse(treeView.SelectedNode.Tag.ToString());
+                else
+                    return int.Parse(treeView.SelectedNode.Parent.Tag.ToString());
+            }
+        }
+
+        // Выделенная внешняя таблица в TreeView
+        private string SelectedForeignTable
+        {
+            get
+            {
+                if (treeView.SelectedNode.Parent != null)
+                    return treeView.SelectedNode.Tag.ToString();
+                else
+                    return treeView.SelectedNode.Nodes[0].Tag.ToString();
+            }
+        }
+
+        // Выделенный элемент в ListView
+        private int SelectedItemId
+        {
+            get
+            {
+                return int.Parse(lvItems.SelectedItems[0].Tag.ToString());
+            }
+        }
+
+        #endregion Свойства
+
+
+
+        #region Методы
+
+        // Заполнние TreeView коллекциями и их внешними таблицами
         private void FillTreeView()
         {
             foreach (Collection collection in CollectionTypes.Collections)
@@ -56,10 +81,10 @@ namespace CollectionsProject.Forms
 
             treeView.ExpandAll();
 
-            if (collectionName != "")
-                FillItems(int.Parse(treeView.Nodes[0].Tag.ToString()), treeView.Nodes[0].Nodes[0].Tag.ToString());
+            FillItems(int.Parse(treeView.Nodes[0].Tag.ToString()), treeView.Nodes[0].Nodes[0].Tag.ToString());
         }
 
+        // Заполнение предметов в ListView по типу коллекции и имени внешней таблицы
         private void FillItems(int collectionType, string foreignTable)
         {
             lvItems.Columns.Clear();
@@ -70,7 +95,7 @@ namespace CollectionsProject.Forms
             foreach (Field field in CollectionTypes.GetCollection(collectionType)[foreignTable].Fields)
                 lvItems.Columns.Add(field.ProgramName).Width = int.Parse(field.Width);
 
-            DataTable dt = mf.CurrentDatabase.GetItemsFromCollection(collectionType, collectionName, foreignTable);
+            DataTable dt = mf.CurrentDatabase.GetItemsFromCollection(collectionType, "", foreignTable);
             string[] items = new string[dt.Columns.Count];
             foreach (DataRow row in dt.Rows)
             {
@@ -83,59 +108,69 @@ namespace CollectionsProject.Forms
             }
         }
 
+        #endregion Методы
+
+
+
+        #region События
+
+        // Загрузка формы
         private void ForeignTableForm_Load(object sender, EventArgs e)
         {
             FillTreeView();
         }
 
+        // Клик на нод в TreeView
         private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             
         }
 
-
+        // Клик на добавление предмета
         private void AddItem_Click(object sender, EventArgs e)
         {
-            ItemPropertiesForm ipf = new ItemPropertiesForm(mf, int.Parse(treeView.SelectedNode.Parent.Tag.ToString()), treeView.SelectedNode.Tag.ToString());
+            ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedForeignTable);
             ipf.ShowDialog();
 
-            if (treeView.SelectedNode.Parent != null)
-                FillItems(int.Parse(treeView.SelectedNode.Parent.Tag.ToString()), treeView.SelectedNode.Tag.ToString());
+            FillItems(SelectedCollectionId, SelectedForeignTable);
         }
-        
+
+        // Клик на редактирование предмета
         private void EditItem_Click(object sender, EventArgs e)
         {
-            ItemPropertiesForm ipf = new ItemPropertiesForm(mf, collectionType, collectionName, int.Parse(lvItems.SelectedItems[0].Tag.ToString()), treeView.SelectedNode.Tag.ToString());
+            ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedItemId, SelectedForeignTable);
             ipf.ShowDialog();
 
-            if (treeView.SelectedNode.Parent != null)
-                FillItems(int.Parse(treeView.SelectedNode.Parent.Tag.ToString()), treeView.SelectedNode.Tag.ToString());
+            FillItems(SelectedCollectionId, SelectedForeignTable);
         }
 
+        // Клик на удаление предмета
         private void DeleteItem_Click(object sender, EventArgs e)
         {
-            if (!mf.CurrentDatabase.ItemExists(int.Parse(lvItems.SelectedItems[0].Tag.ToString()), collectionType, treeView.SelectedNode.Tag.ToString()))
+            if (!mf.CurrentDatabase.ItemExists(SelectedItemId, SelectedCollectionId, SelectedForeignTable))
             {
-                mf.CurrentDatabase.DeleteItem(collectionType, int.Parse(lvItems.SelectedItems[0].Tag.ToString()), collectionName, treeView.SelectedNode.Tag.ToString());
-                if (treeView.SelectedNode.Parent != null)
-                    FillItems(int.Parse(treeView.SelectedNode.Parent.Tag.ToString()), treeView.SelectedNode.Tag.ToString());
+                mf.CurrentDatabase.DeleteItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
+
+                FillItems(SelectedCollectionId, SelectedForeignTable);
             }
             else
                 MessageBox.Show("Данный элемент привязан к одному или нескольким предметам, поэтому произвести операцию удаления невозможно.", "Удаление невозможно");
         }
 
+        // Клик на TreeView
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (treeView.SelectedNode.Parent != null)
-                FillItems(int.Parse(treeView.SelectedNode.Parent.Tag.ToString()), treeView.SelectedNode.Tag.ToString());
+            FillItems(SelectedCollectionId, SelectedForeignTable);
         }
 
+        // Клик на элемент в ListView
         private void lvItems_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Получение описания о предмете
             if (lvItems.SelectedItems.Count != 0)
             {
                 string description = "Описание:\n";
-                description += mf.CurrentDatabase.GetNoteFromItem(collectionType, int.Parse(lvItems.SelectedItems[0].Tag.ToString()), collectionName, treeView.SelectedNode.Tag.ToString());
+                description += mf.CurrentDatabase.GetNoteFromItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
                 rtbDescription.Text = description;
             }
 
@@ -156,5 +191,7 @@ namespace CollectionsProject.Forms
                 cmsDeleteItem.Enabled = true;
             }
         }
+
+        #endregion События
     }
 }

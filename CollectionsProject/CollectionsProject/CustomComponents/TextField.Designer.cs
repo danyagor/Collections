@@ -47,7 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.labelName);
             this.Name = "TextField";
-            this.Size = new System.Drawing.Size(362, 36);
+            this.Size = new System.Drawing.Size(341, 36);
             this.ResumeLayout(false);
             this.PerformLayout();
 

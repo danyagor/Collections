@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CollectionsProject.Forms
@@ -15,12 +8,14 @@ namespace CollectionsProject.Forms
         MainForm form;
         string dbPath;
 
+        // Конструктор
         public CreateDatabaseForm(MainForm form)
         {
             InitializeComponent();
             this.form = form;
         }
 
+        // Загрузка формы
         private void CreateDatabaseForm_Load(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -31,15 +26,24 @@ namespace CollectionsProject.Forms
                 Close();
         }
 
+        // Клик на кнопку "Создать"
         private void btnCreate_Click(object sender, EventArgs e)
         {
             if (tbUserName.Text != "" && tbUserEmail.Text != "" && tbPassword.Text == tbRepPassword.Text)
             {
                 form.ChangeDatabase(new Database(dbPath, tbUserName.Text, tbUserEmail.Text, tbPassword.Text));
+                DialogResult = DialogResult.OK;
                 Close();
             }
             else
                 MessageBox.Show("Введены не все данные или пароли не совпадают", "Ошибка");
-        }  
+        }
+
+        // Клик на кнопку "Отмена"
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
     }
 }

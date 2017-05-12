@@ -8,6 +8,7 @@ namespace CollectionsProject.Forms
         MainForm form;
         string path;
 
+        // Конструктор
         public OpenEncryptedDatabaseForm(MainForm form, string path)
         {
             InitializeComponent();
@@ -16,6 +17,7 @@ namespace CollectionsProject.Forms
             Text = "Открытие базы коллекций \"" + System.IO.Path.GetFileName(path) + "\"";
         }
 
+        // Клик на кнопку "OK"
         private void btnOk_Click(object sender, EventArgs e)
         {
             Database db = new Database();
@@ -27,6 +29,7 @@ namespace CollectionsProject.Forms
             }
         }
 
+        // Клик на кнопку "Отмена"
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

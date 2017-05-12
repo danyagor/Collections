@@ -659,13 +659,13 @@ namespace CollectionsProject
         #region Работа с предметами из внешних таблиц NAMEFIELD
 
         /// <summary>
-        /// Возвращает строку предмета, соедененная по аттрибуту "nameField" из внешней таблицы
+        /// Возвращает строку предмета, соедененную по аттрибуту "nameField" из внешней таблицы
         /// </summary>
         /// <param name="collectionType">Идентификатор типа коллекции</param>
         /// <param name="foreignTable">Имя внешней таблицы</param>
         /// <param name="itemId">Идентификатор предмета</param>
         /// <returns>Строка предмета, соедененная по аттрибуту "nameField"</returns>
-        public string GetItemFromForeignTable(int collectionType, string collectionName, string foreignTable, int itemId)
+        public string GetNameFieldItem(int collectionType, string foreignTable, int itemId)
         {
             // Формирование запроса на получение данных из внешней таблицы
             string query = "SELECT ";
@@ -690,7 +690,7 @@ namespace CollectionsProject
         /// <param name="collectionType">Идентификатор типа коллекции</param>
         /// <param name="foreignTable">Имя внешней таблицы</param>
         /// <returns>Строки, соедененные по аттрибуту "nameField"</returns>
-        public DataTable GetDataFromForeignTable(int collectionType, string collectionName, string foreignTable)
+        public DataTable GetNameFields(int collectionType, string foreignTable)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("id");

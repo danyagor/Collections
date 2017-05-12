@@ -261,7 +261,7 @@ namespace CollectionsProject
                         {
                             if (fields[fieldsCounter].ForeignKey)
                             {
-                                items[i] = CurrentDatabase.GetItemFromForeignTable(collectionType, collectionName, fields[fieldsCounter].ForeignTable, int.Parse(row.ItemArray[i].ToString()));
+                                items[i] = CurrentDatabase.GetNameFieldItem(collectionType, fields[fieldsCounter].ForeignTable, int.Parse(row.ItemArray[i].ToString()));
                                 fieldsCounter++;
                                 continue;
                             }
@@ -564,7 +564,7 @@ namespace CollectionsProject
             {
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
                 {
-                    ForeignTableForm ftf = new ForeignTableForm(this, int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text);
+                    ForeignTableForm ftf = new ForeignTableForm(this, int.Parse(treeView.SelectedNode.Tag.ToString()));
                     ftf.ShowDialog();
 
                     UpdateListViewData(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text);
