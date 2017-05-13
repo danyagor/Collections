@@ -6,6 +6,7 @@ using CollectionsProject.CustomComponents;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace CollectionsProject.Forms
 {
@@ -107,14 +108,14 @@ namespace CollectionsProject.Forms
                     tf.CB.SelectedValueChanged += CB_SelectedValueChanged;
                     if (tf.CB.Items.Count != 0)
                         tf.CB.SelectedIndex = 0;
-
+                    tf.Width = flowLayoutPanel.Width - 8;
                     flowLayoutPanel.Controls.Add(tf);
                     textFields.Add(tf);
                 }
                 else // Обычное поле
                 {
                     TextField tf = new TextField(field.ProgramName + reqStr, field.BaseName, false);
-                    
+                    tf.Width = flowLayoutPanel.Width - 8;
                     flowLayoutPanel.Controls.Add(tf);
                     textFields.Add(tf);
                 }
@@ -252,12 +253,11 @@ namespace CollectionsProject.Forms
             List<ItemImage> itemImages = new List<ItemImage>();
             for (int i = 0; i < images.Length; i++)
             {
-                // TODO: Добавить резайз картинки
-                //Image resizedImage = ResizeImage(images[i], 400, 400);
                 if (images[i] != null)
                 {
+                    Image resizedImage = ResizeImage(images[i], 700, 700);
                     MemoryStream ms = new MemoryStream();
-                    images[i].Save(ms, ImageFormat.Jpeg);
+                    resizedImage.Save(ms, ImageFormat.Jpeg);
                     byte[] bytes = ms.ToArray();
                     itemImages.Add(new ItemImage(bytes, comments[i]));
                 }
@@ -266,6 +266,36 @@ namespace CollectionsProject.Forms
             }
 
             return itemImages.ToArray();
+        }
+
+        // Смена размера изображения
+        public Image ResizeImage(Image image, int nWidth, int nHeight)
+        {
+            int newWidth, newHeight;
+            var coefH = (double)nHeight / (double)image.Height;
+            var coefW = (double)nWidth / (double)image.Width;
+            if (coefW >= coefH)
+            {
+                newHeight = (int)(image.Height * coefH);
+                newWidth = (int)(image.Width * coefH);
+            }
+            else
+            {
+                newHeight = (int)(image.Height * coefW);
+                newWidth = (int)(image.Width * coefW);
+            }
+
+            Image result = new Bitmap(newWidth, newHeight);
+            using (var g = Graphics.FromImage(result))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+                g.Dispose();
+            }
+            return result;
         }
 
         #endregion Вспомогательные методы
@@ -333,5 +363,11 @@ namespace CollectionsProject.Forms
         }
 
         #endregion События
+
+        private void flowLayoutPanel_Resize(object sender, EventArgs e)
+        {
+            for (int i = 0; i < textFields.Count; i++)
+                textFields[i].Width = flowLayoutPanel.Width - 8;
+        }
     }
 }

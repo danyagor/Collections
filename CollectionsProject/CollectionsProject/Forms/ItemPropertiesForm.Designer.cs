@@ -57,7 +57,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(384, 547);
+            this.tabControl.Size = new System.Drawing.Size(384, 561);
             this.tabControl.TabIndex = 0;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
@@ -83,6 +83,7 @@
             this.flowLayoutPanel.Size = new System.Drawing.Size(370, 515);
             this.flowLayoutPanel.TabIndex = 0;
             this.flowLayoutPanel.WrapContents = false;
+            this.flowLayoutPanel.Resize += new System.EventHandler(this.flowLayoutPanel_Resize);
             // 
             // notePage
             // 
@@ -107,20 +108,21 @@
             // 
             this.photosPage.Controls.Add(this.label1);
             this.photosPage.Controls.Add(this.tbComment);
-            this.photosPage.Controls.Add(this.lbPhotos);
             this.photosPage.Controls.Add(this.btnClear);
             this.photosPage.Controls.Add(this.btnAssign);
+            this.photosPage.Controls.Add(this.lbPhotos);
             this.photosPage.Controls.Add(this.pbPhoto);
             this.photosPage.Location = new System.Drawing.Point(4, 22);
             this.photosPage.Name = "photosPage";
-            this.photosPage.Size = new System.Drawing.Size(376, 521);
+            this.photosPage.Size = new System.Drawing.Size(376, 535);
             this.photosPage.TabIndex = 2;
             this.photosPage.Text = "Фотографии";
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 444);
+            this.label1.Location = new System.Drawing.Point(5, 462);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 9;
@@ -128,7 +130,9 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(8, 460);
+            this.tbComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbComment.Location = new System.Drawing.Point(8, 478);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(360, 20);
             this.tbComment.TabIndex = 8;
@@ -136,22 +140,24 @@
             // 
             // lbPhotos
             // 
-            this.lbPhotos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lbPhotos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbPhotos.FormattingEnabled = true;
             this.lbPhotos.Items.AddRange(new object[] {
-            "\t\t\tФотография 1",
-            "\t\t\tФотография 2",
-            "\t\t\tФотография 3",
-            "\t\t\tФотография 4"});
-            this.lbPhotos.Location = new System.Drawing.Point(0, 385);
+            "Фотография 1",
+            "Фотография 2",
+            "Фотография 3",
+            "Фотография 4"});
+            this.lbPhotos.Location = new System.Drawing.Point(8, 390);
             this.lbPhotos.Name = "lbPhotos";
-            this.lbPhotos.Size = new System.Drawing.Size(376, 56);
+            this.lbPhotos.Size = new System.Drawing.Size(360, 56);
             this.lbPhotos.TabIndex = 7;
             this.lbPhotos.SelectedIndexChanged += new System.EventHandler(this.lbPhotos_SelectedIndexChanged);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(293, 486);
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(293, 504);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 6;
@@ -161,7 +167,8 @@
             // 
             // btnAssign
             // 
-            this.btnAssign.Location = new System.Drawing.Point(8, 486);
+            this.btnAssign.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAssign.Location = new System.Drawing.Point(8, 504);
             this.btnAssign.Name = "btnAssign";
             this.btnAssign.Size = new System.Drawing.Size(75, 23);
             this.btnAssign.TabIndex = 5;
@@ -171,11 +178,13 @@
             // 
             // pbPhoto
             // 
+            this.pbPhoto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbPhoto.Dock = System.Windows.Forms.DockStyle.Top;
             this.pbPhoto.Location = new System.Drawing.Point(0, 0);
             this.pbPhoto.Name = "pbPhoto";
-            this.pbPhoto.Size = new System.Drawing.Size(376, 385);
+            this.pbPhoto.Size = new System.Drawing.Size(376, 384);
             this.pbPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPhoto.TabIndex = 1;
             this.pbPhoto.TabStop = false;
@@ -183,7 +192,7 @@
             // btnEditItem
             // 
             this.btnEditItem.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnEditItem.Location = new System.Drawing.Point(0, 547);
+            this.btnEditItem.Location = new System.Drawing.Point(0, 561);
             this.btnEditItem.Name = "btnEditItem";
             this.btnEditItem.Size = new System.Drawing.Size(384, 23);
             this.btnEditItem.TabIndex = 1;
@@ -195,10 +204,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 570);
+            this.ClientSize = new System.Drawing.Size(384, 584);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.btnEditItem);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximizeBox = false;
             this.Name = "ItemPropertiesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование элемента";
