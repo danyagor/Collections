@@ -16,16 +16,14 @@
         /// <param name="baseName">Имя в базе</param>
         /// <param name="type">Тип данных</param>
         /// <param name="width">Ширина колонки в программе</param>
-        /// <param name="required">Обязательное поле</param>
         /// <param name="foreignKey">Внешний ключ</param>
         /// <param name="foreignTable">Имя внешней таблицы</param>
-        public Field(string programName, string baseName, string type, string width, bool required, bool foreignKey, string foreignTable)
+        public Field(string programName, string baseName, string type, string width, bool foreignKey, string foreignTable)
         {
             ProgramName = programName;
             BaseName = baseName;
             Type = type;
             Width = width;
-            RequiredField = required;
             ForeignKey = foreignKey;
             ForeignTable = foreignTable;
         }
@@ -37,15 +35,13 @@
         /// <param name="baseName">Имя в базе</param>
         /// <param name="type">Тип данных</param>
         /// <param name="width">Ширина колонки в программе</param>
-        /// <param name="required">Обязательное поле</param>
         /// <param name="nameField">Именное поле</param>
-        public Field(string programName, string baseName, string type, string width, bool required, bool nameField)
+        public Field(string programName, string baseName, string type, string width, bool nameField)
         {
             ProgramName = programName;
             BaseName = baseName;
             Type = type;
             Width = width;
-            RequiredField = required;
             NameField = nameField;
         }
 
@@ -69,11 +65,6 @@
         /// Ширина колонки в программе
         /// </summary>
         public string Width { get; }
-
-        /// <summary>
-        /// Обязательное поле
-        /// </summary>
-        public bool RequiredField { get; }
 
         /// <summary>
         /// Внешний ключ

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
 using System.IO;
-using System.Drawing;
 
 namespace CollectionsProject
 {

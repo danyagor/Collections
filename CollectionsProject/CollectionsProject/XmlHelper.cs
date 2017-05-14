@@ -101,7 +101,6 @@ namespace CollectionsProject
                         field["baseName"].InnerText,
                         field["type"].InnerText,
                         field["width"].InnerText,
-                        field.Attributes["required"].Value == "true" ? true : false,
                         field.Attributes["nameField"].Value == "true" ? true : false));
                 }
                 else
@@ -112,7 +111,6 @@ namespace CollectionsProject
                         field["baseName"].InnerText,
                         field["type"].InnerText,
                         field["width"].InnerText,
-                        field.Attributes["required"].Value == "true" ? true : false,
                         field.Attributes["foreignKey"].Value == "true" ? true : false,
                         field["foreignTable"] != null ? field["foreignTable"].InnerText : ""));
                 }

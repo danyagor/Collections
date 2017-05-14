@@ -89,15 +89,11 @@ namespace CollectionsProject.Forms
         {
             foreach (Field field in fields)
             {
-                string reqStr = "";
-                if (field.RequiredField)
-                    reqStr = "*";
-
                 // Внешнее поле
                 if (field.ForeignKey)
                 {
                     // Получение во внешней таблице значений и вывод в текущий ComboBox
-                    TextField tf = new TextField(field.ProgramName + reqStr, field.BaseName, true);
+                    TextField tf = new TextField(field.ProgramName, field.BaseName, true);
                     DataTable dt = new DataTable();
                     dt = mf.CurrentDatabase.GetNameFields(typeId, field.ForeignTable);
                     //dt.Rows.Add("-1", "Добавить новый элемент...");
@@ -114,7 +110,7 @@ namespace CollectionsProject.Forms
                 }
                 else // Обычное поле
                 {
-                    TextField tf = new TextField(field.ProgramName + reqStr, field.BaseName, false);
+                    TextField tf = new TextField(field.ProgramName, field.BaseName, false);
                     tf.Width = flowLayoutPanel.Width - 8;
                     flowLayoutPanel.Controls.Add(tf);
                     textFields.Add(tf);
@@ -184,49 +180,33 @@ namespace CollectionsProject.Forms
         {
             string[] userText = new string[textFields.Count];
 
-            // Проверка на введенность всех обязательных полей
-            bool requiredCheck = true;
             for (int i = 0; i < fields.Length; i++)
             {
-                if (fields[i].RequiredField && textFields[i].Value == "")
+                if (textFields[i].Identificated)
                 {
-                    requiredCheck = false;
-                    break;
+                    if (textFields[i].CB.Items.Count != 0)
+                        userText[i] = textFields[i].CB.SelectedValue.ToString();
                 }
+                else
+                    userText[i] = textFields[i].Value;
             }
 
-            if (requiredCheck)
+            if (itemId == 0) // Добавление
             {
-                for (int i = 0; i < fields.Length; i++)
-                {
-                    if (textFields[i].Identificated)
-                    {
-                        if (textFields[i].CB.Items.Count != 0)
-                            userText[i] = textFields[i].CB.SelectedValue.ToString();
-                    }
-                    else
-                        userText[i] = textFields[i].Value;
-                }
-
-                if (itemId == 0) // Добавление
-                {
-                    if (foreignTableName == "")
-                        mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, collectionName, "", GetItemImages());
-                    else
-                        mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, "", foreignTableName);
-                }
-                else // Обновление
-                {
-                    if (foreignTableName == "")
-                        mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, collectionName, "", GetItemImages());
-                    else
-                        mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, "", foreignTableName);
-                }
-
-                Close();
+                if (foreignTableName == "")
+                    mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, collectionName, "", GetItemImages());
+                else
+                    mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, "", foreignTableName);
             }
-            else
-                MessageBox.Show("Введены не все обязательные поля");
+            else // Обновление
+            {
+                if (foreignTableName == "")
+                    mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, collectionName, "", GetItemImages());
+                else
+                    mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, "", foreignTableName);
+            }
+
+            Close();
         }
 
         #endregion Методы
