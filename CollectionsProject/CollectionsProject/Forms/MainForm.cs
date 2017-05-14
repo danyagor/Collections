@@ -580,5 +580,11 @@ namespace CollectionsProject
         }
 
         #endregion События
+
+        private void tsmiSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm sf = new SettingsForm();
+            sf.ShowDialog();
+        }
     }
 }
