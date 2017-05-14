@@ -147,6 +147,7 @@ namespace CollectionsEditor
         {
             cbType.Items.Add("TEXT");
             cbType.Items.Add("VARCHAR");
+            cbType.Items.Add("INTEGER");
         }
 
         // Заполнение внешних таблиц

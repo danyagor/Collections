@@ -487,7 +487,10 @@ namespace CollectionsProject
             foreach (Field field in tableFields)
             {
                 if (field.Type == "INTEGER")
-                    query += field.BaseName + " = " + fields[fieldsCounter] + ", ";
+                    if (fields[fieldsCounter] != "")
+                        query += field.BaseName + " = " + fields[fieldsCounter] + ", ";
+                    else
+                        query += field.BaseName + " = 0, ";
                 else
                     query += field.BaseName + " = '" + fields[fieldsCounter] + "', ";
 
@@ -665,6 +668,9 @@ namespace CollectionsProject
         /// <returns>Строка предмета, соедененная по аттрибуту "nameField"</returns>
         public string GetNameFieldItem(int collectionType, string foreignTable, int itemId)
         {
+            if (itemId == 0)
+                return "";
+
             // Формирование запроса на получение данных из внешней таблицы
             string query = "SELECT ";
             foreach (Field field in CollectionTypes.GetCollection(collectionType)[foreignTable].Fields)

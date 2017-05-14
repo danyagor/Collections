@@ -186,6 +186,8 @@ namespace CollectionsProject.Forms
                 {
                     if (textFields[i].CB.Items.Count != 0)
                         userText[i] = textFields[i].CB.SelectedValue.ToString();
+                    else
+                        userText[i] = "";
                 }
                 else
                     userText[i] = textFields[i].Value;

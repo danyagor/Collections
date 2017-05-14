@@ -81,7 +81,10 @@ namespace CollectionsProject.Forms
 
             treeView.ExpandAll();
 
-            FillItems(int.Parse(treeView.Nodes[0].Tag.ToString()), treeView.Nodes[0].Nodes[0].Tag.ToString());
+            if (collectionType != 0)
+                treeView.SelectedNode = treeView.Nodes[collectionType - 1];
+            else
+                treeView.SelectedNode = treeView.Nodes[0];
         }
 
         // Заполнение предметов в ListView по типу коллекции и имени внешней таблицы
