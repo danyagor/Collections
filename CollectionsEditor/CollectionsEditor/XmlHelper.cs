@@ -66,7 +66,6 @@ namespace CollectionsEditor
                         field["baseName"].InnerText,
                         field["type"].InnerText,
                         field["width"].InnerText,
-                        field.Attributes["required"].Value == "true" ? true : false,
                         field.Attributes["nameField"].Value == "true" ? true : false));
                 }
                 else
@@ -76,7 +75,6 @@ namespace CollectionsEditor
                         field["baseName"].InnerText,
                         field["type"].InnerText,
                         field["width"].InnerText,
-                        field.Attributes["required"].Value == "true" ? true : false,
                         field.Attributes["foreignKey"].Value == "true" ? true : false,
                         field["foreignTable"] != null ? field["foreignTable"].InnerText : ""));
                 }
@@ -125,10 +123,6 @@ namespace CollectionsEditor
                     foreach (Field field in table.Fields)
                     {
                         XmlElement fieldNode = xDoc.CreateElement("field");
-
-                        XmlAttribute requiredAttr = xDoc.CreateAttribute("required");
-                        requiredAttr.Value = field.RequiredField ? "true" : "false";
-                        fieldNode.Attributes.Append(requiredAttr);
                         
                         if (table.Foreign)
                         {

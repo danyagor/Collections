@@ -136,7 +136,6 @@ namespace CollectionsEditor
             }
 
             tbWidth.Text = SelectedField.Width;
-            chkbRequiredField.Checked = SelectedField.RequiredField;
             chkbForeignField.Checked = SelectedField.ForeignKey;
             chkbNameField.Checked = SelectedField.NameField;
             cbForeignTables.Text = SelectedField.ForeignTable;
@@ -146,11 +145,8 @@ namespace CollectionsEditor
         // Заполнеие типов данных
         private void FillTypes()
         {
-            cbType.Items.Add("INTEGER");
             cbType.Items.Add("TEXT");
             cbType.Items.Add("VARCHAR");
-            cbType.Items.Add("DATE");
-            cbType.Items.Add("DATETIME");
         }
 
         // Заполнение внешних таблиц
@@ -173,7 +169,6 @@ namespace CollectionsEditor
             tbWidth.Text = "";
             chkbForeignField.Checked = false;
             chkbNameField.Checked = false;
-            chkbRequiredField.Checked = false;
             cbForeignTables.Text = "";
         }
 
@@ -244,7 +239,7 @@ namespace CollectionsEditor
 
         private void AddField()
         {
-            SelectedTable.Fields.Add(new Field("Название", "name", "TEXT", "120", true, false, ""));
+            SelectedTable.Fields.Add(new Field("Название", "name", "TEXT", "120", false, ""));
 
             FillFields();
             lbFields.SelectedIndex = lbFields.Items.Count - 1;
@@ -278,7 +273,6 @@ namespace CollectionsEditor
                 SelectedField.Width = tbWidth.Text;
                 SelectedField.ForeignKey = chkbForeignField.Checked;
                 SelectedField.ForeignTable = cbForeignTables.Text;
-                SelectedField.RequiredField = chkbRequiredField.Checked;
                 SelectedField.NameField = chkbNameField.Checked;
 
                 lbFields.Items[lbFields.SelectedIndex] = SelectedField.ProgramName;

@@ -37,7 +37,6 @@
             this.tbWidth = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.chkbRequiredField = new System.Windows.Forms.CheckBox();
             this.chkbForeignField = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cbType = new System.Windows.Forms.ComboBox();
@@ -150,21 +149,10 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Ширина поля в программе";
             // 
-            // chkbRequiredField
-            // 
-            this.chkbRequiredField.AutoSize = true;
-            this.chkbRequiredField.Location = new System.Drawing.Point(397, 185);
-            this.chkbRequiredField.Name = "chkbRequiredField";
-            this.chkbRequiredField.Size = new System.Drawing.Size(126, 17);
-            this.chkbRequiredField.TabIndex = 21;
-            this.chkbRequiredField.Text = "Обязательное поле";
-            this.chkbRequiredField.UseVisualStyleBackColor = true;
-            this.chkbRequiredField.Leave += new System.EventHandler(this.FieldEditEnd_Leave);
-            // 
             // chkbForeignField
             // 
             this.chkbForeignField.AutoSize = true;
-            this.chkbForeignField.Location = new System.Drawing.Point(397, 208);
+            this.chkbForeignField.Location = new System.Drawing.Point(397, 199);
             this.chkbForeignField.Name = "chkbForeignField";
             this.chkbForeignField.Size = new System.Drawing.Size(98, 17);
             this.chkbForeignField.TabIndex = 23;
@@ -175,7 +163,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(394, 228);
+            this.label5.Location = new System.Drawing.Point(394, 219);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(158, 13);
             this.label5.TabIndex = 10;
@@ -183,6 +171,7 @@
             // 
             // cbType
             // 
+            this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbType.FormattingEnabled = true;
             this.cbType.Location = new System.Drawing.Point(397, 119);
             this.cbType.Name = "cbType";
@@ -204,7 +193,7 @@
             // chkbNameField
             // 
             this.chkbNameField.AutoSize = true;
-            this.chkbNameField.Location = new System.Drawing.Point(397, 272);
+            this.chkbNameField.Location = new System.Drawing.Point(397, 263);
             this.chkbNameField.Name = "chkbNameField";
             this.chkbNameField.Size = new System.Drawing.Size(99, 17);
             this.chkbNameField.TabIndex = 22;
@@ -296,7 +285,7 @@
             // 
             this.cbForeignTables.FormattingEnabled = true;
             this.cbForeignTables.ItemHeight = 13;
-            this.cbForeignTables.Location = new System.Drawing.Point(397, 245);
+            this.cbForeignTables.Location = new System.Drawing.Point(397, 236);
             this.cbForeignTables.Name = "cbForeignTables";
             this.cbForeignTables.Size = new System.Drawing.Size(257, 21);
             this.cbForeignTables.TabIndex = 24;
@@ -438,7 +427,6 @@
             this.Controls.Add(this.cbType);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.chkbForeignField);
-            this.Controls.Add(this.chkbRequiredField);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbWidth);
@@ -465,7 +453,6 @@
         private System.Windows.Forms.ComboBox cbType;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkbForeignField;
-        private System.Windows.Forms.CheckBox chkbRequiredField;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbWidth;
