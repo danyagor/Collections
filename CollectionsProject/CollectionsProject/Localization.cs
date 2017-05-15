@@ -12,7 +12,7 @@ namespace CollectionsProject
         static string GetValue(string name)
         {
             XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("russin.xml");
+            xDoc.Load("russain.xml");
             XmlElement xRoot = xDoc.DocumentElement;
             foreach (XmlNode item in xRoot.ChildNodes)
             {
