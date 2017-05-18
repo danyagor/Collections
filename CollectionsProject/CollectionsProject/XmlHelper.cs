@@ -38,8 +38,9 @@ namespace CollectionsProject
             XmlElement xRoot = xDoc.DocumentElement;
 
             List<Collection> collections = new List<Collection>();
+            XmlNode[] foreignTables = GetAllForeignTables();
 
-            foreach (XmlNode typeNode in xRoot.ChildNodes)
+            foreach (XmlNode typeNode in xRoot.ChildNodes[0].ChildNodes)
             {
                 string colName = typeNode.Attributes["name"].Value;
                 collections.Add(new Collection(
@@ -117,6 +118,36 @@ namespace CollectionsProject
             }
 
             return fields.ToArray();
+        }
+
+
+        private static XmlNode[] GetAllForeignTables()
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("collections.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            List<XmlNode> nodes = new List<XmlNode>();
+
+            foreach (XmlNode foreignTable in xRoot.ChildNodes[1].ChildNodes)
+                nodes.Add(foreignTable);
+
+            return nodes.ToArray();
+        }
+
+        private static XmlNode[] GetAllForeignTables(int collectionId)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("collections.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            List<XmlNode> nodes = new List<XmlNode>();
+
+            foreach (XmlNode foreignTable in xRoot.ChildNodes[1].ChildNodes)
+                if (foreignTable.Attributes["colId"].Value == collectionId.ToString())
+                    nodes.Add(foreignTable);
+
+            return nodes.ToArray();
         }
 
 

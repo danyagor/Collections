@@ -10,16 +10,17 @@ namespace CollectionsProject
         /// <param name="id">Идентификатор коллекции</param>
         /// <param name="name">Имя коллекции</param>
         /// <param name="tables">Таблицы коллекции</param>
-        public Collection(int id, string name, Table[] tables)
+        public Collection(int id, string name, Table mainTable, Table[] foreignTables)
         {
             Id = id;
             Name = name;
-            Tables = tables;
+            MainTable = mainTable;
+            ForeignTables = ForeignTables;
         }
 
 
         /// <summary>
-        /// Возвращает таблицу по её индексу
+        /// Возвращает внешнюю таблицу по её индексу
         /// </summary>
         /// <param name="index">Индекс</param>
         /// <returns>Таблица</returns>
@@ -27,12 +28,12 @@ namespace CollectionsProject
         {
             get
             {
-                return Tables[index];
+                return ForeignTables[index];
             }
         }
 
         /// <summary>
-        /// Возвращает таблицу по её имени в базе
+        /// Возвращает внешнюю таблицу по её имени в базе
         /// </summary>
         /// <param name="baseName">Имя таблицы в базе</param>
         /// <returns>Таблица</returns>
@@ -40,7 +41,7 @@ namespace CollectionsProject
         {
             get
             {
-                foreach (Table table in Tables)
+                foreach (Table table in ForeignTables)
                     if (table.BaseName == baseName)
                         return table;
 
@@ -60,24 +61,13 @@ namespace CollectionsProject
         public string Name { get; }
 
         /// <summary>
-        /// Таблицы коллекции
+        /// Главная таблица коллекции
         /// </summary>
-        public Table[] Tables { get; }
+        public Table MainTable { get; }
 
         /// <summary>
         /// Внешние таблицы коллекции
         /// </summary>
-        public Table[] ForeignTables
-        {
-            get
-            {
-                List<Table> tables = new List<Table>();
-                foreach (Table table in Tables)
-                    if (table.Foreign)
-                        tables.Add(table);
-                
-                return tables.ToArray();
-            }
-        }
+        public Table[] ForeignTables { get; }
     }
 }
