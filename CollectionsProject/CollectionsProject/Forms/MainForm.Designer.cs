@@ -77,6 +77,7 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.collectionsCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -91,6 +92,7 @@
             this.innerCollectionsCMS.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // collectionsCMS
@@ -151,6 +153,7 @@
             // 
             // innerSplitContailer.Panel1
             // 
+            this.innerSplitContailer.Panel1.Controls.Add(this.dataGridView1);
             this.innerSplitContailer.Panel1.Controls.Add(this.lvData);
             // 
             // innerSplitContailer.Panel2
@@ -165,13 +168,12 @@
             this.lvData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.number});
             this.lvData.ContextMenuStrip = this.itemsCMS;
-            this.lvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvData.FullRowSelect = true;
             this.lvData.GridLines = true;
-            this.lvData.Location = new System.Drawing.Point(0, 0);
+            this.lvData.Location = new System.Drawing.Point(3, 0);
             this.lvData.MultiSelect = false;
             this.lvData.Name = "lvData";
-            this.lvData.Size = new System.Drawing.Size(1026, 365);
+            this.lvData.Size = new System.Drawing.Size(258, 166);
             this.lvData.TabIndex = 0;
             this.lvData.UseCompatibleStateImageBehavior = false;
             this.lvData.View = System.Windows.Forms.View.Details;
@@ -507,6 +509,15 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 53);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(286, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(708, 328);
+            this.dataGridView1.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,6 +547,7 @@
             this.statusStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -588,6 +600,7 @@
         private System.Windows.Forms.ToolStripMenuItem сервисToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiSettings;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
