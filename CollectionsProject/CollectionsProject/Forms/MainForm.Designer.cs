@@ -29,16 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Коллекции");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Результаты поиска");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Коллекции");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Результаты поиска");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.collectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.innerSplitContailer = new System.Windows.Forms.SplitContainer();
-            this.lvData = new System.Windows.Forms.ListView();
-            this.number = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.itemsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemsCmsAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemsCmsEditItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +76,6 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.collectionsCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -87,12 +85,12 @@
             this.innerSplitContailer.Panel1.SuspendLayout();
             this.innerSplitContailer.Panel2.SuspendLayout();
             this.innerSplitContailer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.itemsCMS.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.innerCollectionsCMS.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // collectionsCMS
@@ -114,14 +112,14 @@
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
-            treeNode1.ContextMenuStrip = this.collectionsCMS;
-            treeNode1.Name = "collectionsNode";
-            treeNode1.Text = "Коллекции";
-            treeNode2.Name = "searchResultsNode";
-            treeNode2.Text = "Результаты поиска";
+            treeNode3.ContextMenuStrip = this.collectionsCMS;
+            treeNode3.Name = "collectionsNode";
+            treeNode3.Text = "Коллекции";
+            treeNode4.Name = "searchResultsNode";
+            treeNode4.Text = "Результаты поиска";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            treeNode3,
+            treeNode4});
             this.treeView.Size = new System.Drawing.Size(174, 490);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -154,7 +152,6 @@
             // innerSplitContailer.Panel1
             // 
             this.innerSplitContailer.Panel1.Controls.Add(this.dataGridView1);
-            this.innerSplitContailer.Panel1.Controls.Add(this.lvData);
             // 
             // innerSplitContailer.Panel2
             // 
@@ -163,27 +160,15 @@
             this.innerSplitContailer.SplitterDistance = 365;
             this.innerSplitContailer.TabIndex = 0;
             // 
-            // lvData
+            // dataGridView1
             // 
-            this.lvData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.number});
-            this.lvData.ContextMenuStrip = this.itemsCMS;
-            this.lvData.FullRowSelect = true;
-            this.lvData.GridLines = true;
-            this.lvData.Location = new System.Drawing.Point(3, 0);
-            this.lvData.MultiSelect = false;
-            this.lvData.Name = "lvData";
-            this.lvData.Size = new System.Drawing.Size(258, 166);
-            this.lvData.TabIndex = 0;
-            this.lvData.UseCompatibleStateImageBehavior = false;
-            this.lvData.View = System.Windows.Forms.View.Details;
-            this.lvData.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvData_MouseClick);
-            this.lvData.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EditItem_Click);
-            // 
-            // number
-            // 
-            this.number.Text = "№";
-            this.number.Width = 30;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1026, 365);
+            this.dataGridView1.TabIndex = 1;
             // 
             // itemsCMS
             // 
@@ -217,9 +202,11 @@
             // 
             // rtbItemDescription
             // 
+            this.rtbItemDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtbItemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
             this.rtbItemDescription.Name = "rtbItemDescription";
+            this.rtbItemDescription.ReadOnly = true;
             this.rtbItemDescription.Size = new System.Drawing.Size(1026, 121);
             this.rtbItemDescription.TabIndex = 0;
             this.rtbItemDescription.Text = "";
@@ -509,15 +496,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 53);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(286, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(708, 328);
-            this.dataGridView1.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -539,6 +517,7 @@
             this.innerSplitContailer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.innerSplitContailer)).EndInit();
             this.innerSplitContailer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.itemsCMS.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -547,7 +526,6 @@
             this.statusStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -558,11 +536,9 @@
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
         private System.Windows.Forms.SplitContainer innerSplitContailer;
-        private System.Windows.Forms.ListView lvData;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem tsmiFile;
         private System.Windows.Forms.ToolStripMenuItem tsmlExit;
-        private System.Windows.Forms.ColumnHeader number;
         private System.Windows.Forms.ContextMenuStrip collectionsCMS;
         private System.Windows.Forms.ToolStripMenuItem cmsCreateCollection;
         private System.Windows.Forms.ContextMenuStrip innerCollectionsCMS;

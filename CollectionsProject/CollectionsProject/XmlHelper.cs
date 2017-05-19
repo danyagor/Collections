@@ -35,14 +35,12 @@ namespace CollectionsProject
             XmlElement xRoot = xDoc.DocumentElement;
 
             List<Collection> collections = new List<Collection>();
-            XmlNode[] foreignTables = GetAllForeignTables();
 
-            foreach (XmlNode typeNode in xRoot.ChildNodes[0].ChildNodes)
+            foreach (XmlNode typeNode in xRoot.FirstChild.ChildNodes)
             {
-                string colName = typeNode.Attributes["name"].Value;
                 collections.Add(new Collection(
                     int.Parse(typeNode.Attributes["id"].Value),
-                    colName,
+                    typeNode.Attributes["name"].Value,
                     GetMainTable(typeNode),
                     GetForeignTables(typeNode)));
             }
@@ -64,7 +62,7 @@ namespace CollectionsProject
             List<Table> tables = new List<Table>();
 
             // Таблицы коллекции
-            XmlNodeList tableNodes = collectionNode.ChildNodes[0].ChildNodes;
+            XmlNodeList tableNodes = collectionNode.FirstChild.ChildNodes;
 
             foreach (XmlNode table in tableNodes)
             {
@@ -72,7 +70,7 @@ namespace CollectionsProject
                 tables.Add(new Table(
                     table.Attributes["programName"].Value,
                     tablName,
-                    table.Attributes["foreignTable"].Value == "true" ? true : false,
+                    true,
                     GetAllFieldsFromForeignTable(collectionName, tablName)));
             }
 
@@ -89,14 +87,17 @@ namespace CollectionsProject
 
             foreach (XmlNode field in fieldNodes)
             {
+                // Внешняя таблица
+                string foreignTable = "";
+                if (field.Attributes["foreignTable"] != null)
+                    foreignTable = field.Attributes["foreignTable"].Value;
+
                 // Главная таблица
                 fields.Add(new Field(
                     field["programName"].InnerText,
                     field["baseName"].InnerText,
-                    field["type"].InnerText,
-                    field["width"].InnerText,
-                    field.Attributes["foreignTable"] == null ? true : false,
-                    field.Attributes["foreignTable"] != null ? field.Attributes["foreignTable"].Value : ""));
+                    foreignTable != "" ? true : false,
+                    foreignTable));
             }
 
             return fields.ToArray();
@@ -115,8 +116,6 @@ namespace CollectionsProject
                 fields.Add(new Field(
                     field["programName"].InnerText,
                     field["baseName"].InnerText,
-                    field["type"].InnerText,
-                    field["width"].InnerText,
                     field.Attributes["nameField"].Value == "true" ? true : false));
             }
 
