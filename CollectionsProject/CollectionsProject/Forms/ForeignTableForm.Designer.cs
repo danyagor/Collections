@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lvItems = new System.Windows.Forms.ListView();
             this.cmsItems = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsEditItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,38 +40,24 @@
             this.tsmiDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.cmsTvAddItem = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.rtbDescription = new System.Windows.Forms.RichTextBox();
+            this.cmsTvAddItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvItems = new System.Windows.Forms.DataGridView();
             this.cmsItems.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            this.cmsTvAddItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.cmsTvAddItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.SuspendLayout();
-            // 
-            // lvItems
-            // 
-            this.lvItems.ContextMenuStrip = this.cmsItems;
-            this.lvItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvItems.FullRowSelect = true;
-            this.lvItems.GridLines = true;
-            this.lvItems.Location = new System.Drawing.Point(0, 0);
-            this.lvItems.MultiSelect = false;
-            this.lvItems.Name = "lvItems";
-            this.lvItems.Size = new System.Drawing.Size(646, 332);
-            this.lvItems.TabIndex = 0;
-            this.lvItems.UseCompatibleStateImageBehavior = false;
-            this.lvItems.View = System.Windows.Forms.View.Details;
-            this.lvItems.SelectedIndexChanged += new System.EventHandler(this.lvItems_SelectedIndexChanged);
-            this.lvItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EditItem_Click);
             // 
             // cmsItems
             // 
@@ -150,7 +135,7 @@
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(127, 437);
+            this.treeView.Size = new System.Drawing.Size(157, 437);
             this.treeView.TabIndex = 2;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             this.treeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
@@ -169,8 +154,35 @@
             // 
             this.splitContainer.Panel2.Controls.Add(this.splitContainer1);
             this.splitContainer.Size = new System.Drawing.Size(777, 437);
-            this.splitContainer.SplitterDistance = 127;
+            this.splitContainer.SplitterDistance = 157;
             this.splitContainer.TabIndex = 3;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.dgvItems);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.rtbDescription);
+            this.splitContainer1.Size = new System.Drawing.Size(616, 437);
+            this.splitContainer1.SplitterDistance = 332;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // rtbDescription
+            // 
+            this.rtbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbDescription.Location = new System.Drawing.Point(0, 0);
+            this.rtbDescription.Name = "rtbDescription";
+            this.rtbDescription.Size = new System.Drawing.Size(616, 101);
+            this.rtbDescription.TabIndex = 0;
+            this.rtbDescription.Text = "";
             // 
             // cmsTvAddItem
             // 
@@ -186,32 +198,23 @@
             this.toolStripMenuItem1.Text = "Добавить предмет";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.AddItem_Click);
             // 
-            // splitContainer1
+            // dgvItems
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.lvItems);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.rtbDescription);
-            this.splitContainer1.Size = new System.Drawing.Size(646, 437);
-            this.splitContainer1.SplitterDistance = 332;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // rtbDescription
-            // 
-            this.rtbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbDescription.Location = new System.Drawing.Point(0, 0);
-            this.rtbDescription.Name = "rtbDescription";
-            this.rtbDescription.Size = new System.Drawing.Size(646, 101);
-            this.rtbDescription.TabIndex = 0;
-            this.rtbDescription.Text = "";
+            this.dgvItems.AllowUserToAddRows = false;
+            this.dgvItems.AllowUserToDeleteRows = false;
+            this.dgvItems.AllowUserToResizeRows = false;
+            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvItems.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItems.ContextMenuStrip = this.cmsItems;
+            this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvItems.Location = new System.Drawing.Point(0, 0);
+            this.dgvItems.MultiSelect = false;
+            this.dgvItems.Name = "dgvItems";
+            this.dgvItems.ReadOnly = true;
+            this.dgvItems.Size = new System.Drawing.Size(616, 332);
+            this.dgvItems.TabIndex = 2;
             // 
             // ForeignTableForm
             // 
@@ -232,19 +235,18 @@
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            this.cmsTvAddItem.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.cmsTvAddItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView lvItems;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem tsmiItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddItem;
@@ -260,5 +262,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RichTextBox rtbDescription;
+        private System.Windows.Forms.DataGridView dgvItems;
     }
 }

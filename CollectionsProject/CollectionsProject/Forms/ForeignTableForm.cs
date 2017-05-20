@@ -50,7 +50,7 @@ namespace CollectionsProject.Forms
         {
             get
             {
-                return int.Parse(lvItems.SelectedItems[0].Tag.ToString());
+                return int.Parse(dgvItems.CurrentRow.Tag.ToString());
             }
         }
 
@@ -90,13 +90,13 @@ namespace CollectionsProject.Forms
         // Заполнение предметов в ListView по типу коллекции и имени внешней таблицы
         private void FillItems(int collectionType, string foreignTable)
         {
-            lvItems.Columns.Clear();
-            lvItems.Items.Clear();
+            dgvItems.Rows.Clear();
+            dgvItems.Columns.Clear();
 
-            lvItems.Columns.Add("№");
+            dgvItems.Columns.Add("id", "№");
 
             foreach (Field field in CollectionTypes.GetCollection(collectionType)[foreignTable].Fields)
-                lvItems.Columns.Add(field.ProgramName);
+                dgvItems.Columns.Add(field.BaseName, field.ProgramName);
 
             DataTable dt = mf.CurrentDatabase.GetItemsFromCollection(collectionType, "", foreignTable);
             string[] items = new string[dt.Columns.Count];
@@ -105,9 +105,10 @@ namespace CollectionsProject.Forms
                 for (int i = 0; i < row.ItemArray.Length; i++)
                     items[i] = row.ItemArray[i].ToString();
 
-                ListViewItem lvi = new ListViewItem(items);
-                lvi.Tag = row.ItemArray[0]; // ID
-                lvItems.Items.Add(lvi);
+                //ListViewItem lvi = new ListViewItem(items);
+                //lvi.Tag = row.ItemArray[0]; // ID
+                dgvItems.Rows.Add(items);
+                dgvItems.Rows[dgvItems.Rows.Count - 1].Tag = row.ItemArray[0];
             }
         }
 
@@ -170,14 +171,14 @@ namespace CollectionsProject.Forms
         private void lvItems_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Получение описания о предмете
-            if (lvItems.SelectedItems.Count != 0)
+            if (dgvItems.Rows.Count != 0)
             {
                 string description = "Описание:\n";
                 description += mf.CurrentDatabase.GetNoteFromItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
                 rtbDescription.Text = description;
             }
 
-            if (lvItems.SelectedItems.Count == 0)
+            if (dgvItems.Rows.Count == 0)
             {
                 tsmiEditItem.Enabled = false;
                 tsmiDeleteItem.Enabled = false;

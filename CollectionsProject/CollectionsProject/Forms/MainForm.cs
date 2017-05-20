@@ -489,7 +489,7 @@ namespace CollectionsProject
         {
             if (treeView.SelectedNode.Parent != null && dgvItems.SelectedCells.Count != 0)
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
-                    EditItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.SelectedCells[0].Value.ToString()));
+                    EditItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
         // Удаление предмета
@@ -497,17 +497,15 @@ namespace CollectionsProject
         {
             if (treeView.SelectedNode.Parent != null && dgvItems.SelectedCells.Count != 0)
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
-                    DeleteItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.SelectedCells[0].Value.ToString()));
+                    DeleteItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
-
-        // Клик на ListView
-        private void lvData_MouseClick(object sender, MouseEventArgs e)
+        // Клик на ячейку DataGridView
+        private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (treeView.SelectedNode.Text != "Коллекции")
-                FormDescriptionOfItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.SelectedRows[0].Tag.ToString()));
+                FormDescriptionOfItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
-
 
         // Выбор нода в TreeView
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -582,14 +580,19 @@ namespace CollectionsProject
             sf.ShowDialog();
         }
 
+        // О программе
+        private void tsmiAbout_Click(object sender, EventArgs e)
+        {
+            AboutForm af = new AboutForm();
+            af.ShowDialog();
+        }
+
         // Выход
         private void tsmlExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        #endregion События
-
-        
+        #endregion События        
     }
 }

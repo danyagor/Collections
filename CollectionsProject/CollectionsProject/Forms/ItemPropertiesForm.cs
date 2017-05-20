@@ -338,7 +338,7 @@ namespace CollectionsProject.Forms
         private void flowLayoutPanel_Resize(object sender, EventArgs e)
         {
             for (int i = 0; i < textFields.Count; i++)
-                textFields[i].Width = flowLayoutPanel.Width - 8;
+                textFields[i].Width = flowLayoutPanel.Width - 30;
         }
 
 
@@ -353,7 +353,5 @@ namespace CollectionsProject.Forms
         }
 
         #endregion События
-
-        
     }
 }

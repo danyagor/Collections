@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Коллекции");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Результаты поиска");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Коллекции");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Результаты поиска");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.collectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,11 +38,11 @@
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.innerSplitContailer = new System.Windows.Forms.SplitContainer();
             this.dgvItems = new System.Windows.Forms.DataGridView();
-            this.rtbItemDescription = new System.Windows.Forms.RichTextBox();
             this.itemsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemsCmsAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemsCmsEditItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemsCmsDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rtbItemDescription = new System.Windows.Forms.RichTextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCreateDatabase = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +76,7 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.collectionsCMS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -112,14 +113,14 @@
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
-            treeNode5.ContextMenuStrip = this.collectionsCMS;
-            treeNode5.Name = "collectionsNode";
-            treeNode5.Text = "Коллекции";
-            treeNode6.Name = "searchResultsNode";
-            treeNode6.Text = "Результаты поиска";
+            treeNode1.ContextMenuStrip = this.collectionsCMS;
+            treeNode1.Name = "collectionsNode";
+            treeNode1.Text = "Коллекции";
+            treeNode2.Name = "searchResultsNode";
+            treeNode2.Text = "Результаты поиска";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2});
             this.treeView.Size = new System.Drawing.Size(174, 490);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -177,17 +178,8 @@
             this.dgvItems.ReadOnly = true;
             this.dgvItems.Size = new System.Drawing.Size(1026, 365);
             this.dgvItems.TabIndex = 1;
-            // 
-            // rtbItemDescription
-            // 
-            this.rtbItemDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtbItemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
-            this.rtbItemDescription.Name = "rtbItemDescription";
-            this.rtbItemDescription.ReadOnly = true;
-            this.rtbItemDescription.Size = new System.Drawing.Size(1026, 121);
-            this.rtbItemDescription.TabIndex = 0;
-            this.rtbItemDescription.Text = "";
+            this.dgvItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellClick);
+            this.dgvItems.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditItem_Click);
             // 
             // itemsCMS
             // 
@@ -218,6 +210,17 @@
             this.itemsCmsDeleteItem.Size = new System.Drawing.Size(203, 22);
             this.itemsCmsDeleteItem.Text = "Удалить предмет";
             this.itemsCmsDeleteItem.Click += new System.EventHandler(this.DeleteItem_Click);
+            // 
+            // rtbItemDescription
+            // 
+            this.rtbItemDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtbItemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
+            this.rtbItemDescription.Name = "rtbItemDescription";
+            this.rtbItemDescription.ReadOnly = true;
+            this.rtbItemDescription.Size = new System.Drawing.Size(1026, 121);
+            this.rtbItemDescription.TabIndex = 0;
+            this.rtbItemDescription.Text = "";
             // 
             // menuStrip
             // 
@@ -377,6 +380,8 @@
             // 
             // справкаToolStripMenuItem
             // 
+            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAbout});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
@@ -504,6 +509,13 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 53);
             // 
+            // tsmiAbout
+            // 
+            this.tsmiAbout.Name = "tsmiAbout";
+            this.tsmiAbout.Size = new System.Drawing.Size(158, 22);
+            this.tsmiAbout.Text = "О программе...";
+            this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -585,6 +597,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSettings;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.DataGridView dgvItems;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
     }
 }
 
