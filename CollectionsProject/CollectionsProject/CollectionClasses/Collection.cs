@@ -9,7 +9,7 @@ namespace CollectionsProject
             Id = id;
             Name = name;
             MainTable = mainTable;
-            ForeignTables = ForeignTables;
+            ForeignTables = foreignTables;
         }
 
 

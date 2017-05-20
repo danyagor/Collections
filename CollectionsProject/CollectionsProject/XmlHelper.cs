@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CollectionsProject
 {
-    class XmlHelper
+    static class XmlHelper
     {
         #region Создание служебных файлов
 
@@ -27,7 +27,7 @@ namespace CollectionsProject
 
         #region Коллекции
 
-
+        // Все коллекции
         public static Collection[] GetAllCollections()
         {
             XmlDocument xDoc = new XmlDocument();
@@ -48,37 +48,37 @@ namespace CollectionsProject
             return collections.ToArray();
         }
 
+        // Главная таблица
         private static Table GetMainTable(XmlNode collectionNode)
         {
             return new Table(
-                collectionNode.Attributes["programName"].Value,
-                collectionNode.Attributes["baseName"].Value,
+                collectionNode.FirstChild.Attributes["programName"].Value,
+                collectionNode.FirstChild.Attributes["baseName"].Value,
+                false,
                 false,
                 GetAllFieldsFromMainTable(collectionNode.FirstChild));
         }
 
-        public static Table[] GetForeignTables(XmlNode collectionNode)
+        // Внешние таблицы
+        private static Table[] GetForeignTables(XmlNode collectionNode)
         {
             List<Table> tables = new List<Table>();
 
-            // Таблицы коллекции
-            XmlNodeList tableNodes = collectionNode.FirstChild.ChildNodes;
+            // Поля главной таблицы коллекции
+            XmlNodeList mainTableFields = collectionNode.FirstChild.FirstChild.ChildNodes;
 
-            foreach (XmlNode table in tableNodes)
+            foreach (XmlNode field in mainTableFields)
             {
-                string tablName = table.Attributes["baseName"].Value;
-                tables.Add(new Table(
-                    table.Attributes["programName"].Value,
-                    tablName,
-                    true,
-                    GetAllFieldsFromForeignTable(collectionName, tablName)));
+                if (field.Attributes["foreignTable"] != null)
+                    tables.Add(GetForeignTable(field.Attributes["foreignTable"].Value));
             }
 
             return tables.ToArray();
         }
 
 
-        public static Field[] GetAllFieldsFromMainTable(XmlNode tableNode)
+        // Поля главной таблицы
+        private static Field[] GetAllFieldsFromMainTable(XmlNode tableNode)
         {
             List<Field> fields = new List<Field>();
 
@@ -103,33 +103,39 @@ namespace CollectionsProject
             return fields.ToArray();
         }
 
-        public static Field[] GetAllFieldsFromForeignTable(string foreignTableName)
+        // Внешняя таблица по имени
+        private static Table GetForeignTable(string tableName)
         {
-            List<Field> fields = new List<Field>();
+            XmlNode[] foreignTables = GetAllForeignTablesNodes();
 
-            // Поля таблицы
-            XmlNodeList fieldNodes = tableNode.FirstChild.ChildNodes;
-
-            foreach (XmlNode field in fieldNodes)
+            foreach (XmlNode table in foreignTables)
             {
-                // Внешняя таблица
-                fields.Add(new Field(
-                    field["programName"].InnerText,
-                    field["baseName"].InnerText,
-                    field.Attributes["nameField"].Value == "true" ? true : false));
+                if (table.Attributes["baseName"].Value == tableName)
+                {
+                    List<Field> fields = new List<Field>();
+                    foreach (XmlNode field in table.FirstChild.ChildNodes)
+                    {
+                        // Внешняя таблица
+                        fields.Add(new Field(
+                            field["programName"].InnerText,
+                            field["baseName"].InnerText,
+                            field.Attributes["nameField"].Value == "true" ? true : false));
+                    }
+
+                    return new Table(
+                        table.Attributes["programName"].Value,
+                        table.Attributes["baseName"].Value,
+                        true,
+                        table.Attributes["fixed"] != null ? true : false,
+                        fields.ToArray());
+                }
             }
 
-            return fields.ToArray();
+            return null;
         }
 
-
-
-
-
-
-
-
-        private static XmlNode[] GetAllForeignTables()
+        // Все внешние таблицы
+        private static XmlNode[] GetAllForeignTablesNodes()
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("collections.xml");
@@ -142,58 +148,30 @@ namespace CollectionsProject
 
             return nodes.ToArray();
         }
-
-        private static XmlNode[] GetAllForeignTables(int collectionId)
+        
+        public static Table[] GetAllForeignTables()
         {
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("collections.xml");
-            XmlElement xRoot = xDoc.DocumentElement;
-
-            List<XmlNode> nodes = new List<XmlNode>();
-
-            foreach (XmlNode foreignTable in xRoot.ChildNodes[1].ChildNodes)
-                if (foreignTable.Attributes["colId"].Value == collectionId.ToString())
-                    nodes.Add(foreignTable);
-
-            return nodes.ToArray();
-        }
-
-
-        /// <summary>
-        /// Возвращает нод коллекции по его имени
-        /// </summary>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <returns>Нод коллекции</returns>
-        private static XmlNode GetTypeNode(string collectionName)
-        {
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("collections.xml");
-            XmlElement xRoot = xDoc.DocumentElement;
-
-            foreach (XmlNode typeNode in xRoot.ChildNodes)
-                if (typeNode.Attributes["name"].Value == collectionName)
-                    return typeNode;
-
-            return null;
-        }
-
-        /// <summary>
-        /// Возвращает нод таблицы по имени коллекции и таблицы
-        /// </summary>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="tableName">Имя таблицы</param>
-        /// <returns>Нод таблицы</returns>
-        private static XmlNode GetTableNode(string collectionName, string tableName)
-        {
-            // Таблицы коллекции
-            XmlNodeList tables = GetTypeNode(collectionName).ChildNodes[0].ChildNodes;
-
-            // Поиск таблицы
+            XmlNode[] tables = GetAllForeignTablesNodes();
+            List<Table> resTables = new List<Table>();
             foreach (XmlNode table in tables)
-                if (table.Attributes["baseName"].Value == tableName)
-                    return table;
+            {
+                List<Field> fields = new List<Field>();
+                foreach (XmlNode field in table.FirstChild.ChildNodes)
+                {
+                    fields.Add(new Field(
+                        field["programName"].InnerText,
+                        field["baseName"].InnerText,
+                        field.Attributes["nameField"].Value == "true" ? true : false));
+                }
+                resTables.Add(new Table(
+                    table.Attributes["programName"].Value,
+                    table.Attributes["baseName"].Value,
+                    true,
+                    table.Attributes["fixed"] != null ? true : false,
+                    fields.ToArray()));
+            }
 
-            return null;
+            return resTables.ToArray();
         }
 
         #endregion Коллекции

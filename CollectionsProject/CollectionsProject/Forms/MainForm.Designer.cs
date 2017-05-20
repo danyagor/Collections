@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Коллекции");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Результаты поиска");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Коллекции");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Результаты поиска");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.collectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.innerSplitContailer = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvItems = new System.Windows.Forms.DataGridView();
+            this.rtbItemDescription = new System.Windows.Forms.RichTextBox();
             this.itemsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemsCmsAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemsCmsEditItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemsCmsDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rtbItemDescription = new System.Windows.Forms.RichTextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCreateDatabase = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,7 +85,7 @@
             this.innerSplitContailer.Panel1.SuspendLayout();
             this.innerSplitContailer.Panel2.SuspendLayout();
             this.innerSplitContailer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.itemsCMS.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.innerCollectionsCMS.SuspendLayout();
@@ -112,14 +112,14 @@
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
-            treeNode3.ContextMenuStrip = this.collectionsCMS;
-            treeNode3.Name = "collectionsNode";
-            treeNode3.Text = "Коллекции";
-            treeNode4.Name = "searchResultsNode";
-            treeNode4.Text = "Результаты поиска";
+            treeNode5.ContextMenuStrip = this.collectionsCMS;
+            treeNode5.Name = "collectionsNode";
+            treeNode5.Text = "Коллекции";
+            treeNode6.Name = "searchResultsNode";
+            treeNode6.Text = "Результаты поиска";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4});
+            treeNode5,
+            treeNode6});
             this.treeView.Size = new System.Drawing.Size(174, 490);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -151,7 +151,7 @@
             // 
             // innerSplitContailer.Panel1
             // 
-            this.innerSplitContailer.Panel1.Controls.Add(this.dataGridView1);
+            this.innerSplitContailer.Panel1.Controls.Add(this.dgvItems);
             // 
             // innerSplitContailer.Panel2
             // 
@@ -160,15 +160,34 @@
             this.innerSplitContailer.SplitterDistance = 365;
             this.innerSplitContailer.TabIndex = 0;
             // 
-            // dataGridView1
+            // dgvItems
             // 
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1026, 365);
-            this.dataGridView1.TabIndex = 1;
+            this.dgvItems.AllowUserToAddRows = false;
+            this.dgvItems.AllowUserToDeleteRows = false;
+            this.dgvItems.AllowUserToResizeRows = false;
+            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvItems.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItems.ContextMenuStrip = this.itemsCMS;
+            this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvItems.Location = new System.Drawing.Point(0, 0);
+            this.dgvItems.MultiSelect = false;
+            this.dgvItems.Name = "dgvItems";
+            this.dgvItems.ReadOnly = true;
+            this.dgvItems.Size = new System.Drawing.Size(1026, 365);
+            this.dgvItems.TabIndex = 1;
+            // 
+            // rtbItemDescription
+            // 
+            this.rtbItemDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtbItemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
+            this.rtbItemDescription.Name = "rtbItemDescription";
+            this.rtbItemDescription.ReadOnly = true;
+            this.rtbItemDescription.Size = new System.Drawing.Size(1026, 121);
+            this.rtbItemDescription.TabIndex = 0;
+            this.rtbItemDescription.Text = "";
             // 
             // itemsCMS
             // 
@@ -199,17 +218,6 @@
             this.itemsCmsDeleteItem.Size = new System.Drawing.Size(203, 22);
             this.itemsCmsDeleteItem.Text = "Удалить предмет";
             this.itemsCmsDeleteItem.Click += new System.EventHandler(this.DeleteItem_Click);
-            // 
-            // rtbItemDescription
-            // 
-            this.rtbItemDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtbItemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
-            this.rtbItemDescription.Name = "rtbItemDescription";
-            this.rtbItemDescription.ReadOnly = true;
-            this.rtbItemDescription.Size = new System.Drawing.Size(1026, 121);
-            this.rtbItemDescription.TabIndex = 0;
-            this.rtbItemDescription.Text = "";
             // 
             // menuStrip
             // 
@@ -517,7 +525,7 @@
             this.innerSplitContailer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.innerSplitContailer)).EndInit();
             this.innerSplitContailer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.itemsCMS.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -576,7 +584,7 @@
         private System.Windows.Forms.ToolStripMenuItem сервисToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiSettings;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvItems;
     }
 }
 

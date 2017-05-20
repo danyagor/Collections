@@ -69,7 +69,7 @@ namespace CollectionsProject.Forms
                 collectionNode.Tag = collection.Id;
                 collectionNode.ContextMenuStrip = cmsTvAddItem;
 
-                foreach (Table table in CollectionTypes.GetCollection(collection.Id).ForeignTables)
+                foreach (Table table in collection.ForeignTables)
                 {
                     TreeNode tableNode = new TreeNode(table.ProgramName);
                     tableNode.Tag = table.BaseName;
@@ -96,7 +96,7 @@ namespace CollectionsProject.Forms
             lvItems.Columns.Add("№");
 
             foreach (Field field in CollectionTypes.GetCollection(collectionType)[foreignTable].Fields)
-                lvItems.Columns.Add(field.ProgramName).Width = int.Parse(field.Width);
+                lvItems.Columns.Add(field.ProgramName);
 
             DataTable dt = mf.CurrentDatabase.GetItemsFromCollection(collectionType, "", foreignTable);
             string[] items = new string[dt.Columns.Count];

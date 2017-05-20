@@ -229,28 +229,25 @@ namespace CollectionsProject
 
                 // Создание таблиц и занесение в них первоначальной информации
                 // UserInfo
-                SqlQuery("CREATE TABLE UserInfo(username TEXT, useremail TEXT)");
+                SqlQuery("CREATE TABLE UserInfo(username VARCHAR, useremail VARCHAR)");
                 SqlQuery("INSERT INTO UserInfo VALUES('" + userName + "', '" + userEmail + "')");
 
                 // Collections
-                SqlQuery("CREATE TABLE Collections(id INTEGER PRIMARY KEY AUTOINCREMENT, baseName TEXT, programName TEXT, typeId INTEGER)");
+                SqlQuery("CREATE TABLE Collections(id INTEGER PRIMARY KEY AUTOINCREMENT, baseName VARCHAR, programName VARCHAR, typeId INTEGER)");
 
                 // Configurations
                 SqlQuery("CREATE TABLE Configurations(key VARCHAR, value VARCHAR)");
                 SqlQuery("INSERT INTO Configurations VALUES('COLLECTION_COUNTER', '0')");
 
                 // Создание внешних таблиц
-                foreach (Collection collection in CollectionTypes.Collections)
+                foreach (Table table in CollectionTypes.ForeignTables)
                 {
-                    foreach (Table table in collection.ForeignTables)
-                    {
-                        string query = "CREATE TABLE " + table.BaseName + " (id INTEGER PRIMARY KEY AUTOINCREMENT, ";
-                        foreach (Field field in table.Fields)
-                            query += field.BaseName + " " + field.Type + ", ";
-                        query += "note TEXT)";
+                    string query = "CREATE TABLE " + table.BaseName + " (id INTEGER PRIMARY KEY AUTOINCREMENT, ";
+                    foreach (Field field in table.Fields)
+                        query += field.BaseName + " VARCHAR, ";
+                    query += "note TEXT)";
 
-                        SqlQuery(query);
-                    }
+                    SqlQuery(query);
                 }
             }
             catch (Exception ex)
@@ -323,15 +320,20 @@ namespace CollectionsProject
             SqlQuery("UPDATE Configurations SET value = '" + numberOfCreatedCollections + "' WHERE(key = 'COLLECTION_COUNTER')");
 
             // Запрос на создание главной таблицы
-            string query = "CREATE TABLE " + CollectionTypes.GetCollection(collectionId)[0].BaseName + "_" + numberOfCreatedCollections + "(";
+            string query = "CREATE TABLE " + CollectionTypes.GetCollection(collectionId).MainTable.BaseName + "_" + numberOfCreatedCollections + "(";
             query += "id INTEGER PRIMARY KEY AUTOINCREMENT, ";
-            foreach (Field field in CollectionTypes.GetCollection(collectionId)[0].Fields)
-                query += field.BaseName + " " + field.Type + ", ";
-            query += "uploadDate DATETIME, changeDate DATETIME, note TEXT, photo1 BLOB, photo2 BLOB, photo3 BLOB, photo4 BLOB, comment1 TEXT, comment2 TEXT, comment3 TEXT, comment4 TEXT)";
+            foreach (Field field in CollectionTypes.GetCollection(collectionId).MainTable.Fields)
+            {
+                if (field.ForeignKey)
+                    query += field.BaseName + " INTEGER, ";
+                else
+                    query += field.BaseName + " VARCHAR, ";
+            }
+            query += "uploadDate DATETIME, changeDate DATETIME, note TEXT, photo1 BLOB, photo2 BLOB, photo3 BLOB, photo4 BLOB, comment1 VARCHAR, comment2 VARCHAR, comment3 VARCHAR, comment4 VARCHAR)";
             SqlQuery(query);
 
             // Добавление в таблицу Collections данных о текущей коллекции
-            SqlQuery("INSERT INTO Collections(baseName, programName, typeId) VALUES('" + CollectionTypes.GetCollection(collectionId)[0].BaseName + "_" + numberOfCreatedCollections + "', '" + name + "', " + collectionId + ")");
+            SqlQuery("INSERT INTO Collections(baseName, programName, typeId) VALUES('" + CollectionTypes.GetCollection(collectionId).MainTable.BaseName + "_" + numberOfCreatedCollections + "', '" + name + "', " + collectionId + ")");
         }
 
         /// <summary>
@@ -387,13 +389,13 @@ namespace CollectionsProject
             if (foreignTable == "")
             {
                 int collectionNumber = GetCollectionNumber(collectionName);
-                tableFields = CollectionTypes.GetCollection(collectionType)[0].Fields;
-                query = "INSERT INTO " + CollectionTypes.GetCollection(collectionType)[0].BaseName + "_" + collectionNumber + " VALUES(NULL, ";
+                tableFields = CollectionTypes.GetCollection(collectionType).MainTable.Fields;
+                query = "INSERT INTO " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber + " VALUES(NULL, ";
             }
             else
             {
                 tableFields = CollectionTypes.GetCollection(collectionType)[foreignTable].Fields;
-                query = "INSERT INTO " + foreignTable  + " VALUES(NULL, ";
+                query = "INSERT INTO " + foreignTable + " VALUES(NULL, ";
             }
 
             // Формирование запроса на добавление
@@ -402,19 +404,18 @@ namespace CollectionsProject
             {
                 if (fields[fieldsCounter] != "")
                 {
-                    if (field.Type == "INTEGER")
+                    if (field.ForeignKey)
                         query += fields[fieldsCounter] + ", ";
                     else
                         query += "'" + fields[fieldsCounter] + "', ";
                 }
                 else
                 {
-                    if (field.Type == "INTEGER")
+                    if (field.ForeignKey)
                         query += "0, ";
                     else
                         query += "'', ";
                 }
-
 
                 fieldsCounter++;
             }
@@ -473,8 +474,8 @@ namespace CollectionsProject
             if (foreignTable == "")
             {
                 int collectionNumber = GetCollectionNumber(collectionName);
-                tableFields = CollectionTypes.GetCollection(collectionType)[0].Fields;
-                query = "UPDATE " + CollectionTypes.GetCollection(collectionType)[0].BaseName + "_" + collectionNumber + " SET ";
+                tableFields = CollectionTypes.GetCollection(collectionType).MainTable.Fields;
+                query = "UPDATE " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber + " SET ";
             }
             else
             {
@@ -486,7 +487,7 @@ namespace CollectionsProject
             int fieldsCounter = 0;
             foreach (Field field in tableFields)
             {
-                if (field.Type == "INTEGER")
+                if (field.ForeignKey)
                     if (fields[fieldsCounter] != "")
                         query += field.BaseName + " = " + fields[fieldsCounter] + ", ";
                     else
@@ -545,7 +546,7 @@ namespace CollectionsProject
             if (foreignTable == "")
             {
                 int collectionNumber = GetCollectionNumber(collectionName);
-                SqlQuery("DELETE FROM " + CollectionTypes.GetCollection(collectionType)[0].BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")");
+                SqlQuery("DELETE FROM " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")");
             }
             else
                 SqlQuery("DELETE FROM " + CollectionTypes.GetCollection(collectionType)[foreignTable].BaseName + " WHERE(id = " + itemId + ")");
@@ -562,7 +563,7 @@ namespace CollectionsProject
 
             DataTable[] collections = new DataTable[collectionsInfo.Count];
             for (int i = 0; i < collections.Length; i++)
-                collections[i] = SqlQueryDataTable("SELECT " + CollectionTypes.GetCollection(int.Parse(collectionsInfo[i].ItemArray[2].ToString()))[0][0].BaseName + ", uploadDate, changeDate FROM " + collectionsInfo[i][0]);
+                collections[i] = SqlQueryDataTable("SELECT " + CollectionTypes.GetCollection(int.Parse(collectionsInfo[i].ItemArray[2].ToString())).MainTable[0].BaseName + ", uploadDate, changeDate FROM " + collectionsInfo[i][0]);
 
             DataTable resultDt = new DataTable();
             resultDt.Columns.Add("id");
@@ -607,10 +608,10 @@ namespace CollectionsProject
             if (foreignTable == "")
             {
                 int collectionNumber = GetCollectionNumber(collectionName);
-                dt = SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetCollection(collectionType)[0].BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")");
+                dt = SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")");
             }
             else
-                dt = SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetCollection(collectionType)[foreignTable].BaseName + " WHERE(id = " + itemId + ")");
+                dt = SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetForeignTable(foreignTable).BaseName + " WHERE(id = " + itemId + ")");
 
             return dt.Rows[0];
         }
@@ -627,10 +628,10 @@ namespace CollectionsProject
             if (foreignTable == "")
             {
                 int collectionNumber = GetCollectionNumber(collectionName);
-                return SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetCollection(collectionType)[0].BaseName + "_" + collectionNumber);
+                return SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber);
             }
             else
-                return SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetCollection(collectionType)[foreignTable].BaseName);
+                return SqlQueryDataTable("SELECT * FROM " + CollectionTypes.GetForeignTable(foreignTable).BaseName);
         }
 
 
@@ -647,10 +648,10 @@ namespace CollectionsProject
             if (foreignTable == "")
             {
                 int collectionNumber = GetCollectionNumber(collectionName);
-                return SqlQueryScalar("SELECT note FROM " + CollectionTypes.GetCollection(collectionType)[0].BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")").ToString();
+                return SqlQueryScalar("SELECT note FROM " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")").ToString();
             }
             else
-                return SqlQueryScalar("SELECT note FROM " + CollectionTypes.GetCollection(collectionType)[foreignTable].BaseName + " WHERE(id = " + itemId + ")").ToString();
+                return SqlQueryScalar("SELECT note FROM " + CollectionTypes.GetForeignTable(foreignTable).BaseName + " WHERE(id = " + itemId + ")").ToString();
         }
 
         #endregion Работа с предметами

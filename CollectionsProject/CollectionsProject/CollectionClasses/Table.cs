@@ -2,11 +2,12 @@
 {
     public class Table
     {
-        public Table(string programName, string baseName, bool foreign, Field[] fields)
+        public Table(string programName, string baseName, bool foreign, bool fixedTable, Field[] fields)
         {
             ProgramName = programName;
             BaseName = baseName;
             Foreign = foreign;
+            Fixed = fixedTable;
             Fields = fields;
         }
 
@@ -36,6 +37,8 @@
         public string BaseName { get; }
 
         public bool Foreign { get; }
+
+        public bool Fixed { get; }
 
         public Field[] Fields { get; }
     }

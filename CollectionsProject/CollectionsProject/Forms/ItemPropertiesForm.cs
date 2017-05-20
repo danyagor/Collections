@@ -40,7 +40,7 @@ namespace CollectionsProject.Forms
             comments = new string[4];
             textFields = new List<TextField>();
             if (foreignTableName == "")
-                fields = CollectionTypes.GetCollection(typeId)[0].Fields;
+                fields = CollectionTypes.GetCollection(typeId).MainTable.Fields;
             else
             {
                 fields = CollectionTypes.GetCollection(typeId)[foreignTableName].Fields;
@@ -66,7 +66,7 @@ namespace CollectionsProject.Forms
             comments = new string[4];
             textFields = new List<TextField>();
             if (foreignTableName == "")
-                fields = CollectionTypes.GetCollection(typeId)[0].Fields;
+                fields = CollectionTypes.GetCollection(typeId).MainTable.Fields;
             else
             {
                 fields = CollectionTypes.GetCollection(typeId)[foreignTableName].Fields;
@@ -334,6 +334,14 @@ namespace CollectionsProject.Forms
                 lbPhotos.SelectedIndex = 0;
         }
 
+        // Изменение размера полей под размер формы
+        private void flowLayoutPanel_Resize(object sender, EventArgs e)
+        {
+            for (int i = 0; i < textFields.Count; i++)
+                textFields[i].Width = flowLayoutPanel.Width - 8;
+        }
+
+
         // UNDONE: Клик на "Добавить новый предмет..."
         private void CB_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -346,10 +354,6 @@ namespace CollectionsProject.Forms
 
         #endregion События
 
-        private void flowLayoutPanel_Resize(object sender, EventArgs e)
-        {
-            for (int i = 0; i < textFields.Count; i++)
-                textFields[i].Width = flowLayoutPanel.Width - 8;
-        }
+        
     }
 }

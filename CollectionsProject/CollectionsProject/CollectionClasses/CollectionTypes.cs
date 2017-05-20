@@ -1,20 +1,14 @@
-﻿namespace CollectionsProject
+﻿using System.Collections.Generic;
+using System.Xml;
+
+namespace CollectionsProject
 {
-    class CollectionTypes
+    static class CollectionTypes
     {
         /// <summary>
         /// Коллекции из файла
         /// </summary>
         public static Collection[] Collections;
-
-        /// <summary>
-        /// Статический конструктор, который заполняет массив коллекций при первом обращении к нему
-        /// </summary>
-        static CollectionTypes()
-        {
-            Collections = XmlHelper.GetAllCollections();
-        }
-
 
         /// <summary>
         /// Возвращает коллекцию по её идентификатору
@@ -43,5 +37,16 @@
 
             return null;
         }
+
+        public static Table GetForeignTable(string foreignTable)
+        {
+            foreach (Table table in ForeignTables)
+                if (table.BaseName == foreignTable)
+                    return table;
+
+            return null;
+        }
+        
+        public static Table[] ForeignTables { get; set; }
     }
 }
