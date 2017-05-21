@@ -41,10 +41,10 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.dgvItems = new System.Windows.Forms.DataGridView();
             this.rtbDescription = new System.Windows.Forms.RichTextBox();
             this.cmsTvAddItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgvItems = new System.Windows.Forms.DataGridView();
             this.cmsItems.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -55,8 +55,8 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.cmsTvAddItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
+            this.cmsTvAddItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmsItems
@@ -175,6 +175,26 @@
             this.splitContainer1.SplitterDistance = 332;
             this.splitContainer1.TabIndex = 1;
             // 
+            // dgvItems
+            // 
+            this.dgvItems.AllowUserToAddRows = false;
+            this.dgvItems.AllowUserToDeleteRows = false;
+            this.dgvItems.AllowUserToResizeRows = false;
+            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvItems.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItems.ContextMenuStrip = this.cmsItems;
+            this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvItems.Location = new System.Drawing.Point(0, 0);
+            this.dgvItems.MultiSelect = false;
+            this.dgvItems.Name = "dgvItems";
+            this.dgvItems.ReadOnly = true;
+            this.dgvItems.Size = new System.Drawing.Size(616, 332);
+            this.dgvItems.TabIndex = 2;
+            this.dgvItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellClick);
+            this.dgvItems.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditItem_Click);
+            // 
             // rtbDescription
             // 
             this.rtbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -197,24 +217,6 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
             this.toolStripMenuItem1.Text = "Добавить предмет";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.AddItem_Click);
-            // 
-            // dgvItems
-            // 
-            this.dgvItems.AllowUserToAddRows = false;
-            this.dgvItems.AllowUserToDeleteRows = false;
-            this.dgvItems.AllowUserToResizeRows = false;
-            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvItems.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvItems.ContextMenuStrip = this.cmsItems;
-            this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvItems.Location = new System.Drawing.Point(0, 0);
-            this.dgvItems.MultiSelect = false;
-            this.dgvItems.Name = "dgvItems";
-            this.dgvItems.ReadOnly = true;
-            this.dgvItems.Size = new System.Drawing.Size(616, 332);
-            this.dgvItems.TabIndex = 2;
             // 
             // ForeignTableForm
             // 
@@ -239,8 +241,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.cmsTvAddItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
+            this.cmsTvAddItem.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

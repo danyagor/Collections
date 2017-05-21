@@ -40,11 +40,15 @@ namespace CollectionsProject.Forms
             comments = new string[4];
             textFields = new List<TextField>();
             if (foreignTableName == "")
+            {
                 fields = CollectionTypes.GetCollection(typeId).MainTable.Fields;
+                Text = "Редактирование элемента - " + CollectionTypes.GetCollection(typeId).Name;
+            }
             else
             {
                 fields = CollectionTypes.GetCollection(typeId)[foreignTableName].Fields;
                 tabControl.TabPages.RemoveAt(2);
+                Text = "Редактирование элемента - " + CollectionTypes.GetForeignTable(foreignTableName).ProgramName;
             }
 
             AddTextFields();
@@ -66,11 +70,15 @@ namespace CollectionsProject.Forms
             comments = new string[4];
             textFields = new List<TextField>();
             if (foreignTableName == "")
+            {
                 fields = CollectionTypes.GetCollection(typeId).MainTable.Fields;
+                Text = "Редактирование элемента - " + CollectionTypes.GetCollection(typeId).Name;
+            }
             else
             {
                 fields = CollectionTypes.GetCollection(typeId)[foreignTableName].Fields;
                 tabControl.TabPages.RemoveAt(2); // Удаление вкладки фотографий
+                Text = "Редактирование элемента - " + CollectionTypes.GetForeignTable(foreignTableName).ProgramName;
             }
 
             AddTextFields();
@@ -94,17 +102,30 @@ namespace CollectionsProject.Forms
                 {
                     // Получение во внешней таблице значений и вывод в текущий ComboBox
                     TextField tf = new TextField(field.ProgramName, field.BaseName, true);
-                    DataTable dt = new DataTable();
-                    dt = mf.CurrentDatabase.GetNameFields(typeId, field.ForeignTable);
-                    //dt.Rows.Add("-1", "Добавить новый элемент...");
-                    tf.CB.DataSource = dt;
+
+                    DataTable resTable = new DataTable();
+                    resTable.Columns.Add("id");
+                    resTable.Columns.Add("data");
+                    resTable.Rows.Add("-2", "Не указано");
+
+                    DataTable nameFields = mf.CurrentDatabase.GetNameFields(typeId, field.ForeignTable);
+
+                    foreach (DataRow row in nameFields.Rows)
+                        resTable.Rows.Add(row.ItemArray[0], row.ItemArray[1]);
+
+                    resTable.Rows.Add("-1", "Добавить новый элемент...");
+
+                    tf.CB.DataSource = resTable;
                     tf.CB.ValueMember = "id";
                     tf.CB.DisplayMember = "data";
+
+
+
                     tf.CB.DropDownStyle = ComboBoxStyle.DropDownList;
-                    tf.CB.SelectedValueChanged += CB_SelectedValueChanged;
-                    if (tf.CB.Items.Count != 0)
-                        tf.CB.SelectedIndex = 0;
+                    tf.CB.TextChanged += CB_SelectedValueChanged;
+                    tf.CB.SelectedIndex = 0;
                     tf.Width = flowLayoutPanel.Width - 8;
+                    tf.CB.Tag = field.ForeignTable;
                     flowLayoutPanel.Controls.Add(tf);
                     textFields.Add(tf);
                 }
@@ -185,7 +206,8 @@ namespace CollectionsProject.Forms
                 if (textFields[i].Identificated)
                 {
                     if (textFields[i].CB.Items.Count != 0)
-                        userText[i] = textFields[i].CB.SelectedValue.ToString();
+                        if (textFields[i].CB.SelectedValue != null)
+                            userText[i] = textFields[i].CB.SelectedValue.ToString();
                     else
                         userText[i] = "";
                 }
@@ -342,14 +364,33 @@ namespace CollectionsProject.Forms
         }
 
 
-        // UNDONE: Клик на "Добавить новый предмет..."
+        // Клик на "Добавить новый предмет..."
         private void CB_SelectedValueChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
-            //if (cb.SelectedValue.ToString() == "-1")
-            //{
-            //    ItemPropertiesForm ifp = new ItemPropertiesForm(mf, typeId, collectionName, )
-            //}
+            if (cb.SelectedValue != null)
+            {
+                if (cb.SelectedValue.ToString() == "-1")
+                {
+                    ItemPropertiesForm ifp = new ItemPropertiesForm(mf, typeId, "", cb.Tag.ToString());
+                    ifp.ShowDialog();
+
+
+                    DataTable resTable = new DataTable();
+                    resTable.Columns.Add("id");
+                    resTable.Columns.Add("data");
+                    resTable.Rows.Add("-2", "Не указано");
+
+                    DataTable nameFields = mf.CurrentDatabase.GetNameFields(typeId, cb.Tag.ToString());
+
+                    foreach (DataRow row in nameFields.Rows)
+                        resTable.Rows.Add(row);
+
+                    resTable.Rows.Add("-1", "Добавить новый элемент...");
+                    cb.DataSource = resTable;
+                    cb.SelectedIndex = cb.Items.Count - 2;
+                }
+            }
         }
 
         #endregion События

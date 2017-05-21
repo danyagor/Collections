@@ -72,7 +72,9 @@ namespace CollectionsProject.Forms
                 foreach (Table table in collection.ForeignTables)
                 {
                     TreeNode tableNode = new TreeNode(table.ProgramName);
+
                     tableNode.Tag = table.BaseName;
+
                     tableNode.ContextMenuStrip = cmsTvAddItem;
                     collectionNode.Nodes.Add(tableNode);
                 }
@@ -105,8 +107,6 @@ namespace CollectionsProject.Forms
                 for (int i = 0; i < row.ItemArray.Length; i++)
                     items[i] = row.ItemArray[i].ToString();
 
-                //ListViewItem lvi = new ListViewItem(items);
-                //lvi.Tag = row.ItemArray[0]; // ID
                 dgvItems.Rows.Add(items);
                 dgvItems.Rows[dgvItems.Rows.Count - 1].Tag = row.ItemArray[0];
             }
@@ -127,38 +127,53 @@ namespace CollectionsProject.Forms
         // Клик на нод в TreeView
         private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            
+
         }
 
         // Клик на добавление предмета
         private void AddItem_Click(object sender, EventArgs e)
         {
-            ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedForeignTable);
-            ipf.ShowDialog();
+            if (!CollectionTypes.GetForeignTable(SelectedForeignTable).Fixed)
+            {
+                ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedForeignTable);
+                ipf.ShowDialog();
 
-            FillItems(SelectedCollectionId, SelectedForeignTable);
+                FillItems(SelectedCollectionId, SelectedForeignTable);
+            }
+            else
+                MessageBox.Show("Данная таблица является фиксированной, в ней нельзя изменять данные.");
         }
 
         // Клик на редактирование предмета
         private void EditItem_Click(object sender, EventArgs e)
         {
-            ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedItemId, SelectedForeignTable);
-            ipf.ShowDialog();
+            if (!CollectionTypes.GetForeignTable(SelectedForeignTable).Fixed)
+            {
+                ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedItemId, SelectedForeignTable);
+                ipf.ShowDialog();
 
-            FillItems(SelectedCollectionId, SelectedForeignTable);
+                FillItems(SelectedCollectionId, SelectedForeignTable);
+            }
+            else
+                MessageBox.Show("Данная таблица является фиксированной, в ней нельзя изменять данные.");
         }
 
         // Клик на удаление предмета
         private void DeleteItem_Click(object sender, EventArgs e)
         {
-            if (!mf.CurrentDatabase.ItemExists(SelectedItemId, SelectedCollectionId, SelectedForeignTable))
+            if (!CollectionTypes.GetForeignTable(SelectedForeignTable).Fixed)
             {
-                mf.CurrentDatabase.DeleteItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
+                if (!mf.CurrentDatabase.ItemExists(SelectedItemId, SelectedCollectionId, SelectedForeignTable))
+                {
+                    mf.CurrentDatabase.DeleteItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
 
-                FillItems(SelectedCollectionId, SelectedForeignTable);
+                    FillItems(SelectedCollectionId, SelectedForeignTable);
+                }
+                else
+                    MessageBox.Show("Данный элемент привязан к одному или нескольким предметам, поэтому произвести операцию удаления невозможно.", "Удаление невозможно");
             }
             else
-                MessageBox.Show("Данный элемент привязан к одному или нескольким предметам, поэтому произвести операцию удаления невозможно.", "Удаление невозможно");
+                MessageBox.Show("Данная таблица является фиксированной, в ней нельзя изменять данные.");
         }
 
         // Клик на TreeView
@@ -167,8 +182,8 @@ namespace CollectionsProject.Forms
             FillItems(SelectedCollectionId, SelectedForeignTable);
         }
 
-        // Клик на элемент в ListView
-        private void lvItems_SelectedIndexChanged(object sender, EventArgs e)
+        // Клик на ячейку в DataGridView
+        private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Получение описания о предмете
             if (dgvItems.Rows.Count != 0)
@@ -197,5 +212,7 @@ namespace CollectionsProject.Forms
         }
 
         #endregion События
+
+
     }
 }
