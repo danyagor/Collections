@@ -26,7 +26,12 @@ namespace CollectionsEditor
             get
             {
                 if (lbCollections.SelectedIndex != -1 && lbTables.SelectedIndex != -1)
-                    return collections[lbCollections.SelectedIndex].Tables[lbTables.SelectedIndex];
+                {
+                    if (lbTables.SelectedIndex == 0)
+                        return collections[lbCollections.SelectedIndex].MainTable;
+                    else
+                        return collections[lbCollections.SelectedIndex][lbCollections.SelectedIndex + 1];
+                }
 
                 return null;
             }
@@ -36,8 +41,13 @@ namespace CollectionsEditor
             get
             {
                 if (lbCollections.SelectedIndex != -1 && lbTables.SelectedIndex != -1 && lbFields.SelectedIndex != -1)
-                    return collections[lbCollections.SelectedIndex].Tables[lbTables.SelectedIndex].Fields[lbFields.SelectedIndex];
-
+                {
+                    if (lbTables.SelectedIndex == 0)
+                        return collections[lbCollections.SelectedIndex].MainTable[lbFields.SelectedIndex];
+                    else
+                        return collections[lbCollections.SelectedIndex][lbCollections.SelectedIndex + 1][lbFields.SelectedIndex];
+                }
+  
                 return null;
             }
         }
@@ -49,6 +59,15 @@ namespace CollectionsEditor
         }
 
         #region Заполнение данных
+
+        private void FillTreeView()
+        {
+            foreach (var item in collection)
+            {
+
+            }
+        }
+
 
         // Заполняет ListBox коллекций
         private void FillCollections()
@@ -269,15 +288,15 @@ namespace CollectionsEditor
 
         private void OpenCollectionFile()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Файлы коллекций | *.xml";
-            ofd.FileName = "collections.xml";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                collections = XmlHelper.GetAllCollections(ofd.FileName);
-                filePath = ofd.FileName;
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //ofd.Filter = "Файлы коллекций | *.xml";
+            //ofd.FileName = "collections.xml";
+            //if (ofd.ShowDialog() == DialogResult.OK)
+            //{
+                collections = XmlHelper.GetAllCollections();
+                //filePath = ofd.FileName;
                 FillCollections();
-            }
+            //}
         }
 
         private void SaveCollection()

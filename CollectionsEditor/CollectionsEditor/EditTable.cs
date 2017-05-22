@@ -29,8 +29,18 @@ namespace CollectionsEditor
             this.tableId = tableId;
             this.rename = rename;
 
-            tbProgramName.Text = mf.Collections[collectionId].Tables[tableId].ProgramName;
-            tbBaseName.Text = mf.Collections[collectionId].Tables[tableId].BaseName;
+            if (tableId == 0)
+            {
+                tbProgramName.Text = mf.Collections[collectionId].MainTable.ProgramName;
+                tbBaseName.Text = mf.Collections[collectionId].MainTable.BaseName;
+            }
+            else
+            {
+                tbProgramName.Text = mf.Collections[collectionId][tableId].ProgramName;
+                tbBaseName.Text = mf.Collections[collectionId][tableId].BaseName;
+            }
+
+            
 
             Text = "Переименование таблицы";
         }
@@ -43,7 +53,7 @@ namespace CollectionsEditor
                 if (tableId == -1)
                     foreign = false;
 
-                mf.Collections[collectionId].Tables.Add(new Table(tbProgramName.Text, tbBaseName.Text, foreign, new List<Field>()));
+                mf.Collections[collectionId].Tables.Add(new Table(tbProgramName.Text, tbBaseName.Text, foreign, cbFixedTable.Checked, new List<Field>()));
             }
             else
             {

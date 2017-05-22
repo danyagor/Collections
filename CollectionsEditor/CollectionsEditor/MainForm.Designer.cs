@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Авторы");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Переплеты");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Книги", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
             this.lbCollections = new System.Windows.Forms.ListBox();
             this.lbFields = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -58,6 +63,7 @@
             this.tsmiSaveCollection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveCollectionAs = new System.Windows.Forms.ToolStripMenuItem();
             this.btnBeginValues = new System.Windows.Forms.Button();
+            this.tvData = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,7 +83,7 @@
             this.lbFields.FormattingEnabled = true;
             this.lbFields.Items.AddRange(new object[] {
             "ПОЛЯ"});
-            this.lbFields.Location = new System.Drawing.Point(267, 40);
+            this.lbFields.Location = new System.Drawing.Point(884, 41);
             this.lbFields.Name = "lbFields";
             this.lbFields.Size = new System.Drawing.Size(120, 251);
             this.lbFields.TabIndex = 2;
@@ -303,7 +309,7 @@
             this.tsmiFile});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(661, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1175, 24);
             this.menuStrip1.TabIndex = 32;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -342,18 +348,34 @@
             // 
             // btnBeginValues
             // 
-            this.btnBeginValues.Location = new System.Drawing.Point(392, 297);
+            this.btnBeginValues.Location = new System.Drawing.Point(397, 268);
             this.btnBeginValues.Name = "btnBeginValues";
             this.btnBeginValues.Size = new System.Drawing.Size(257, 23);
             this.btnBeginValues.TabIndex = 33;
             this.btnBeginValues.Text = "Начальные значения таблицы";
             this.btnBeginValues.UseVisualStyleBackColor = true;
             // 
+            // tvData
+            // 
+            this.tvData.Location = new System.Drawing.Point(696, 41);
+            this.tvData.Name = "tvData";
+            treeNode1.Name = "Узел3";
+            treeNode1.Text = "Авторы";
+            treeNode2.Name = "Узел4";
+            treeNode2.Text = "Переплеты";
+            treeNode3.Name = "Узел0";
+            treeNode3.Text = "Книги";
+            this.tvData.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3});
+            this.tvData.Size = new System.Drawing.Size(182, 251);
+            this.tvData.TabIndex = 34;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(661, 417);
+            this.ClientSize = new System.Drawing.Size(1175, 594);
+            this.Controls.Add(this.tvData);
             this.Controls.Add(this.btnBeginValues);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label9);
@@ -424,6 +446,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveCollection;
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveCollectionAs;
         private System.Windows.Forms.Button btnBeginValues;
+        private System.Windows.Forms.TreeView tvData;
     }
 }
 

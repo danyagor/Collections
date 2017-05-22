@@ -13,6 +13,20 @@ namespace CollectionsEditor
             Fields = fields;
         }
 
+        public Field this[int index] { get { return Fields[index]; } }
+
+        public Field this[string baseName]
+        {
+            get
+            {
+                foreach (Field field in Fields)
+                    if (field.BaseName == baseName)
+                        return field;
+
+                return null;
+            }
+        }
+
         public string ProgramName { get; set; }
         public string BaseName { get; set; }
         public bool Foreign { get; set; }

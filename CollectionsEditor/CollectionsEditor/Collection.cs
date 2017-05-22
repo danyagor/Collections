@@ -8,15 +8,27 @@ namespace CollectionsEditor
 {
     public class Collection
     {
-        public Collection(string name, Table mainTable, List<Table> foreignTables)
+        public Collection(string name, List<Table> tables)
         {
             Name = name;
-            MainTable = mainTable;
-            ForeignTables = foreignTables;
+            Tables = tables;
+        }
+
+        public Table this[int index] { get { return Tables[index]; } }
+
+        public Table this[string baseName]
+        {
+            get
+            {
+                foreach (Table table in Tables)
+                    if (table.BaseName == baseName)
+                        return table;
+
+                return null;
+            }
         }
 
         public string Name { get; set; }
-        public Table MainTable { get; set; }
-        public List<Table> ForeignTables { get; set; }
+        public List<Table> Tables { get; set; }
     }
 }
