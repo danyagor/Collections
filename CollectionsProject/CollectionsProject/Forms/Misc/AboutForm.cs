@@ -16,5 +16,11 @@ namespace CollectionsProject.Forms
         {
             InitializeComponent();
         }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+            lTitle.Text = "Коллекции";
+            lVersion.Text = "Версия: " + Application.ProductVersion;
+        }
     }
 }

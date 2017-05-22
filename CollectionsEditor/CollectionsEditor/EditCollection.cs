@@ -31,13 +31,13 @@ namespace CollectionsEditor
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (collectionId == -1)
-                mf.Collections.Add(new Collection(tbName.Text, new List<Table>()));
-            else
-                mf.Collections[collectionId].Name = tbName.Text;
+            //if (collectionId == -1)
+            //    mf.Collections.Add(new Collection(tbName.Text, new List<Table>()));
+            //else
+            //    mf.Collections[collectionId].Name = tbName.Text;
 
-            DialogResult = DialogResult.OK;
-            Close();
+            //DialogResult = DialogResult.OK;
+            //Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

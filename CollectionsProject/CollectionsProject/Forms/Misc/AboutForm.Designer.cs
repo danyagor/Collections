@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lTitle = new System.Windows.Forms.Label();
             this.lVersion = new System.Windows.Forms.Label();
             this.lAuthors = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
@@ -36,15 +36,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(98, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Collections Project";
+            this.lTitle.AutoSize = true;
+            this.lTitle.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lTitle.Location = new System.Drawing.Point(98, 12);
+            this.lTitle.Name = "lTitle";
+            this.lTitle.Size = new System.Drawing.Size(133, 17);
+            this.lTitle.TabIndex = 0;
+            this.lTitle.Text = "Collections Project";
             // 
             // lVersion
             // 
@@ -64,7 +64,7 @@
             this.lAuthors.Name = "lAuthors";
             this.lAuthors.Size = new System.Drawing.Size(108, 34);
             this.lAuthors.TabIndex = 2;
-            this.lAuthors.Text = "Авторы:\r\nДаниил Горячев";
+            this.lAuthors.Text = "Автор:\r\nДаниил Горячев";
             // 
             // pbLogo
             // 
@@ -80,9 +80,9 @@
             this.lCopyrights.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lCopyrights.Location = new System.Drawing.Point(9, 105);
             this.lCopyrights.Name = "lCopyrights";
-            this.lCopyrights.Size = new System.Drawing.Size(317, 17);
+            this.lCopyrights.Size = new System.Drawing.Size(313, 17);
             this.lCopyrights.TabIndex = 4;
-            this.lCopyrights.Text = "© 2015-2017 DG Company.  Все права защищены.";
+            this.lCopyrights.Text = "© 2015-2017 DG Company. Все права защищены.";
             // 
             // AboutForm
             // 
@@ -93,11 +93,12 @@
             this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.lAuthors);
             this.Controls.Add(this.lVersion);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AboutForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "О программе";
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -106,7 +107,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.Label lVersion;
         private System.Windows.Forms.Label lAuthors;
         private System.Windows.Forms.PictureBox pbLogo;

@@ -11,46 +11,40 @@ namespace CollectionsEditor
 
         private string filePath;
 
-        private Collection SelectedCollection
-        {
-            get
-            {
-                if (lbCollections.SelectedIndex != -1)
-                    return collections[lbCollections.SelectedIndex];
 
-                return null;
-            }
-        }
-        private Table SelectedTable
-        {
-            get
-            {
-                if (lbCollections.SelectedIndex != -1 && lbTables.SelectedIndex != -1)
-                {
-                    if (lbTables.SelectedIndex == 0)
-                        return collections[lbCollections.SelectedIndex].MainTable;
-                    else
-                        return collections[lbCollections.SelectedIndex][lbCollections.SelectedIndex + 1];
-                }
 
-                return null;
-            }
-        }
-        private Field SelectedField
+        public Collection SelectedCollection
         {
             get
             {
-                if (lbCollections.SelectedIndex != -1 && lbTables.SelectedIndex != -1 && lbFields.SelectedIndex != -1)
-                {
-                    if (lbTables.SelectedIndex == 0)
-                        return collections[lbCollections.SelectedIndex].MainTable[lbFields.SelectedIndex];
-                    else
-                        return collections[lbCollections.SelectedIndex][lbCollections.SelectedIndex + 1][lbFields.SelectedIndex];
-                }
-  
-                return null;
+                
             }
         }
+        public Table SelectedTable
+        {
+            get
+            {
+                return collections[tvData.SelectedNode.Index].
+            }
+        }
+        public Field SelectedField
+        {
+            get
+            {
+                if (TreeViewPathForm().Length == 1)
+                {
+                    Collection collection = (Collection)tvData.SelectedNode.Tag;
+                    return collections[tvData.SelectedNode.Pa]
+                }
+                else
+                {
+                    Table table = tvData.SelectedNode.Tag as Table;
+                    return table.Fields[lbFields.SelectedIndex];
+                }
+            }
+        }
+
+
 
         public MainForm()
         {
@@ -60,43 +54,24 @@ namespace CollectionsEditor
 
         #region Заполнение данных
 
+        // Заполнение TreeView
         private void FillTreeView()
         {
-            foreach (var item in collection)
+            tvData.Nodes.Clear();
+            foreach (Collection collection in collections)
             {
-
+                TreeNode collectionNode = new TreeNode(collection.Name);
+                collectionNode.Tag = collection.Tables[0].BaseName;
+                foreach (Table table in collection.Tables)
+                {
+                    TreeNode tableNode = new TreeNode(table.ProgramName);
+                    tableNode.Tag = table.BaseName;
+                    collectionNode.Nodes.Add(tableNode);
+                }
+                tvData.Nodes.Add(collectionNode);
             }
         }
 
-
-        // Заполняет ListBox коллекций
-        private void FillCollections()
-        {
-            lbCollections.Items.Clear();
-            lbTables.Items.Clear();
-            lbFields.Items.Clear();
-
-            foreach (Collection collection in collections)
-                lbCollections.Items.Add(collection.Name);
-
-            if (lbCollections.Items.Count != 0)
-                lbCollections.SelectedIndex = 0;
-        }
-
-        // Заполняет ListBox таблиц
-        private void FillTables()
-        {
-            lbTables.Items.Clear();
-            lbFields.Items.Clear();
-
-            lbTables.Items.Add(SelectedCollection.MainTable.ProgramName);
-
-            foreach (Table table in SelectedCollection.ForeignTables)
-                lbTables.Items.Add(table.ProgramName);
-
-            if (lbTables.Items.Count != 0)
-                lbTables.SelectedIndex = 0;
-        }
 
         // Заполняет ListBox полей
         private void FillFields()
@@ -168,7 +143,8 @@ namespace CollectionsEditor
             EditCollection ef = new EditCollection(this);
             if (ef.ShowDialog() == DialogResult.OK)
             {
-                FillCollections();
+                FillTreeView();
+                tvData.Sele
                 lbCollections.SelectedIndex = lbCollections.Items.Count - 1;
             }
         }
@@ -313,6 +289,11 @@ namespace CollectionsEditor
                 XmlHelper.SaveCollectionFile(collections.ToArray(), sfd.FileName);
         }
 
+        private string[] TreeViewPathForm()
+        {
+            return tvData.SelectedNode.FullPath.Split('\\');
+        }
+
         #endregion Вспомогательные методы
 
 
@@ -321,6 +302,7 @@ namespace CollectionsEditor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            FillTreeView();
         }
 
 
@@ -441,5 +423,14 @@ namespace CollectionsEditor
         }
 
         #endregion События 
+
+        private void tvData_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            FillFields();
+            if (TreeViewPathForm().Length == 1)
+            {
+                FillFields();
+            }
+        }
     }
 }

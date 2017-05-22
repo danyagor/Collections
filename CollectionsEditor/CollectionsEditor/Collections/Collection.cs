@@ -8,8 +8,9 @@ namespace CollectionsEditor
 {
     public class Collection
     {
-        public Collection(string name, List<Table> tables)
+        public Collection(int id, string name, List<Table> tables)
         {
+            Id = id;
             Name = name;
             Tables = tables;
         }
@@ -28,6 +29,7 @@ namespace CollectionsEditor
             }
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<Table> Tables { get; set; }
     }

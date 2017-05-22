@@ -56,7 +56,8 @@ namespace CollectionsProject
                 AddCollectionInTreeView(collectionsNames[i], collectionsTypes[i]);
 
             // Очистка всех данных из ListView
-            dgvItems.DataSource = null;
+            dgvItems.Columns.Clear();
+            dgvItems.Rows.Clear();
         }
 
         // Открытие базы данных
@@ -399,6 +400,8 @@ namespace CollectionsProject
 
                 // Включение кнопок
                 ChangeButtonsState(true);
+
+                tsmiForeignTablesEditor.Enabled = true;
             }
             else
             {
@@ -408,6 +411,7 @@ namespace CollectionsProject
                 // Выключение кнопок кнопок
                 ChangeButtonsState(false);
                 tsmiCreateCollection.Enabled = false;
+                tsmiForeignTablesEditor.Enabled = false;
             }
         }
 
