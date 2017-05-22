@@ -64,8 +64,6 @@ namespace CollectionsEditor
                     fields.Add(new Field(
                         field["programName"].InnerText,
                         field["baseName"].InnerText,
-                        field["type"].InnerText,
-                        field["width"].InnerText,
                         field.Attributes["nameField"].Value == "true" ? true : false));
                 }
                 else
@@ -73,8 +71,6 @@ namespace CollectionsEditor
                     fields.Add(new Field(
                         field["programName"].InnerText,
                         field["baseName"].InnerText,
-                        field["type"].InnerText,
-                        field["width"].InnerText,
                         field.Attributes["foreignKey"].Value == "true" ? true : false,
                         field["foreignTable"] != null ? field["foreignTable"].InnerText : ""));
                 }
@@ -141,15 +137,9 @@ namespace CollectionsEditor
                         programName.InnerText = field.ProgramName;
                         XmlElement baseName = xDoc.CreateElement("baseName");
                         baseName.InnerText = field.BaseName;
-                        XmlElement type = xDoc.CreateElement("type");
-                        type.InnerText = field.Type;
-                        XmlElement width = xDoc.CreateElement("width");
-                        width.InnerText = field.Width;
 
                         fieldNode.AppendChild(programName);
                         fieldNode.AppendChild(baseName);
-                        fieldNode.AppendChild(type);
-                        fieldNode.AppendChild(width);
 
                         if (field.ForeignKey)
                         {

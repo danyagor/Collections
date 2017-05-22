@@ -34,12 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbProgramName = new System.Windows.Forms.TextBox();
             this.tbBaseName = new System.Windows.Forms.TextBox();
-            this.tbWidth = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.chkbForeignField = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbType = new System.Windows.Forms.ComboBox();
             this.lbTables = new System.Windows.Forms.ListBox();
             this.chkbNameField = new System.Windows.Forms.CheckBox();
             this.btnAddCollection = new System.Windows.Forms.Button();
@@ -53,8 +49,6 @@
             this.cbForeignTables = new System.Windows.Forms.ComboBox();
             this.btnCollectionRename = new System.Windows.Forms.Button();
             this.btnTableRename = new System.Windows.Forms.Button();
-            this.tbTypeLimit = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -63,6 +57,7 @@
             this.tsmiOpenCollectionFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveCollection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveCollectionAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnBeginValues = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,36 +118,10 @@
             this.tbBaseName.TabIndex = 18;
             this.tbBaseName.Leave += new System.EventHandler(this.FieldEditEnd_Leave);
             // 
-            // tbWidth
-            // 
-            this.tbWidth.Location = new System.Drawing.Point(397, 159);
-            this.tbWidth.Name = "tbWidth";
-            this.tbWidth.Size = new System.Drawing.Size(257, 20);
-            this.tbWidth.TabIndex = 20;
-            this.tbWidth.Leave += new System.EventHandler(this.FieldEditEnd_Leave);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(394, 102);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Тип данных";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(394, 143);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(142, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Ширина поля в программе";
-            // 
             // chkbForeignField
             // 
             this.chkbForeignField.AutoSize = true;
-            this.chkbForeignField.Location = new System.Drawing.Point(397, 199);
+            this.chkbForeignField.Location = new System.Drawing.Point(397, 105);
             this.chkbForeignField.Name = "chkbForeignField";
             this.chkbForeignField.Size = new System.Drawing.Size(98, 17);
             this.chkbForeignField.TabIndex = 23;
@@ -163,21 +132,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(394, 219);
+            this.label5.Location = new System.Drawing.Point(394, 125);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(158, 13);
             this.label5.TabIndex = 10;
             this.label5.Text = "Имя внешней таблицы в базе";
-            // 
-            // cbType
-            // 
-            this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbType.FormattingEnabled = true;
-            this.cbType.Location = new System.Drawing.Point(397, 119);
-            this.cbType.Name = "cbType";
-            this.cbType.Size = new System.Drawing.Size(126, 21);
-            this.cbType.TabIndex = 19;
-            this.cbType.Leave += new System.EventHandler(this.FieldEditEnd_Leave);
             // 
             // lbTables
             // 
@@ -193,7 +152,7 @@
             // chkbNameField
             // 
             this.chkbNameField.AutoSize = true;
-            this.chkbNameField.Location = new System.Drawing.Point(397, 263);
+            this.chkbNameField.Location = new System.Drawing.Point(397, 169);
             this.chkbNameField.Name = "chkbNameField";
             this.chkbNameField.Size = new System.Drawing.Size(99, 17);
             this.chkbNameField.TabIndex = 22;
@@ -285,7 +244,7 @@
             // 
             this.cbForeignTables.FormattingEnabled = true;
             this.cbForeignTables.ItemHeight = 13;
-            this.cbForeignTables.Location = new System.Drawing.Point(397, 236);
+            this.cbForeignTables.Location = new System.Drawing.Point(397, 142);
             this.cbForeignTables.Name = "cbForeignTables";
             this.cbForeignTables.Size = new System.Drawing.Size(257, 21);
             this.cbForeignTables.TabIndex = 24;
@@ -310,23 +269,6 @@
             this.btnTableRename.Text = "Переименовать";
             this.btnTableRename.UseVisualStyleBackColor = true;
             this.btnTableRename.Click += new System.EventHandler(this.btnTableRename_Click);
-            // 
-            // tbTypeLimit
-            // 
-            this.tbTypeLimit.Location = new System.Drawing.Point(529, 119);
-            this.tbTypeLimit.Name = "tbTypeLimit";
-            this.tbTypeLimit.Size = new System.Drawing.Size(125, 20);
-            this.tbTypeLimit.TabIndex = 27;
-            this.tbTypeLimit.Leave += new System.EventHandler(this.FieldEditEnd_Leave);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(526, 102);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(73, 13);
-            this.label6.TabIndex = 28;
-            this.label6.Text = "Ограничение";
             // 
             // label7
             // 
@@ -398,17 +340,25 @@
             this.tsmiSaveCollectionAs.Text = "Сохранить коллекции как...";
             this.tsmiSaveCollectionAs.Click += new System.EventHandler(this.tsmiSaveCollectionAs_Click);
             // 
+            // btnBeginValues
+            // 
+            this.btnBeginValues.Location = new System.Drawing.Point(392, 297);
+            this.btnBeginValues.Name = "btnBeginValues";
+            this.btnBeginValues.Size = new System.Drawing.Size(257, 23);
+            this.btnBeginValues.TabIndex = 33;
+            this.btnBeginValues.Text = "Начальные значения таблицы";
+            this.btnBeginValues.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(661, 417);
+            this.Controls.Add(this.btnBeginValues);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.tbTypeLimit);
             this.Controls.Add(this.btnTableRename);
             this.Controls.Add(this.btnCollectionRename);
             this.Controls.Add(this.cbForeignTables);
@@ -424,12 +374,8 @@
             this.Controls.Add(this.lbTables);
             this.Controls.Add(this.lbFields);
             this.Controls.Add(this.lbCollections);
-            this.Controls.Add(this.cbType);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.chkbForeignField);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbWidth);
             this.Controls.Add(this.tbBaseName);
             this.Controls.Add(this.tbProgramName);
             this.Controls.Add(this.label2);
@@ -450,12 +396,8 @@
         #endregion
         private System.Windows.Forms.ListBox lbCollections;
         private System.Windows.Forms.ListBox lbFields;
-        private System.Windows.Forms.ComboBox cbType;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkbForeignField;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbWidth;
         private System.Windows.Forms.TextBox tbBaseName;
         private System.Windows.Forms.TextBox tbProgramName;
         private System.Windows.Forms.Label label2;
@@ -473,8 +415,6 @@
         private System.Windows.Forms.ComboBox cbForeignTables;
         private System.Windows.Forms.Button btnCollectionRename;
         private System.Windows.Forms.Button btnTableRename;
-        private System.Windows.Forms.TextBox tbTypeLimit;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
@@ -483,6 +423,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiOpenCollectionFile;
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveCollection;
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveCollectionAs;
+        private System.Windows.Forms.Button btnBeginValues;
     }
 }
 

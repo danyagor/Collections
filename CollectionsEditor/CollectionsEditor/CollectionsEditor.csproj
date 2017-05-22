@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BeginValuesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BeginValuesForm.Designer.cs">
+      <DependentUpon>BeginValuesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collection.cs" />
     <Compile Include="EditTable.cs">
       <SubType>Form</SubType>

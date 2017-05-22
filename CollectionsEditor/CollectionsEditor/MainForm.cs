@@ -70,7 +70,9 @@ namespace CollectionsEditor
             lbTables.Items.Clear();
             lbFields.Items.Clear();
 
-            foreach (Table table in SelectedCollection.Tables)
+            lbTables.Items.Add(SelectedCollection.MainTable.ProgramName);
+
+            foreach (Table table in SelectedCollection.ForeignTables)
                 lbTables.Items.Add(table.ProgramName);
 
             if (lbTables.Items.Count != 0)
@@ -110,44 +112,11 @@ namespace CollectionsEditor
         // Заполняет информацию о выделенном поле
         private void FillFieldInfo()
         {
-            string type = "";
-            int index = -1;
-            if (SelectedField.Type != null)
-            {
-                type = SelectedField.Type;
-                index = type.IndexOf('(');
-            }
-
             tbProgramName.Text = SelectedField.ProgramName;
             tbBaseName.Text = SelectedField.BaseName;
-
-            // Тип данных
-            if (index != -1)
-            {
-                cbType.Text = type.Remove(index);
-
-                type = type.Remove(0, index + 1);
-                tbTypeLimit.Text = type.Remove(type.Length - 1);
-            }
-            else
-            {
-                cbType.Text = type;
-                tbTypeLimit.Text = "";
-            }
-
-            tbWidth.Text = SelectedField.Width;
             chkbForeignField.Checked = SelectedField.ForeignKey;
             chkbNameField.Checked = SelectedField.NameField;
             cbForeignTables.Text = SelectedField.ForeignTable;
-        }
-
-
-        // Заполнеие типов данных
-        private void FillTypes()
-        {
-            cbType.Items.Add("TEXT");
-            cbType.Items.Add("VARCHAR");
-            cbType.Items.Add("INTEGER");
         }
 
         // Заполнение внешних таблиц
@@ -155,9 +124,8 @@ namespace CollectionsEditor
         {
             cbForeignTables.Items.Clear();
 
-            foreach (Table table in SelectedCollection.Tables)
-                if (table.Foreign)
-                    cbForeignTables.Items.Add(table.BaseName);
+            foreach (Table table in SelectedCollection.ForeignTables)
+                cbForeignTables.Items.Add(table.BaseName);
         }
 
         // Очищение информации о поле
@@ -165,9 +133,6 @@ namespace CollectionsEditor
         {
             tbProgramName.Text = "";
             tbBaseName.Text = "";
-            cbType.Text = "";
-            tbTypeLimit.Text = "";
-            tbWidth.Text = "";
             chkbForeignField.Checked = false;
             chkbNameField.Checked = false;
             cbForeignTables.Text = "";
@@ -227,9 +192,13 @@ namespace CollectionsEditor
         }
         private void RemoveTable()
         {
-            SelectedCollection.Tables.RemoveAt(lbTables.SelectedIndex);
-
-            FillTables();
+            if (lbTables.SelectedIndex != 0)
+            {
+                SelectedCollection.ForeignTables.RemoveAt(lbTables.SelectedIndex);
+                FillTables();
+            }
+            else
+                MessageBox.Show("Главную таблицу нельзя удалить.");
         }
 
         #endregion Таблицы
@@ -240,7 +209,7 @@ namespace CollectionsEditor
 
         private void AddField()
         {
-            SelectedTable.Fields.Add(new Field("Название", "name", "TEXT", "120", false, ""));
+            SelectedTable.Fields.Add(new Field("Название", "name", false, ""));
 
             FillFields();
             lbFields.SelectedIndex = lbFields.Items.Count - 1;
@@ -259,19 +228,6 @@ namespace CollectionsEditor
             {
                 SelectedField.ProgramName = tbProgramName.Text;
                 SelectedField.BaseName = tbBaseName.Text;
-
-                // Тип данных
-                if (cbType.Text != "DATE" && cbType.Text != "DATETIME")
-                {
-                    if (tbTypeLimit.Text != "")
-                        SelectedField.Type = cbType.Text + "(" + tbTypeLimit.Text + ")";
-                    else
-                        SelectedField.Type = cbType.Text;
-                }
-                else
-                    SelectedField.Type = cbType.Text;
-
-                SelectedField.Width = tbWidth.Text;
                 SelectedField.ForeignKey = chkbForeignField.Checked;
                 SelectedField.ForeignTable = cbForeignTables.Text;
                 SelectedField.NameField = chkbNameField.Checked;
@@ -346,7 +302,6 @@ namespace CollectionsEditor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            FillTypes();
         }
 
 

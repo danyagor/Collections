@@ -8,13 +8,15 @@ namespace CollectionsEditor
 {
     public class Collection
     {
-        public Collection(string name, List<Table> tables)
+        public Collection(string name, Table mainTable, List<Table> foreignTables)
         {
             Name = name;
-            Tables = tables;
+            MainTable = mainTable;
+            ForeignTables = foreignTables;
         }
 
         public string Name { get; set; }
-        public List<Table> Tables { get; set; }
+        public Table MainTable { get; set; }
+        public List<Table> ForeignTables { get; set; }
     }
 }

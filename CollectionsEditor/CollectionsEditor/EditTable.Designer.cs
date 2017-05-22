@@ -34,11 +34,12 @@
             this.tbProgramName = new System.Windows.Forms.TextBox();
             this.tbBaseName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbFixedTable = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(120, 90);
+            this.btnOk.Location = new System.Drawing.Point(120, 116);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 0;
@@ -48,7 +49,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(201, 90);
+            this.btnCancel.Location = new System.Drawing.Point(201, 116);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -88,11 +89,22 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Имя в базе";
             // 
+            // cbFixedTable
+            // 
+            this.cbFixedTable.AutoSize = true;
+            this.cbFixedTable.Location = new System.Drawing.Point(15, 90);
+            this.cbFixedTable.Name = "cbFixedTable";
+            this.cbFixedTable.Size = new System.Drawing.Size(153, 17);
+            this.cbFixedTable.TabIndex = 6;
+            this.cbFixedTable.Text = "Фиксированная таблица";
+            this.cbFixedTable.UseVisualStyleBackColor = true;
+            // 
             // EditTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 124);
+            this.ClientSize = new System.Drawing.Size(288, 152);
+            this.Controls.Add(this.cbFixedTable);
             this.Controls.Add(this.tbBaseName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbProgramName);
@@ -116,5 +128,6 @@
         private System.Windows.Forms.TextBox tbProgramName;
         private System.Windows.Forms.TextBox tbBaseName;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cbFixedTable;
     }
 }
