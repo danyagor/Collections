@@ -56,7 +56,8 @@ namespace CollectionsProject
                 AddCollectionInTreeView(collectionsNames[i], collectionsTypes[i]);
 
             // Очистка всех данных из ListView
-            dgvItems.DataSource = null;
+            dgvItems.Columns.Clear();
+            dgvItems.Rows.Clear();
         }
 
         // Открытие базы данных

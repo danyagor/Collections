@@ -52,7 +52,7 @@
     <Compile Include="BeginValuesForm.Designer.cs">
       <DependentUpon>BeginValuesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Collection.cs" />
+    <Compile Include="Collections\Collection.cs" />
     <Compile Include="EditTable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,7 +65,7 @@
     <Compile Include="EditCollection.Designer.cs">
       <DependentUpon>EditCollection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Field.cs" />
+    <Compile Include="Collections\Field.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,7 +74,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table.cs" />
+    <Compile Include="Collections\Table.cs" />
     <Compile Include="XmlHelper.cs" />
     <EmbeddedResource Include="EditTable.resx">
       <DependentUpon>EditTable.cs</DependentUpon>

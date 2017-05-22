@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Коллекции");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Результаты поиска");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.collectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,9 +58,9 @@
             this.tsmiDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiForeignTables = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiForeignTablesEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiService = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.innerCollectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsAddItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,11 +115,8 @@
             treeNode1.ContextMenuStrip = this.collectionsCMS;
             treeNode1.Name = "collectionsNode";
             treeNode1.Text = "Коллекции";
-            treeNode2.Name = "searchResultsNode";
-            treeNode2.Text = "Результаты поиска";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            treeNode1});
             this.treeView.Size = new System.Drawing.Size(174, 490);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -229,8 +225,8 @@
             this.tsmiCollections,
             this.tsmiItems,
             this.tsmiForeignTables,
-            this.сервисToolStripMenuItem,
-            this.справкаToolStripMenuItem});
+            this.tsmiService,
+            this.tsmiHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1204, 24);
@@ -363,13 +359,14 @@
             this.tsmiForeignTablesEditor.Text = "Редактор справочников";
             this.tsmiForeignTablesEditor.Click += new System.EventHandler(this.ForeignTablesEditor_Click);
             // 
-            // сервисToolStripMenuItem
+            // tsmiService
             // 
-            this.сервисToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiService.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiSettings});
-            this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
-            this.сервисToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.сервисToolStripMenuItem.Text = "Сервис";
+            this.tsmiService.Name = "tsmiService";
+            this.tsmiService.Size = new System.Drawing.Size(59, 20);
+            this.tsmiService.Text = "Сервис";
+            this.tsmiService.Visible = false;
             // 
             // tsmiSettings
             // 
@@ -378,13 +375,13 @@
             this.tsmiSettings.Text = "Настройки";
             this.tsmiSettings.Click += new System.EventHandler(this.tsmiSettings_Click);
             // 
-            // справкаToolStripMenuItem
+            // tsmiHelp
             // 
-            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAbout});
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.справкаToolStripMenuItem.Text = "Справка";
+            this.tsmiHelp.Name = "tsmiHelp";
+            this.tsmiHelp.Size = new System.Drawing.Size(65, 20);
+            this.tsmiHelp.Text = "Справка";
             // 
             // tsmiAbout
             // 
@@ -594,9 +591,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem сервисToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiService;
         private System.Windows.Forms.ToolStripMenuItem tsmiSettings;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiHelp;
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
     }
