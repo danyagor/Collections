@@ -114,7 +114,8 @@ namespace CollectionsProject.Forms
                     foreach (DataRow row in nameFields.Rows)
                         resTable.Rows.Add(row.ItemArray[0], row.ItemArray[1]);
 
-                    resTable.Rows.Add("-1", "Добавить новый элемент...");
+                    if (!CollectionTypes.GetForeignTable(field.ForeignTable).Fixed)
+                        resTable.Rows.Add("-1", "Добавить новый элемент...");
 
                     tf.CB.DataSource = resTable;
                     tf.CB.ValueMember = "id";
