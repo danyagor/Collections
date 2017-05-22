@@ -225,6 +225,19 @@
             this.добавитьКоллекциюToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.добавитьКоллекциюToolStripMenuItem.Text = "Добавить коллекцию";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.добавитьКоллекциюToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 26);
+            // 
+            // добавитьКоллекциюToolStripMenuItem
+            // 
+            this.добавитьКоллекциюToolStripMenuItem.Name = "добавитьКоллекциюToolStripMenuItem";
+            this.добавитьКоллекциюToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.добавитьКоллекциюToolStripMenuItem.Text = "Добавить коллекцию";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
