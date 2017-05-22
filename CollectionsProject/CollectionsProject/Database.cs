@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
 
 namespace CollectionsProject
 {
@@ -246,8 +247,25 @@ namespace CollectionsProject
                     foreach (Field field in table.Fields)
                         query += field.BaseName + " VARCHAR, ";
                     query += "note TEXT)";
-
                     SqlQuery(query);
+
+                    // Начальные значения
+                    List<string[]> beginValues = XmlHelper.GetBeginValuesOfForeignTable(table.BaseName);
+                    if (beginValues.Count > 0)
+                    {
+                        string beginValQuery = "INSERT INTO " + table.BaseName + " VALUES";
+                        foreach (string[] beginVal in beginValues)
+                        {
+                            beginValQuery += "(NULL, ";
+                            foreach (string val in beginVal)
+                                beginValQuery += "'" + val + "', ";
+
+                            beginValQuery += "''), ";
+                        }
+                        beginValQuery = beginValQuery.Remove(beginValQuery.Length - 2, 2);
+
+                        SqlQuery(beginValQuery);
+                    }
                 }
             }
             catch (Exception ex)
@@ -793,7 +811,7 @@ namespace CollectionsProject
                 collections[i] = dt.Rows[i].ItemArray[0].ToString();
 
             string foreignField = "";
-            foreach (Field field in CollectionTypes.GetCollection(collectionType)[0].Fields)
+            foreach (Field field in CollectionTypes.GetCollection(collectionType).MainTable.Fields)
                 if (field.ForeignTable == foreignTable)
                     foreignField = field.BaseName;
 

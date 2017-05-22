@@ -112,21 +112,24 @@
             // tsmiAddItem
             // 
             this.tsmiAddItem.Name = "tsmiAddItem";
-            this.tsmiAddItem.Size = new System.Drawing.Size(203, 22);
+            this.tsmiAddItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.tsmiAddItem.Size = new System.Drawing.Size(243, 22);
             this.tsmiAddItem.Text = "Добавить предмет";
             this.tsmiAddItem.Click += new System.EventHandler(this.AddItem_Click);
             // 
             // tsmiEditItem
             // 
             this.tsmiEditItem.Name = "tsmiEditItem";
-            this.tsmiEditItem.Size = new System.Drawing.Size(203, 22);
+            this.tsmiEditItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.tsmiEditItem.Size = new System.Drawing.Size(243, 22);
             this.tsmiEditItem.Text = "Редактировать предмет";
             this.tsmiEditItem.Click += new System.EventHandler(this.EditItem_Click);
             // 
             // tsmiDeleteItem
             // 
             this.tsmiDeleteItem.Name = "tsmiDeleteItem";
-            this.tsmiDeleteItem.Size = new System.Drawing.Size(203, 22);
+            this.tsmiDeleteItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.tsmiDeleteItem.Size = new System.Drawing.Size(243, 22);
             this.tsmiDeleteItem.Text = "Удалить предмет";
             this.tsmiDeleteItem.Click += new System.EventHandler(this.DeleteItem_Click);
             // 

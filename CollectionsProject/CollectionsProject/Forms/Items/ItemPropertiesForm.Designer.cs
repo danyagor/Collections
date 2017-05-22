@@ -36,9 +36,9 @@
             this.photosPage = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.tbComment = new System.Windows.Forms.TextBox();
-            this.lbPhotos = new System.Windows.Forms.ListBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnAssign = new System.Windows.Forms.Button();
+            this.lbPhotos = new System.Windows.Forms.ListBox();
             this.pbPhoto = new System.Windows.Forms.PictureBox();
             this.btnEditItem = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
@@ -58,7 +58,7 @@
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(384, 561);
-            this.tabControl.TabIndex = 0;
+            this.tabControl.TabIndex = 500;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // mainPage
@@ -68,7 +68,7 @@
             this.mainPage.Location = new System.Drawing.Point(4, 22);
             this.mainPage.Name = "mainPage";
             this.mainPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainPage.Size = new System.Drawing.Size(376, 521);
+            this.mainPage.Size = new System.Drawing.Size(376, 535);
             this.mainPage.TabIndex = 0;
             this.mainPage.Text = "Общие";
             // 
@@ -80,8 +80,8 @@
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(370, 515);
-            this.flowLayoutPanel.TabIndex = 0;
+            this.flowLayoutPanel.Size = new System.Drawing.Size(370, 529);
+            this.flowLayoutPanel.TabIndex = 501;
             this.flowLayoutPanel.WrapContents = false;
             this.flowLayoutPanel.Resize += new System.EventHandler(this.flowLayoutPanel_Resize);
             // 
@@ -91,7 +91,7 @@
             this.notePage.Location = new System.Drawing.Point(4, 22);
             this.notePage.Name = "notePage";
             this.notePage.Padding = new System.Windows.Forms.Padding(3);
-            this.notePage.Size = new System.Drawing.Size(376, 521);
+            this.notePage.Size = new System.Drawing.Size(376, 535);
             this.notePage.TabIndex = 1;
             this.notePage.Text = "Описание";
             // 
@@ -101,8 +101,8 @@
             this.tbNote.Location = new System.Drawing.Point(3, 3);
             this.tbNote.Multiline = true;
             this.tbNote.Name = "tbNote";
-            this.tbNote.Size = new System.Drawing.Size(370, 515);
-            this.tbNote.TabIndex = 0;
+            this.tbNote.Size = new System.Drawing.Size(370, 529);
+            this.tbNote.TabIndex = 503;
             // 
             // photosPage
             // 
@@ -135,8 +135,30 @@
             this.tbComment.Location = new System.Drawing.Point(8, 478);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(360, 20);
-            this.tbComment.TabIndex = 8;
+            this.tbComment.TabIndex = 505;
             this.tbComment.Leave += new System.EventHandler(this.tbComment_Leave);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(293, 504);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 507;
+            this.btnClear.Text = "Очистить";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnAssign
+            // 
+            this.btnAssign.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAssign.Location = new System.Drawing.Point(8, 504);
+            this.btnAssign.Name = "btnAssign";
+            this.btnAssign.Size = new System.Drawing.Size(75, 23);
+            this.btnAssign.TabIndex = 506;
+            this.btnAssign.Text = "Загрузить";
+            this.btnAssign.UseVisualStyleBackColor = true;
+            this.btnAssign.Click += new System.EventHandler(this.btnAssign_Click);
             // 
             // lbPhotos
             // 
@@ -151,30 +173,8 @@
             this.lbPhotos.Location = new System.Drawing.Point(8, 390);
             this.lbPhotos.Name = "lbPhotos";
             this.lbPhotos.Size = new System.Drawing.Size(360, 56);
-            this.lbPhotos.TabIndex = 7;
+            this.lbPhotos.TabIndex = 504;
             this.lbPhotos.SelectedIndexChanged += new System.EventHandler(this.lbPhotos_SelectedIndexChanged);
-            // 
-            // btnClear
-            // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(293, 504);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 6;
-            this.btnClear.Text = "Очистить";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // btnAssign
-            // 
-            this.btnAssign.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAssign.Location = new System.Drawing.Point(8, 504);
-            this.btnAssign.Name = "btnAssign";
-            this.btnAssign.Size = new System.Drawing.Size(75, 23);
-            this.btnAssign.TabIndex = 5;
-            this.btnAssign.Text = "Назначить";
-            this.btnAssign.UseVisualStyleBackColor = true;
-            this.btnAssign.Click += new System.EventHandler(this.btnAssign_Click);
             // 
             // pbPhoto
             // 
@@ -195,13 +195,14 @@
             this.btnEditItem.Location = new System.Drawing.Point(0, 561);
             this.btnEditItem.Name = "btnEditItem";
             this.btnEditItem.Size = new System.Drawing.Size(384, 23);
-            this.btnEditItem.TabIndex = 1;
+            this.btnEditItem.TabIndex = 502;
             this.btnEditItem.Text = "Редактирование предмета";
             this.btnEditItem.UseVisualStyleBackColor = true;
             this.btnEditItem.Click += new System.EventHandler(this.btnEditItem_Click);
             // 
             // ItemPropertiesForm
             // 
+            this.AcceptButton = this.btnEditItem;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 584);

@@ -95,6 +95,7 @@ namespace CollectionsProject.Forms
         // Создание текстовых полей
         private void AddTextFields()
         {
+            int tabCounter = 0;
             foreach (Field field in fields)
             {
                 // Внешнее поле
@@ -119,10 +120,11 @@ namespace CollectionsProject.Forms
                     tf.CB.ValueMember = "id";
                     tf.CB.DisplayMember = "data";
 
-
+                    tf.CB.TabIndex = tabCounter;
 
                     tf.CB.DropDownStyle = ComboBoxStyle.DropDownList;
-                    tf.CB.TextChanged += CB_SelectedValueChanged;
+                    tf.CB.SelectedIndexChanged += CB_SelectedValueChanged;
+                    tf.CB.MouseWheel += CB_MouseWheel;
                     tf.CB.SelectedIndex = 0;
                     tf.Width = flowLayoutPanel.Width - 8;
                     tf.CB.Tag = field.ForeignTable;
@@ -133,12 +135,15 @@ namespace CollectionsProject.Forms
                 {
                     TextField tf = new TextField(field.ProgramName, field.BaseName, false);
                     tf.Width = flowLayoutPanel.Width - 8;
+                    tf.TB.TabIndex = tabCounter;
                     flowLayoutPanel.Controls.Add(tf);
                     textFields.Add(tf);
                 }
+                tabCounter++;
             }
         }
-        
+
+
         // Вставление данных о предмете
         private void InsertDataInTextFields()
         {
@@ -167,7 +172,10 @@ namespace CollectionsProject.Forms
                         itemData.Table.Columns[i].ColumnName != "comment4")
                     {
                         if (fields[textFieldsCounter].ForeignKey)
-                            textFields[textFieldsCounter].CB.SelectedValue = itemData.ItemArray[i];
+                            if (itemData.ItemArray[i].ToString() != "0")
+                                textFields[textFieldsCounter].CB.SelectedValue = itemData.ItemArray[i];
+                            else
+                                textFields[textFieldsCounter].CB.SelectedIndex = 0;
                         else
                             textFields[textFieldsCounter].Value = itemData.ItemArray[i].ToString();
 
@@ -203,17 +211,19 @@ namespace CollectionsProject.Forms
 
             for (int i = 0; i < fields.Length; i++)
             {
+                // Внешнее поле
                 if (textFields[i].Identificated)
                 {
-                    if (textFields[i].CB.Items.Count != 0)
-                        if (textFields[i].CB.SelectedValue != null)
-                            userText[i] = textFields[i].CB.SelectedValue.ToString();
+                    if (textFields[i].CB.SelectedValue.ToString() != "-2")
+                        userText[i] = textFields[i].CB.SelectedValue.ToString();
                     else
                         userText[i] = "";
                 }
-                else
+                else // Обычное поле
                     userText[i] = textFields[i].Value;
             }
+
+
 
             if (itemId == 0) // Добавление
             {
@@ -375,7 +385,6 @@ namespace CollectionsProject.Forms
                     ItemPropertiesForm ifp = new ItemPropertiesForm(mf, typeId, "", cb.Tag.ToString());
                     ifp.ShowDialog();
 
-
                     DataTable resTable = new DataTable();
                     resTable.Columns.Add("id");
                     resTable.Columns.Add("data");
@@ -384,13 +393,19 @@ namespace CollectionsProject.Forms
                     DataTable nameFields = mf.CurrentDatabase.GetNameFields(typeId, cb.Tag.ToString());
 
                     foreach (DataRow row in nameFields.Rows)
-                        resTable.Rows.Add(row);
+                        resTable.Rows.Add(row.ItemArray[0], row.ItemArray[1]);
 
                     resTable.Rows.Add("-1", "Добавить новый элемент...");
                     cb.DataSource = resTable;
                     cb.SelectedIndex = cb.Items.Count - 2;
                 }
             }
+        }
+
+        // Предотвращение прокрутки ComboBox'а
+        private void CB_MouseWheel(object sender, MouseEventArgs e)
+        {
+            ((HandledMouseEventArgs)e).Handled = true;
         }
 
         #endregion События

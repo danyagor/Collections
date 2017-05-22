@@ -148,7 +148,7 @@ namespace CollectionsProject
 
             return nodes.ToArray();
         }
-        
+
         public static Table[] GetAllForeignTables()
         {
             XmlNode[] tables = GetAllForeignTablesNodes();
@@ -172,6 +172,39 @@ namespace CollectionsProject
             }
 
             return resTables.ToArray();
+        }
+
+        public static List<string[]> GetBeginValuesOfForeignTable(string foreignTableName)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("collections.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            List<string[]> beginVals = new List<string[]>();
+
+            foreach (XmlNode foreignTable in xRoot.ChildNodes[1].ChildNodes)
+            {
+                if (foreignTable.Attributes["baseName"].Value == foreignTableName)
+                {
+                    if (foreignTable.SelectSingleNode("beginValues") != null)
+                    {                        
+                        foreach (XmlNode value in foreignTable.ChildNodes[1].ChildNodes)
+                        {
+                            List<string> vals = new List<string>();
+                            foreach (XmlNode field in value.ChildNodes)
+                                vals.Add(field.InnerText);
+
+                            beginVals.Add(vals.ToArray());
+                        }
+
+                        break;
+                    }
+                    else
+                        break;
+                }
+            }
+
+            return beginVals;
         }
 
         #endregion Коллекции
