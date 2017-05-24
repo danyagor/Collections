@@ -3,6 +3,7 @@ using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using CollectionsProject.Forms;
+using System.Drawing;
 
 namespace CollectionsProject
 {
@@ -16,6 +17,8 @@ namespace CollectionsProject
             Text = Localization.PROGRAM_TITLE;
             CollectionTypes.Collections = XmlHelper.GetAllCollections();
             CollectionTypes.ForeignTables = XmlHelper.GetAllForeignTables();
+            XmlHelper.OpenSettingsFromFile();
+            UpdateIconsSize();
         }
 
         #region Свойства
@@ -339,9 +342,21 @@ namespace CollectionsProject
         // Формирование описания предмета
         private void FormDescriptionOfItem(int collectionType, string collectionName, int itemId)
         {
+            rtbItemDescription.Text = "";
+            pbPhoto1.Image = null;
+            pbPhoto2.Image = null;
+            pbPhoto3.Image = null;
+            pbPhoto4.Image = null;
+
             string description = "Описание: \n";
             description += CurrentDatabase.GetNoteFromItem(collectionType, itemId, collectionName) + "\n";
             rtbItemDescription.Text = description;
+
+            Image[] images = CurrentDatabase.GetImagesFromItem(collectionType, itemId, collectionName);
+            pbPhoto1.Image = images[0];
+            pbPhoto2.Image = images[1];
+            pbPhoto3.Image = images[2];
+            pbPhoto4.Image = images[3];
 
             // TODO: При выделении предмета в ноде "Коллекции" дописать после описания все главные поля и их значения
         }
@@ -362,11 +377,16 @@ namespace CollectionsProject
         private void UpdateLastFilesMenuItem()
         {
             tsmiLastBases.DropDownItems.Clear();
+            tsbOpenBase.DropDownItems.Clear();
+
             string[] files = XmlHelper.GetLastFiles();
             for (int i = 0; i < files.Length; i++)
             {
                 tsmiLastBases.DropDownItems.Add((i + 1) + ". " + files[i]);
                 tsmiLastBases.DropDownItems[i].Click += LastBases_Click;
+
+                tsbOpenBase.DropDownItems.Add((i + 1) + ". " + files[i]);
+                tsbOpenBase.DropDownItems[i].Click += LastBases_Click;
             }
         }
 
@@ -427,6 +447,21 @@ namespace CollectionsProject
             itemsCmsDeleteItem.Enabled = value;
         }
 
+        private void UpdateIconsSize()
+        {
+            foreach (ToolStripItem item in toolStrip.Items)
+                item.Size = new System.Drawing.Size(Settings.IconsSize, Settings.IconsSize);
+        }
+
+        private void ClearItemInformation()
+        {
+            rtbItemDescription.Text = "";
+            pbPhoto1.Image = null;
+            pbPhoto2.Image = null;
+            pbPhoto3.Image = null;
+            pbPhoto4.Image = null;
+        }
+
         #endregion Вспомогательные методы
 
 
@@ -441,6 +476,8 @@ namespace CollectionsProject
         }
 
 
+        #region База данных
+
         // Создание базы
         private void CreateDatabase_Click(object sender, EventArgs e)
         {
@@ -453,6 +490,9 @@ namespace CollectionsProject
             OpenDatabase();
         }
 
+        #endregion База данных
+
+        #region Коллекции
 
         // Создание коллекции
         private void CreateCollection_Click(object sender, EventArgs e)
@@ -476,6 +516,9 @@ namespace CollectionsProject
                     DeleteCollection(treeView.SelectedNode.Text);
         }
 
+        #endregion Коллекции
+
+        #region Предметы
 
         // Добавление предмета
         private void AddItem_Click(object sender, EventArgs e)
@@ -501,11 +544,15 @@ namespace CollectionsProject
                     DeleteItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
+        #endregion Предметы
+
         // Клик на ячейку DataGridView
         private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (treeView.SelectedNode.Text != "Коллекции")
                 FormDescriptionOfItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
+            else
+                ClearItemInformation();
         }
 
         // Выбор нода в TreeView
@@ -579,6 +626,7 @@ namespace CollectionsProject
         {
             SettingsForm sf = new SettingsForm();
             sf.ShowDialog();
+            UpdateIconsSize();
         }
 
         // О программе
@@ -595,5 +643,32 @@ namespace CollectionsProject
         }
 
         #endregion События        
+
+        private void tsmiPhotoPanel_Click(object sender, EventArgs e)
+        {
+            ItemInformation.Panel1Collapsed = !tsmiPhotoPanel.Checked;
+
+            if (!tsmiPhotoPanel.Checked && !tsmiDescriptionPanel.Checked)
+                ItemInformation.Visible = false;
+            else
+                ItemInformation.Visible = true;
+
+            
+        }
+
+        private void tsmiDescriptionPanel_Click(object sender, EventArgs e)
+        {
+            ItemInformation.Panel2Collapsed = !tsmiDescriptionPanel.Checked;
+
+            if (!tsmiPhotoPanel.Checked && !tsmiDescriptionPanel.Checked)
+                ItemInformation.Visible = false;
+            else
+                ItemInformation.Visible = true;
+        }
+
+        private void tsmiIconsPanel_Click(object sender, EventArgs e)
+        {
+            toolStrip.Visible = tsmiIconsPanel.Checked;
+        }
     }
 }

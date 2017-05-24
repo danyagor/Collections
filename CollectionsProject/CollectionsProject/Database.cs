@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace CollectionsProject
 {
@@ -672,6 +673,20 @@ namespace CollectionsProject
                 return SqlQueryScalar("SELECT note FROM " + CollectionTypes.GetForeignTable(foreignTable).BaseName + " WHERE(id = " + itemId + ")").ToString();
         }
 
+        public Image[] GetImagesFromItem(int collectionType, int itemId, string collectionName)
+        {
+            int collectionNumber = GetCollectionNumber(collectionName);
+            DataTable dt = SqlQueryDataTable("SELECT photo1, photo2, photo3, photo4 FROM " + CollectionTypes.GetCollection(collectionType).MainTable.BaseName + "_" + collectionNumber + " WHERE(id = " + itemId + ")");
+
+            Image[] images = new Image[4];
+
+            for (int i = 0; i < 4; i++)
+                if (dt.Rows[0].ItemArray[i].ToString() != "")
+                    images[i] = ByteToImage((byte[])dt.Rows[0].ItemArray[i]);
+
+            return images;
+        }
+
         #endregion Работа с предметами
 
 
@@ -825,6 +840,18 @@ namespace CollectionsProject
                 return true;
             else
                 return false;
+        }
+
+        // Конвертирует массив байтов в картинку
+        public Image ByteToImage(byte[] imageBytes)
+        {
+            if (imageBytes.Length == 0)
+                return null;
+
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = new Bitmap(ms);
+            return image;
         }
 
 
