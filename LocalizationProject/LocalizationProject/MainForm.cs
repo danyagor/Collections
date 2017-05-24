@@ -14,48 +14,16 @@ namespace LocalizationProject
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            FillLanguagesComboBox();
+            FillDataGridView();
         }
         
-        private void FillLanguagesComboBox()
+        private void FillDataGridView()
         {
-            DirectoryInfo dir = new DirectoryInfo("Languages");
-            FileInfo[] files = dir.GetFiles("*.xml");
-
-            cbLanguages.Items.Clear();
-
-            for (int i = 0; i < files.Length; i++)
-                cbLanguages.Items.Add(files[i].Name);    
-
-            if (cbLanguages.Items.Count != 0)
-                cbLanguages.SelectedIndex = 0;
-        }
-
-        private void FillStringsListBox()
-        {
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("Languages\\" + cbLanguages.Text);
-            XmlElement xRoot = xDoc.DocumentElement;
-
-            lbStrings.Items.Clear();
-
-            foreach (XmlNode node in xRoot.ChildNodes)
-                lbStrings.Items.Add(node.Attributes["name"].Value);
-        }
-
-        private void cbLanguages_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FillStringsListBox();
-        }
-
-        private void lbStrings_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("Languages\\" + cbLanguages.Text);
-            XmlElement xRoot = xDoc.DocumentElement;
-
-            tbName.Text = xRoot.ChildNodes[lbStrings.SelectedIndex].Attributes["name"].Value;
-            tbValue.Text = xRoot.ChildNodes[lbStrings.SelectedIndex].Attributes["value"].Value;
+            Data[] data = XmlHelper.GetDataFromFile();
+            foreach (Data dat in data)
+            {
+                dgv.Rows.Add(dat.key, dat.value);
+            }
         }
     }
 }

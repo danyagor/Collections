@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Xml;
 using System.Collections.Generic;
+using System.Data;
 
 namespace CollectionsProject
 {
@@ -236,6 +237,26 @@ namespace CollectionsProject
         }
 
         #endregion Настройки
+
+
+        public static DataTable GetLanguages()
+        {
+            DataTable languages = new DataTable();
+            languages.Columns.Add("lang");
+            languages.Columns.Add("file");
+
+            DirectoryInfo di = new DirectoryInfo("Languages");
+            foreach (FileInfo file in di.GetFiles())
+            {
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load("Languages/" + file.Name);
+                XmlElement xRoot = xDoc.DocumentElement;
+
+                languages.Rows.Add(xRoot.Attributes["language"].Value, file.Name);
+            }
+
+            return languages;
+        }
 
         #region Последние файлы
 

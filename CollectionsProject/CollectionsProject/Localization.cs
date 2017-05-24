@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
 
 namespace CollectionsProject
 {
@@ -12,7 +7,7 @@ namespace CollectionsProject
         static string GetValue(string name)
         {
             XmlDocument xDoc = new XmlDocument();
-            xDoc.Load(Settings.Language + ".xml");
+            xDoc.Load("Languages/" + Settings.Language);
             XmlElement xRoot = xDoc.DocumentElement;
             foreach (XmlNode item in xRoot.ChildNodes)
             {

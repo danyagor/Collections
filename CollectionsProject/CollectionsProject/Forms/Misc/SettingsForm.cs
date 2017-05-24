@@ -10,6 +10,13 @@ namespace CollectionsProject.Forms
         {
             InitializeComponent();
 
+            // Язык
+            cbLanguage.DisplayMember = "lang";
+            cbLanguage.ValueMember = "file";
+            cbLanguage.DataSource = XmlHelper.GetLanguages();
+            cbLanguage.SelectedValue = Settings.Language;
+            
+            // Размер загружаемых в базу фото
             cbPhotosSize.Items.Add("Маленький");
             cbPhotosSize.Items.Add("Средний");
             cbPhotosSize.Items.Add("Большой");
@@ -21,6 +28,7 @@ namespace CollectionsProject.Forms
             else if (Settings.PhotosSize == 600)
                 cbPhotosSize.SelectedIndex = 2;
 
+            // Размер иконок на главной форме
             cbIconsSize.Items.Add("Маленький");
             cbIconsSize.Items.Add("Средний");
             cbIconsSize.Items.Add("Большой");
@@ -36,6 +44,8 @@ namespace CollectionsProject.Forms
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            Settings.Language = cbLanguage.SelectedValue.ToString();
+
             if (cbPhotosSize.SelectedIndex == 0)
                 Settings.PhotosSize = 400;
             else if (cbPhotosSize.SelectedIndex == 1)

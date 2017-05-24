@@ -14,10 +14,10 @@ namespace CollectionsProject
         public MainForm()
         {
             InitializeComponent();
+            XmlHelper.OpenSettingsFromFile();
             Text = Localization.PROGRAM_TITLE;
             CollectionTypes.Collections = XmlHelper.GetAllCollections();
             CollectionTypes.ForeignTables = XmlHelper.GetAllForeignTables();
-            XmlHelper.OpenSettingsFromFile();
             UpdateIconsSize();
         }
 
@@ -416,7 +416,7 @@ namespace CollectionsProject
             if (CurrentDatabase != null)
             {
                 tssLabelConnectionState.Text = "Подсоединено к \"" + CurrentDatabase.BaseName + "\"";
-                Text = "Коллекции - \"" +CurrentDatabase.BaseName + "\"";
+                Text = Localization.PROGRAM_TITLE + " - \"" +CurrentDatabase.BaseName + "\"";
 
                 // Включение кнопок
                 ChangeButtonsState(true);
@@ -426,7 +426,7 @@ namespace CollectionsProject
             else
             {
                 tssLabelConnectionState.Text = "Не подсоединено";
-                Text = "Коллекции";
+                Text = Localization.PROGRAM_TITLE;
 
                 // Выключение кнопок кнопок
                 ChangeButtonsState(false);
