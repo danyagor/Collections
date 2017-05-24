@@ -209,6 +209,34 @@ namespace CollectionsProject
 
         #endregion Коллекции
 
+        #region Настройки
+
+        public static void OpenSettingsFromFile()
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("configurations.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            Settings.Language = xRoot.ChildNodes[0].Attributes["value"].Value;
+            Settings.PhotosSize = int.Parse(xRoot.ChildNodes[1].Attributes["value"].Value);
+            Settings.IconsSize = int.Parse(xRoot.ChildNodes[2].Attributes["value"].Value);
+        }
+
+        public static void SaveSettings()
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("configurations.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            xRoot.ChildNodes[0].Attributes["value"].Value = Settings.Language;
+            xRoot.ChildNodes[1].Attributes["value"].Value = Settings.PhotosSize.ToString();
+            xRoot.ChildNodes[2].Attributes["value"].Value = Settings.IconsSize.ToString();
+
+            xDoc.Save("configurations.xml");
+        }
+
+        #endregion Настройки
+
         #region Последние файлы
 
         /// <summary>

@@ -270,7 +270,7 @@ namespace CollectionsProject.Forms
             {
                 if (images[i] != null)
                 {
-                    Image resizedImage = ResizeImage(images[i], 700, 700);
+                    Image resizedImage = ResizeImage(images[i], Settings.PhotosSize, Settings.PhotosSize);
                     MemoryStream ms = new MemoryStream();
                     resizedImage.Save(ms, ImageFormat.Jpeg);
                     byte[] bytes = ms.ToArray();
