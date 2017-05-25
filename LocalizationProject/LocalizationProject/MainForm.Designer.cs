@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.dgv = new System.Windows.Forms.DataGridView();
+            this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.translatedValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,8 +41,7 @@
             this.сохранитьКакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lbCategories = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -50,13 +52,32 @@
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.key,
-            this.value});
+            this.value,
+            this.translatedValue});
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(0, 24);
+            this.dgv.Location = new System.Drawing.Point(120, 24);
             this.dgv.MultiSelect = false;
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(641, 444);
+            this.dgv.Size = new System.Drawing.Size(762, 474);
             this.dgv.TabIndex = 0;
+            // 
+            // key
+            // 
+            this.key.HeaderText = "Ключ";
+            this.key.Name = "key";
+            this.key.Width = 200;
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Значение";
+            this.value.Name = "value";
+            this.value.Width = 200;
+            // 
+            // translatedValue
+            // 
+            this.translatedValue.HeaderText = "Переведенное значение";
+            this.translatedValue.Name = "translatedValue";
+            this.translatedValue.Width = 200;
             // 
             // menuStrip1
             // 
@@ -64,7 +85,7 @@
             this.файлToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(641, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(882, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -122,22 +143,23 @@
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.выходToolStripMenuItem.Text = "Выход";
             // 
-            // key
+            // lbCategories
             // 
-            this.key.HeaderText = "Ключ";
-            this.key.Name = "key";
-            // 
-            // value
-            // 
-            this.value.HeaderText = "Значение";
-            this.value.Name = "value";
+            this.lbCategories.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbCategories.FormattingEnabled = true;
+            this.lbCategories.Location = new System.Drawing.Point(0, 24);
+            this.lbCategories.Name = "lbCategories";
+            this.lbCategories.Size = new System.Drawing.Size(120, 474);
+            this.lbCategories.TabIndex = 2;
+            this.lbCategories.SelectedIndexChanged += new System.EventHandler(this.lbCategories_SelectedIndexChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 468);
+            this.ClientSize = new System.Drawing.Size(882, 498);
             this.Controls.Add(this.dgv);
+            this.Controls.Add(this.lbCategories);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -163,8 +185,10 @@
         private System.Windows.Forms.ToolStripMenuItem сохранитьКакToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
+        private System.Windows.Forms.ListBox lbCategories;
         private System.Windows.Forms.DataGridViewTextBoxColumn key;
         private System.Windows.Forms.DataGridViewTextBoxColumn value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn translatedValue;
     }
 }
 
