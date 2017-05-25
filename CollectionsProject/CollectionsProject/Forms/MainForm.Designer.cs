@@ -58,7 +58,7 @@
             this.tsmiCreateDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLastBases = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmlExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCollections = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRenameCollection = new System.Windows.Forms.ToolStripMenuItem();
@@ -363,6 +363,7 @@
             // 
             this.rtbItemDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtbItemDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbItemDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
             this.rtbItemDescription.Name = "rtbItemDescription";
             this.rtbItemDescription.Size = new System.Drawing.Size(680, 159);
@@ -391,7 +392,7 @@
             this.tsmiCreateDatabase,
             this.tsmiOpenDatabase,
             this.tsmiLastBases,
-            this.tsmlExit});
+            this.tsmiExit});
             this.tsmiFile.Name = "tsmiFile";
             this.tsmiFile.Size = new System.Drawing.Size(48, 20);
             this.tsmiFile.Text = "Файл";
@@ -418,13 +419,13 @@
             this.tsmiLastBases.Size = new System.Drawing.Size(254, 22);
             this.tsmiLastBases.Text = "Последние базы";
             // 
-            // tsmlExit
+            // tsmiExit
             // 
-            this.tsmlExit.Name = "tsmlExit";
-            this.tsmlExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.tsmlExit.Size = new System.Drawing.Size(254, 22);
-            this.tsmlExit.Text = "Выход";
-            this.tsmlExit.Click += new System.EventHandler(this.tsmlExit_Click);
+            this.tsmiExit.Name = "tsmiExit";
+            this.tsmiExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.tsmiExit.Size = new System.Drawing.Size(254, 22);
+            this.tsmiExit.Text = "Выход";
+            this.tsmiExit.Click += new System.EventHandler(this.tsmlExit_Click);
             // 
             // tsmiCollections
             // 
@@ -813,7 +814,7 @@
         private System.Windows.Forms.SplitContainer innerSplitContailer;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem tsmiFile;
-        private System.Windows.Forms.ToolStripMenuItem tsmlExit;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.ContextMenuStrip collectionsCMS;
         private System.Windows.Forms.ToolStripMenuItem cmsCreateCollection;
         private System.Windows.Forms.ContextMenuStrip innerCollectionsCMS;

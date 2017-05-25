@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace LocalizationProject
 {
     public partial class CodeGeneratorForm : Form
     {
-        public CodeGeneratorForm()
+        Category[] categories;
+
+        public CodeGeneratorForm(Category[] categories)
         {
             InitializeComponent();
+            this.categories = categories;
+        }
+
+        private void CodeGeneratorForm_Load(object sender, System.EventArgs e)
+        {
+            foreach (Category category in categories)
+                foreach (Data str in category.Strings)
+                    rtbCode.Text += "public static string " + str.Key + " { get { return GetValue(\"" + str.Key + "\"); } }\n";
         }
     }
 }

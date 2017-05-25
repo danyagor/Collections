@@ -2,7 +2,7 @@
 
 namespace LocalizationProject
 {
-    class Category
+    public class Category
     {
         public Category(string name, List<Data> strings)
         {

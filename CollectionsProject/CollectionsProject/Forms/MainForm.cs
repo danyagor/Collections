@@ -15,7 +15,7 @@ namespace CollectionsProject
         {
             InitializeComponent();
             XmlHelper.OpenSettingsFromFile();
-            Text = Localization.PROGRAM_TITLE;
+            InitializeFormText();
             CollectionTypes.Collections = XmlHelper.GetAllCollections();
             CollectionTypes.ForeignTables = XmlHelper.GetAllForeignTables();
             UpdateIconsSize();
@@ -415,7 +415,7 @@ namespace CollectionsProject
         {
             if (CurrentDatabase != null)
             {
-                tssLabelConnectionState.Text = "Подсоединено к \"" + CurrentDatabase.BaseName + "\"";
+                tssLabelConnectionState.Text = Localization.CONNECTED + " \"" + CurrentDatabase.BaseName + "\"";
                 Text = Localization.PROGRAM_TITLE + " - \"" +CurrentDatabase.BaseName + "\"";
 
                 // Включение кнопок
@@ -425,7 +425,7 @@ namespace CollectionsProject
             }
             else
             {
-                tssLabelConnectionState.Text = "Не подсоединено";
+                tssLabelConnectionState.Text = Localization.DISCONNECTED;
                 Text = Localization.PROGRAM_TITLE;
 
                 // Выключение кнопок кнопок
@@ -453,7 +453,7 @@ namespace CollectionsProject
         private void UpdateIconsSize()
         {
             foreach (ToolStripItem item in toolStrip.Items)
-                item.Size = new System.Drawing.Size(Settings.IconsSize, Settings.IconsSize);
+                item.Size = new Size(Settings.IconsSize, Settings.IconsSize);
         }
 
         private void ClearItemInformation()
@@ -463,6 +463,49 @@ namespace CollectionsProject
             pbPhoto2.Image = null;
             pbPhoto3.Image = null;
             pbPhoto4.Image = null;
+        }
+
+        private void InitializeFormText()
+        {
+            CheckDatabaseConnection();
+
+            // Файл
+            tsmiFile.Text = Localization.FILE;
+            tsmiCreateDatabase.Text = Localization.CREATE_BASE;
+            tsmiOpenDatabase.Text = Localization.OPEN_BASE;
+            tsmiLastBases.Text = Localization.LAST_BASES;
+            tsmiExit.Text = Localization.EXIT;
+
+            // Коллекции
+            tsmiCollections.Text = Localization.COLLECTIONS;
+            tsmiCreateCollection.Text = Localization.CREATE_COLLECTION;
+            tsmiRenameCollection.Text = Localization.RENAME_COLLECTION;
+            tsmiDeleteCollection.Text = Localization.DELETE_COLLECTION;
+
+            // Предметы
+            tsmiItems.Text = Localization.ITEMS;
+            tsmiAddItem.Text = Localization.ADD_ITEM;
+            tsmiEditItem.Text = Localization.EDIT_ITEM;
+            tsmiDeleteItem.Text = Localization.DELETE_ITEM;
+            tsmiSearchItem.Text = Localization.SEARCH_ITEM;
+
+            // Вид
+            tsmiView.Text = Localization.VIEW;
+            tsmiPhotoPanel.Text = Localization.PHOTOS_PANEL;
+            tsmiDescriptionPanel.Text = Localization.DESCRIPTION_PANEL;
+            tsmiIconsPanel.Text = Localization.ICONS_PANEL;
+
+            // Справочники
+            tsmiForeignTables.Text = Localization.CATALOGS;
+            tsmiForeignTablesEditor.Text = Localization.CATALOGS_EDITOR;
+
+            // Сервис
+            tsmiService.Text = Localization.SERVICE;
+            tsmiSettings.Text = Localization.SETTINGS;
+
+            // Справка
+            tsmiHelp.Text = Localization.HELP;
+            tsmiAbout.Text = Localization.ABOUT;
         }
 
         #endregion Вспомогательные методы
@@ -630,6 +673,7 @@ namespace CollectionsProject
             SettingsForm sf = new SettingsForm();
             sf.ShowDialog();
             UpdateIconsSize();
+            InitializeFormText();
         }
 
         // О программе

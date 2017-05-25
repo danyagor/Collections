@@ -42,6 +42,8 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbCategories = new System.Windows.Forms.ListBox();
+            this.всякоеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiGenerateCode = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,6 +62,7 @@
             this.dgv.Name = "dgv";
             this.dgv.Size = new System.Drawing.Size(762, 474);
             this.dgv.TabIndex = 0;
+            this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
             // 
             // key
             // 
@@ -82,7 +85,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem});
+            this.файлToolStripMenuItem,
+            this.всякоеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(882, 24);
@@ -153,6 +157,21 @@
             this.lbCategories.TabIndex = 2;
             this.lbCategories.SelectedIndexChanged += new System.EventHandler(this.lbCategories_SelectedIndexChanged);
             // 
+            // всякоеToolStripMenuItem
+            // 
+            this.всякоеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiGenerateCode});
+            this.всякоеToolStripMenuItem.Name = "всякоеToolStripMenuItem";
+            this.всякоеToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.всякоеToolStripMenuItem.Text = "Всякое";
+            // 
+            // tsmiGenerateCode
+            // 
+            this.tsmiGenerateCode.Name = "tsmiGenerateCode";
+            this.tsmiGenerateCode.Size = new System.Drawing.Size(179, 22);
+            this.tsmiGenerateCode.Text = "Сгенерировать код";
+            this.tsmiGenerateCode.Click += new System.EventHandler(this.tsmiGenerateCode_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,6 +208,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn key;
         private System.Windows.Forms.DataGridViewTextBoxColumn value;
         private System.Windows.Forms.DataGridViewTextBoxColumn translatedValue;
+        private System.Windows.Forms.ToolStripMenuItem всякоеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiGenerateCode;
     }
 }
 

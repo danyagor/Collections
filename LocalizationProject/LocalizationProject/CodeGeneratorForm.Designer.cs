@@ -33,10 +33,14 @@
             // 
             // rtbCode
             // 
+            this.rtbCode.BackColor = System.Drawing.Color.Black;
+            this.rtbCode.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbCode.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbCode.ForeColor = System.Drawing.Color.White;
             this.rtbCode.Location = new System.Drawing.Point(0, 0);
             this.rtbCode.Name = "rtbCode";
-            this.rtbCode.Size = new System.Drawing.Size(721, 533);
+            this.rtbCode.Size = new System.Drawing.Size(1024, 509);
             this.rtbCode.TabIndex = 0;
             this.rtbCode.Text = "";
             // 
@@ -44,10 +48,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(721, 533);
+            this.ClientSize = new System.Drawing.Size(1024, 509);
             this.Controls.Add(this.rtbCode);
             this.Name = "CodeGeneratorForm";
             this.Text = "CodeGeneratorForm";
+            this.Load += new System.EventHandler(this.CodeGeneratorForm_Load);
             this.ResumeLayout(false);
 
         }

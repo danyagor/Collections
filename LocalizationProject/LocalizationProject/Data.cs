@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace LocalizationProject
 {
-    class Data
+    public class Data
     {
         public Data(string key, string value)
         {
-            this.key = key;
-            this.value = value;
+            Key = key;
+            Value = value;
         }
 
-        public string key;
-        public string value;
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }
