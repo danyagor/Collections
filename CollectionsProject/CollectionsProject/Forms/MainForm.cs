@@ -361,6 +361,12 @@ namespace CollectionsProject
             // TODO: При выделении предмета в ноде "Коллекции" дописать после описания все главные поля и их значения
         }
 
+        // Поиск предметов
+        public void SearchItems(string searchText, int collectionId)
+        {
+
+        }
+
         #endregion Предметы
 
 

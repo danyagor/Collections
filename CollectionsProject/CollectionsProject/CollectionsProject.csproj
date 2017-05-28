@@ -106,6 +106,12 @@
       <DependentUpon>TextField.cs</DependentUpon>
     </Compile>
     <Compile Include="Database.cs" />
+    <Compile Include="Forms\Items\SearchingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Items\SearchingForm.Designer.cs">
+      <DependentUpon>SearchingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Misc\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     <Compile Include="XmlHelper.cs" />
     <EmbeddedResource Include="CustomComponents\TextField.resx">
       <DependentUpon>TextField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Items\SearchingForm.resx">
+      <DependentUpon>SearchingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Misc\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
