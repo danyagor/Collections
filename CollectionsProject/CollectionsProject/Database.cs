@@ -687,10 +687,10 @@ namespace CollectionsProject
             return images;
         }
 
-        public DataTable SearchItems(int collectionType, string collectionName)
-        {
-            int collectionNumber = GetCollectionNumber(collectionName);
-        }
+        //public DataTable SearchItems(int collectionType, string collectionName)
+        //{
+        //    int collectionNumber = GetCollectionNumber(collectionName);
+        //}
 
         #endregion Работа с предметами
 
