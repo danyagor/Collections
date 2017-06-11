@@ -56,7 +56,7 @@ namespace CollectionsProject
             int[] collectionsTypes = CurrentDatabase.GetAllCollectionsTypesIdInCurrentDB();
 
             for (int i = 0; i < collectionsNames.Length; i++)
-                AddCollectionInTreeView(collectionsNames[i], collectionsTypes[i]);
+                AddCollectionInTreeView(new UserCollection(CollectionTypes.GetCollection(collectionsTypes[i]), collectionsNames[i]));
 
             // Очистка всех данных из ListView
             dgvItems.Columns.Clear();
@@ -202,10 +202,10 @@ namespace CollectionsProject
 
 
         // Добавить нод коллекции в TreeView
-        public void AddCollectionInTreeView(string name, int typeId)
+        public void AddCollectionInTreeView(UserCollection collection)
         {
-            TreeNode newNode = new TreeNode(name);
-            newNode.Tag = typeId;
+            TreeNode newNode = new TreeNode(collection.Name);
+            newNode.Tag = collection;
             newNode.ContextMenuStrip = innerCollectionsCMS;
             treeView.Nodes[0].Nodes.Add(newNode);
             treeView.Nodes[0].ExpandAll();

@@ -97,8 +97,10 @@
     <Compile Include="CollectionClasses\Collection.cs" />
     <Compile Include="CollectionClasses\CollectionTypes.cs" />
     <Compile Include="CollectionClasses\Field.cs" />
+    <Compile Include="CollectionClasses\Item.cs" />
     <Compile Include="CollectionClasses\ItemImage.cs" />
     <Compile Include="CollectionClasses\Table.cs" />
+    <Compile Include="CollectionClasses\UserCollection.cs" />
     <Compile Include="CustomComponents\TextField.cs">
       <SubType>UserControl</SubType>
     </Compile>
