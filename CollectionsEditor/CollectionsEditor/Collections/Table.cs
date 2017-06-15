@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace CollectionsEditor
+﻿namespace CollectionsEditor
 {
     public class Table
     {
-        public Table(string programName, string baseName, bool foreign, bool fixedTable, List<Field> fields)
+        public Table(string programName, string baseName, bool foreign, bool fixedTable, Field[] fields)
         {
             ProgramName = programName;
             BaseName = baseName;
@@ -13,7 +11,13 @@ namespace CollectionsEditor
             Fields = fields;
         }
 
-        public Field this[int index] { get { return Fields[index]; } }
+        public Field this[int index]
+        {
+            get
+            {
+                return Fields[index];
+            }
+        }
 
         public Field this[string baseName]
         {
@@ -27,10 +31,15 @@ namespace CollectionsEditor
             }
         }
 
-        public string ProgramName { get; set; }
-        public string BaseName { get; set; }
-        public bool Foreign { get; set; }
-        public bool Fixed { get; set; }
-        public List<Field> Fields { get; set; }
+
+        public string ProgramName { get; }
+
+        public string BaseName { get; }
+
+        public bool Foreign { get; }
+
+        public bool Fixed { get; }
+
+        public Field[] Fields { get; }
     }
 }

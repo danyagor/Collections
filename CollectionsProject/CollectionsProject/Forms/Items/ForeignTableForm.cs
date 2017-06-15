@@ -7,14 +7,14 @@ namespace CollectionsProject.Forms
     public partial class ForeignTableForm : Form
     {
         MainForm mf;
-        int collectionType;
+        UserCollection collection;
 
         // Конструктор
-        public ForeignTableForm(MainForm mf, int collectionType)
+        public ForeignTableForm(MainForm mf, UserCollection collection)
         {
             InitializeComponent();
             this.mf = mf;
-            this.collectionType = collectionType;
+            this.collection = collection;
 
             Text = "Редактор справочников";
         }
@@ -22,14 +22,14 @@ namespace CollectionsProject.Forms
         #region Свойства
 
         // Выделенный ID коллекции в TreeView
-        private int SelectedCollectionId
+        private UserCollection SelectedCollection
         {
             get
             {
                 if (treeView.SelectedNode.Parent == null)
-                    return int.Parse(treeView.SelectedNode.Tag.ToString());
+                    return (UserCollection)treeView.SelectedNode.Tag;
                 else
-                    return int.Parse(treeView.SelectedNode.Parent.Tag.ToString());
+                    return (UserCollection)treeView.SelectedNode.Parent.Tag;
             }
         }
 
@@ -66,7 +66,7 @@ namespace CollectionsProject.Forms
             foreach (Collection collection in CollectionTypes.Collections)
             {
                 TreeNode collectionNode = new TreeNode(collection.Name);
-                collectionNode.Tag = collection.Id;
+                collectionNode.Tag = new UserCollection(collection, "");
                 collectionNode.ContextMenuStrip = cmsTvAddItem;
 
                 foreach (Table table in collection.ForeignTables)
@@ -83,24 +83,24 @@ namespace CollectionsProject.Forms
 
             treeView.ExpandAll();
 
-            if (collectionType != 0)
-                treeView.SelectedNode = treeView.Nodes[collectionType - 1];
+            if (collection.CollectionType != null)
+                treeView.SelectedNode = treeView.Nodes[collection.CollectionType.Id - 1];
             else
                 treeView.SelectedNode = treeView.Nodes[0];
         }
 
         // Заполнение предметов в ListView по типу коллекции и имени внешней таблицы
-        private void FillItems(int collectionType, string foreignTable)
+        private void FillItems(UserCollection collection, string foreignTable)
         {
             dgvItems.Rows.Clear();
             dgvItems.Columns.Clear();
 
             dgvItems.Columns.Add("id", "№");
 
-            foreach (Field field in CollectionTypes.GetCollection(collectionType)[foreignTable].Fields)
+            foreach (Field field in collection.CollectionType[foreignTable].Fields)
                 dgvItems.Columns.Add(field.BaseName, field.ProgramName);
 
-            DataTable dt = mf.CurrentDatabase.GetItemsFromCollection(collectionType, "", foreignTable);
+            DataTable dt = mf.CurrentDatabase.GetItemsFromCollection(collection.CollectionType.Id, "", foreignTable);
             string[] items = new string[dt.Columns.Count];
             foreach (DataRow row in dt.Rows)
             {
@@ -135,10 +135,10 @@ namespace CollectionsProject.Forms
         {
             if (!CollectionTypes.GetForeignTable(SelectedForeignTable).Fixed)
             {
-                ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedForeignTable);
+                ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollection, SelectedForeignTable);
                 ipf.ShowDialog();
 
-                FillItems(SelectedCollectionId, SelectedForeignTable);
+                FillItems(SelectedCollection, SelectedForeignTable);
             }
             else
                 MessageBox.Show("Данная таблица является фиксированной, в ней нельзя изменять данные.");
@@ -149,10 +149,10 @@ namespace CollectionsProject.Forms
         {
             if (!CollectionTypes.GetForeignTable(SelectedForeignTable).Fixed)
             {
-                ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollectionId, "", SelectedItemId, SelectedForeignTable);
+                ItemPropertiesForm ipf = new ItemPropertiesForm(mf, SelectedCollection, SelectedItemId, SelectedForeignTable);
                 ipf.ShowDialog();
 
-                FillItems(SelectedCollectionId, SelectedForeignTable);
+                FillItems(SelectedCollection, SelectedForeignTable);
             }
             else
                 MessageBox.Show("Данная таблица является фиксированной, в ней нельзя изменять данные.");
@@ -163,11 +163,11 @@ namespace CollectionsProject.Forms
         {
             if (!CollectionTypes.GetForeignTable(SelectedForeignTable).Fixed)
             {
-                if (!mf.CurrentDatabase.ItemExists(SelectedItemId, SelectedCollectionId, SelectedForeignTable))
+                if (!mf.CurrentDatabase.ItemExists(SelectedItemId, SelectedCollection.CollectionType.Id, SelectedForeignTable))
                 {
-                    mf.CurrentDatabase.DeleteItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
+                    mf.CurrentDatabase.DeleteItem(SelectedCollection.CollectionType.Id, SelectedItemId, "", SelectedForeignTable);
 
-                    FillItems(SelectedCollectionId, SelectedForeignTable);
+                    FillItems(SelectedCollection, SelectedForeignTable);
                 }
                 else
                     MessageBox.Show("Данный элемент привязан к одному или нескольким предметам, поэтому произвести операцию удаления невозможно.", "Удаление невозможно");
@@ -179,7 +179,7 @@ namespace CollectionsProject.Forms
         // Клик на TreeView
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            FillItems(SelectedCollectionId, SelectedForeignTable);
+            FillItems(SelectedCollection, SelectedForeignTable);
         }
 
         // Клик на ячейку в DataGridView
@@ -189,7 +189,7 @@ namespace CollectionsProject.Forms
             if (dgvItems.Rows.Count != 0)
             {
                 string description = "Описание:\n";
-                description += mf.CurrentDatabase.GetNoteFromItem(SelectedCollectionId, SelectedItemId, "", SelectedForeignTable);
+                description += mf.CurrentDatabase.GetNoteFromItem(SelectedCollection.CollectionType.Id, SelectedItemId, "", SelectedForeignTable);
                 rtbDescription.Text = description;
             }
 

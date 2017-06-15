@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Авторы");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Переплеты");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Книги", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Авторы");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Переплеты");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Книги", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
             this.lbFields = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -188,7 +188,7 @@
             // 
             // btnBeginValues
             // 
-            this.btnBeginValues.Location = new System.Drawing.Point(122, 352);
+            this.btnBeginValues.Location = new System.Drawing.Point(708, 95);
             this.btnBeginValues.Name = "btnBeginValues";
             this.btnBeginValues.Size = new System.Drawing.Size(257, 23);
             this.btnBeginValues.TabIndex = 33;
@@ -199,31 +199,18 @@
             // 
             this.tvData.Location = new System.Drawing.Point(12, 40);
             this.tvData.Name = "tvData";
-            treeNode4.BackColor = System.Drawing.Color.Silver;
-            treeNode4.Name = "Узел3";
-            treeNode4.Text = "Авторы";
-            treeNode5.Name = "Узел4";
-            treeNode5.Text = "Переплеты";
-            treeNode6.Name = "Узел0";
-            treeNode6.Text = "Книги";
+            treeNode1.BackColor = System.Drawing.Color.Silver;
+            treeNode1.Name = "Узел3";
+            treeNode1.Text = "Авторы";
+            treeNode2.Name = "Узел4";
+            treeNode2.Text = "Переплеты";
+            treeNode3.Name = "Узел0";
+            treeNode3.Text = "Книги";
             this.tvData.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6});
+            treeNode3});
             this.tvData.Size = new System.Drawing.Size(160, 251);
             this.tvData.TabIndex = 34;
             this.tvData.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvData_AfterSelect);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.добавитьКоллекциюToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 26);
-            // 
-            // добавитьКоллекциюToolStripMenuItem
-            // 
-            this.добавитьКоллекциюToolStripMenuItem.Name = "добавитьКоллекциюToolStripMenuItem";
-            this.добавитьКоллекциюToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.добавитьКоллекциюToolStripMenuItem.Text = "Добавить коллекцию";
             // 
             // contextMenuStrip1
             // 

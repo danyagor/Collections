@@ -1,27 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CollectionsEditor
 {
     public class Collection
     {
-        public Collection(int id, string name, List<Table> tables)
+        public Collection(int id, string name, Table mainTable, Table[] foreignTables)
         {
             Id = id;
             Name = name;
-            Tables = tables;
+            MainTable = mainTable;
+            ForeignTables = foreignTables;
         }
 
-        public Table this[int index] { get { return Tables[index]; } }
+
+        public Table this[int index]
+        {
+            get
+            {
+                return ForeignTables[index];
+            }
+        }
 
         public Table this[string baseName]
         {
             get
             {
-                foreach (Table table in Tables)
+                foreach (Table table in ForeignTables)
                     if (table.BaseName == baseName)
                         return table;
 
@@ -29,8 +33,17 @@ namespace CollectionsEditor
             }
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Table> Tables { get; set; }
+
+
+        public int Id { get; }
+
+
+        public string Name { get; }
+
+
+        public Table MainTable { get; }
+
+
+        public Table[] ForeignTables { get; }
     }
 }

@@ -31,7 +31,7 @@ namespace CollectionsProject.Forms
             if (!mf.CurrentDatabase.CollectionExists(tbName.Text))
             {
                 mf.CurrentDatabase.CreateCollection(tbName.Text, cbCollectionType.SelectedIndex + 1);
-                mf.AddCollectionInTreeView(tbName.Text, cbCollectionType.SelectedIndex + 1);
+                mf.AddCollectionInTreeView(new UserCollection(CollectionTypes.GetCollection(cbCollectionType.SelectedIndex + 1), tbName.Text));
                 DialogResult = DialogResult.OK;
                 Close();
             }

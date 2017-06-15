@@ -2,7 +2,7 @@
 {
     public class Field
     {
-        // Конструктор для полей в главной таблице
+
         public Field(string programName, string baseName, bool foreignKey, string foreignTable)
         {
             ProgramName = programName;
@@ -11,7 +11,6 @@
             ForeignTable = foreignTable;
         }
 
-        // Конструктор для полей во внешней таблице
         public Field(string programName, string baseName, bool nameField)
         {
             ProgramName = programName;
@@ -19,12 +18,15 @@
             NameField = nameField;
         }
 
-        public string ProgramName { get; set; }
-        public string BaseName { get; set; }
+        public string ProgramName { get; }
 
-        public bool ForeignKey { get; set; }
-        public string ForeignTable { get; set; }
+        public string BaseName { get;}
 
-        public bool NameField { get; set; }
+        public bool ForeignKey { get; }
+
+
+        public string ForeignTable { get; }
+
+        public bool NameField { get; }
     }
 }

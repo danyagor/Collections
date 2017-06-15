@@ -687,10 +687,16 @@ namespace CollectionsProject
             return images;
         }
 
-        //public DataTable SearchItems(int collectionType, string collectionName)
-        //{
-        //    int collectionNumber = GetCollectionNumber(collectionName);
-        //}
+        public DataTable SearchItems(string search, UserCollection collection)
+        {
+            int collectionNumber = GetCollectionNumber(collection.Name);
+            return SqlQueryDataTable("SELECT * FROM " + collection.CollectionType.MainTable.BaseName + "_" + collectionNumber + " WHERE(name LIKE '%" + search + "%')");
+        }
+
+        public DataTable SearchItems(string search)
+        {
+            return null;
+        }
 
         #endregion Работа с предметами
 
@@ -769,6 +775,17 @@ namespace CollectionsProject
         /// Возвращает имена всех коллекций, которые есть в текущей базе данных
         /// </summary>
         /// <returns>Имена всех коллекций</returns>
+        public string[] GetAllCollectionsProgramNamesInCurrentDB()
+        {
+            DataTable dt = SqlQueryDataTable("SELECT programName FROM Collections");
+
+            string[] collections = new string[dt.Rows.Count];
+            for (int i = 0; i < collections.Length; i++)
+                collections[i] = dt.Rows[i].ItemArray[0].ToString();
+
+            return collections;
+        }
+
         public string[] GetAllCollectionsNamesInCurrentDB()
         {
             DataTable dt = SqlQueryDataTable("SELECT programName FROM Collections");

@@ -231,14 +231,14 @@ namespace CollectionsProject
 
 
         // Обновление колонок в ListView исходя из типа коллекции 
-        private void UpdateListViewColumns(int typeId)
+        private void UpdateListViewColumns(UserCollection collection)
         {
             dgvItems.Rows.Clear();
             dgvItems.Columns.Clear();
 
             dgvItems.Columns.Add("id", "№");
 
-            foreach (Field field in CollectionTypes.GetCollection(typeId).MainTable.Fields)
+            foreach (Field field in collection.CollectionType.MainTable.Fields)
                 dgvItems.Columns.Add(field.BaseName, field.ProgramName);
 
             dgvItems.Columns.Add("uploadDate", "Дата добавления");
@@ -246,11 +246,11 @@ namespace CollectionsProject
         }
 
         // Обновить данные в DataGridView о коллекции
-        private void UpdateDataGridView(int collectionType, string collectionName)
+        private void UpdateDataGridView(UserCollection collection)
         {
             dgvItems.Rows.Clear();
-            DataTable dt = CurrentDatabase.GetItemsFromCollection(collectionType, collectionName);
-            Field[] fields = CollectionTypes.GetCollection(collectionType).MainTable.Fields;
+            DataTable dt = CurrentDatabase.GetItemsFromCollection(collection.CollectionType.Id, collection.Name);
+            Field[] fields = collection.CollectionType.MainTable.Fields;
             foreach (DataRow row in dt.Rows)
             {
                 string[] items = new string[row.ItemArray.Length];
@@ -266,7 +266,7 @@ namespace CollectionsProject
                         {
                             if (fields[fieldsCounter].ForeignKey)
                             {
-                                items[i] = CurrentDatabase.GetNameFieldItem(collectionType, fields[fieldsCounter].ForeignTable, int.Parse(row.ItemArray[i].ToString()));
+                                items[i] = CurrentDatabase.GetNameFieldItem(collection.CollectionType.Id, fields[fieldsCounter].ForeignTable, int.Parse(row.ItemArray[i].ToString()));
                                 fieldsCounter++;
                                 continue;
                             }
@@ -291,29 +291,29 @@ namespace CollectionsProject
         #region Предметы
 
         // Добавление предмета в коллекцию
-        private void AddItem(int collectionId, string collectionName)
+        private void AddItem(UserCollection collection)
         {
-            ItemPropertiesForm ipf = new ItemPropertiesForm(this, collectionId, collectionName);
+            ItemPropertiesForm ipf = new ItemPropertiesForm(this, collection);
             ipf.ShowDialog();
 
-            UpdateDataGridView(collectionId, collectionName);
+            UpdateDataGridView(collection);
         }
 
         // Редактирование предмета
-        private void EditItem(int collectionId, string collectionName, int itemId)
+        private void EditItem(UserCollection collection, int itemId)
         {
-            ItemPropertiesForm ipf = new ItemPropertiesForm(this, collectionId, collectionName, itemId);
+            ItemPropertiesForm ipf = new ItemPropertiesForm(this, collection, itemId);
             ipf.ShowDialog();
 
-            UpdateDataGridView(collectionId, collectionName);
+            UpdateDataGridView(collection);
         }
 
         // Удаление предмета из коллекции
-        private void DeleteItem(int collectionType, string collectionName, int itemId)
+        private void DeleteItem(UserCollection collection, int itemId)
         {
-            currentDatabase.DeleteItem(collectionType, itemId, collectionName);
+            currentDatabase.DeleteItem(collection.CollectionType.Id, itemId, collection.Name);
 
-            UpdateDataGridView(collectionType, collectionName);
+            UpdateDataGridView(collection);
         }
 
 
@@ -340,7 +340,7 @@ namespace CollectionsProject
         }
 
         // Формирование описания предмета
-        private void FormDescriptionOfItem(int collectionType, string collectionName, int itemId)
+        private void FormDescriptionOfItem(UserCollection collection, int itemId)
         {
             rtbItemDescription.Text = "";
             pbPhoto1.Image = null;
@@ -349,10 +349,10 @@ namespace CollectionsProject
             pbPhoto4.Image = null;
 
             string description = "Описание: \n";
-            description += CurrentDatabase.GetNoteFromItem(collectionType, itemId, collectionName) + "\n";
+            description += CurrentDatabase.GetNoteFromItem(collection.CollectionType.Id, itemId, collection.Name) + "\n";
             rtbItemDescription.Text = description;
 
-            Image[] images = CurrentDatabase.GetImagesFromItem(collectionType, itemId, collectionName);
+            Image[] images = CurrentDatabase.GetImagesFromItem(collection.CollectionType.Id, itemId, collection.Name);
             pbPhoto1.Image = images[0];
             pbPhoto2.Image = images[1];
             pbPhoto3.Image = images[2];
@@ -361,9 +361,52 @@ namespace CollectionsProject
             // TODO: При выделении предмета в ноде "Коллекции" дописать после описания все главные поля и их значения
         }
 
-        // Поиск предметов
-        public void SearchItems(string searchText, int collectionId)
+        // Поиск предметов по определенной коллекции
+        public void SearchItems(string searchText, UserCollection collection)
         {
+            UpdateListViewColumns(collection);
+
+            dgvItems.Rows.Clear();
+            DataTable dt = CurrentDatabase.SearchItems(searchText, collection);
+            Field[] fields = collection.CollectionType.MainTable.Fields;
+            foreach (DataRow row in dt.Rows)
+            {
+                string[] items = new string[row.ItemArray.Length];
+                int fieldsCounter = 0;
+
+                // Без описания
+                for (int i = 0; i < row.ItemArray.Length - 1; i++)
+                {
+                    // Если поле внешнее, то производит поиск по внешней таблице и записывает значения именных полей
+                    if (fieldsCounter < fields.Length)
+                    {
+                        if (dt.Columns[i].ColumnName == fields[fieldsCounter].BaseName)
+                        {
+                            if (fields[fieldsCounter].ForeignKey)
+                            {
+                                items[i] = CurrentDatabase.GetNameFieldItem(collection.CollectionType.Id, fields[fieldsCounter].ForeignTable, int.Parse(row.ItemArray[i].ToString()));
+                                fieldsCounter++;
+                                continue;
+                            }
+
+                            fieldsCounter++;
+                        }
+                    }
+
+                    items[i] = row.ItemArray[i].ToString();
+                }
+
+
+                dgvItems.Rows.Add(items);
+                dgvItems.Rows[dgvItems.Rows.Count - 1].Tag = row.ItemArray[0];
+            }
+        }
+
+        // Поиск предметов по всем коллекциям
+        public void SearchItems(string searchText)
+        {
+            CurrentDatabase.SearchItems(searchText);
+            UpdateListViewAllItems();
 
         }
 
@@ -577,7 +620,7 @@ namespace CollectionsProject
         {
             if (treeView.SelectedNode.Parent != null)
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
-                    AddItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text);
+                    AddItem((UserCollection)treeView.SelectedNode.Tag);
         }
 
         // Редактирование предмета
@@ -585,7 +628,7 @@ namespace CollectionsProject
         {
             if (treeView.SelectedNode.Parent != null && dgvItems.SelectedCells.Count != 0)
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
-                    EditItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
+                    EditItem((UserCollection)treeView.SelectedNode.Tag, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
         // Удаление предмета
@@ -593,7 +636,7 @@ namespace CollectionsProject
         {
             if (treeView.SelectedNode.Parent != null && dgvItems.SelectedCells.Count != 0)
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
-                    DeleteItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
+                    DeleteItem((UserCollection)treeView.SelectedNode.Tag, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
         #endregion Предметы
@@ -602,7 +645,7 @@ namespace CollectionsProject
         private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (treeView.SelectedNode.Text != "Коллекции")
-                FormDescriptionOfItem(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
+                FormDescriptionOfItem((UserCollection)treeView.SelectedNode.Tag, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
             else
                 ClearItemInformation();
         }
@@ -612,7 +655,7 @@ namespace CollectionsProject
         {
             // Обновление колонок в ListView
             if (treeView.SelectedNode.Tag != null)
-                UpdateListViewColumns((int)treeView.SelectedNode.Tag);
+                UpdateListViewColumns((UserCollection)treeView.SelectedNode.Tag);
 
             // Обновление ListView для отображения всех предметов из всех коллекций
             if (treeView.SelectedNode.Text == "Коллекции" && CurrentDatabase != null)
@@ -639,7 +682,7 @@ namespace CollectionsProject
             // Обновление строк в ListView
             if (treeView.SelectedNode.Parent != null)
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
-                    UpdateDataGridView(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text);
+                    UpdateDataGridView((UserCollection)treeView.SelectedNode.Tag);
         }
 
 
@@ -657,7 +700,7 @@ namespace CollectionsProject
         {
             if (treeView.SelectedNode.Text == "Коллекции")
             {
-                ForeignTableForm ftf = new ForeignTableForm(this, 0);
+                ForeignTableForm ftf = new ForeignTableForm(this, new UserCollection(null, ""));
                 ftf.ShowDialog();
             }
 
@@ -665,10 +708,10 @@ namespace CollectionsProject
             {
                 if (treeView.SelectedNode.Parent.Text == "Коллекции")
                 {
-                    ForeignTableForm ftf = new ForeignTableForm(this, int.Parse(treeView.SelectedNode.Tag.ToString()));
+                    ForeignTableForm ftf = new ForeignTableForm(this, (UserCollection)treeView.SelectedNode.Tag);
                     ftf.ShowDialog();
 
-                    UpdateDataGridView(int.Parse(treeView.SelectedNode.Tag.ToString()), treeView.SelectedNode.Text);
+                    UpdateDataGridView((UserCollection)treeView.SelectedNode.Tag);
                 }
             }
         }
@@ -722,6 +765,12 @@ namespace CollectionsProject
         private void tsmiIconsPanel_Click(object sender, EventArgs e)
         {
             toolStrip.Visible = tsmiIconsPanel.Checked;
+        }
+
+        private void tsmiSearchItem_Click(object sender, EventArgs e)
+        {
+            SearchingForm sf = new SearchingForm(this, (UserCollection)treeView.SelectedNode.Tag);
+            sf.ShowDialog();
         }
     }
 }

@@ -13,8 +13,7 @@ namespace CollectionsProject.Forms
     public partial class ItemPropertiesForm : Form
     {
         MainForm mf;
-        int typeId;
-        string collectionName;
+        UserCollection collection;
         string foreignTableName;
         int itemId;
 
@@ -27,13 +26,12 @@ namespace CollectionsProject.Forms
         #region Конструкторы
 
         // Конструктор для добавления предмета
-        public ItemPropertiesForm(MainForm mf, int typeId, string collectionName, string foreignTableName = "")
+        public ItemPropertiesForm(MainForm mf, UserCollection collection, string foreignTableName = "")
         {
             InitializeComponent();
 
             this.mf = mf;
-            this.typeId = typeId;
-            this.collectionName = collectionName;
+            this.collection = collection;
             this.foreignTableName = foreignTableName;
 
             images = new Image[4];
@@ -41,12 +39,12 @@ namespace CollectionsProject.Forms
             textFields = new List<TextField>();
             if (foreignTableName == "")
             {
-                fields = CollectionTypes.GetCollection(typeId).MainTable.Fields;
-                Text = "Редактирование элемента - " + CollectionTypes.GetCollection(typeId).Name;
+                fields = collection.CollectionType.MainTable.Fields;
+                Text = "Редактирование элемента - " + collection.CollectionType.Name;
             }
             else
             {
-                fields = CollectionTypes.GetCollection(typeId)[foreignTableName].Fields;
+                fields = collection.CollectionType[foreignTableName].Fields;
                 tabControl.TabPages.RemoveAt(2);
                 Text = "Редактирование элемента - " + CollectionTypes.GetForeignTable(foreignTableName).ProgramName;
             }
@@ -56,13 +54,12 @@ namespace CollectionsProject.Forms
         }
 
         // Конструктор для изменения предмета
-        public ItemPropertiesForm(MainForm mf, int typeId, string collectionName, int itemId, string foreignTableName = "")
+        public ItemPropertiesForm(MainForm mf, UserCollection collection, int itemId, string foreignTableName = "")
         {
             InitializeComponent();
 
             this.mf = mf;
-            this.typeId = typeId;
-            this.collectionName = collectionName;
+            this.collection = collection;
             this.itemId = itemId;
             this.foreignTableName = foreignTableName;
 
@@ -71,12 +68,12 @@ namespace CollectionsProject.Forms
             textFields = new List<TextField>();
             if (foreignTableName == "")
             {
-                fields = CollectionTypes.GetCollection(typeId).MainTable.Fields;
-                Text = "Редактирование элемента - " + CollectionTypes.GetCollection(typeId).Name;
+                fields = collection.CollectionType.MainTable.Fields;
+                Text = "Редактирование элемента - " + collection.CollectionType.Name;
             }
             else
             {
-                fields = CollectionTypes.GetCollection(typeId)[foreignTableName].Fields;
+                fields = collection.CollectionType[foreignTableName].Fields;
                 tabControl.TabPages.RemoveAt(2); // Удаление вкладки фотографий
                 Text = "Редактирование элемента - " + CollectionTypes.GetForeignTable(foreignTableName).ProgramName;
             }
@@ -109,7 +106,7 @@ namespace CollectionsProject.Forms
                     resTable.Columns.Add("data");
                     resTable.Rows.Add("-2", "Не указано");
 
-                    DataTable nameFields = mf.CurrentDatabase.GetNameFields(typeId, field.ForeignTable);
+                    DataTable nameFields = mf.CurrentDatabase.GetNameFields(collection.CollectionType.Id, field.ForeignTable);
 
                     foreach (DataRow row in nameFields.Rows)
                         resTable.Rows.Add(row.ItemArray[0], row.ItemArray[1]);
@@ -152,9 +149,9 @@ namespace CollectionsProject.Forms
             {
                 DataRow itemData;
                 if (foreignTableName == "")
-                    itemData = mf.CurrentDatabase.GetItemFromCollection(typeId, itemId, collectionName);
+                    itemData = mf.CurrentDatabase.GetItemFromCollection(collection.CollectionType.Id, itemId, collection.Name);
                 else
-                    itemData = mf.CurrentDatabase.GetItemFromCollection(typeId, itemId, "", foreignTableName);
+                    itemData = mf.CurrentDatabase.GetItemFromCollection(collection.CollectionType.Id, itemId, "", foreignTableName);
 
                 int textFieldsCounter = 0;
                 for (int i = 0; i < itemData.ItemArray.Length; i++)
@@ -229,16 +226,16 @@ namespace CollectionsProject.Forms
             if (itemId == 0) // Добавление
             {
                 if (foreignTableName == "")
-                    mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, collectionName, "", GetItemImages());
+                    mf.CurrentDatabase.AddItem(collection.CollectionType.Id, userText, tbNote.Text, collection.Name, "", GetItemImages());
                 else
-                    mf.CurrentDatabase.AddItem(typeId, userText, tbNote.Text, "", foreignTableName);
+                    mf.CurrentDatabase.AddItem(collection.CollectionType.Id, userText, tbNote.Text, "", foreignTableName);
             }
             else // Обновление
             {
                 if (foreignTableName == "")
-                    mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, collectionName, "", GetItemImages());
+                    mf.CurrentDatabase.UpdateItem(collection.CollectionType.Id, itemId, userText, tbNote.Text, collection.Name, "", GetItemImages());
                 else
-                    mf.CurrentDatabase.UpdateItem(typeId, itemId, userText, tbNote.Text, "", foreignTableName);
+                    mf.CurrentDatabase.UpdateItem(collection.CollectionType.Id, itemId, userText, tbNote.Text, "", foreignTableName);
             }
 
             Close();
@@ -383,7 +380,7 @@ namespace CollectionsProject.Forms
             {
                 if (cb.SelectedValue.ToString() == "-1")
                 {
-                    ItemPropertiesForm ifp = new ItemPropertiesForm(mf, typeId, "", cb.Tag.ToString());
+                    ItemPropertiesForm ifp = new ItemPropertiesForm(mf, collection, cb.Tag.ToString());
                     ifp.ShowDialog();
 
                     DataTable resTable = new DataTable();
@@ -391,7 +388,7 @@ namespace CollectionsProject.Forms
                     resTable.Columns.Add("data");
                     resTable.Rows.Add("-2", "Не указано");
 
-                    DataTable nameFields = mf.CurrentDatabase.GetNameFields(typeId, cb.Tag.ToString());
+                    DataTable nameFields = mf.CurrentDatabase.GetNameFields(collection.CollectionType.Id, cb.Tag.ToString());
 
                     foreach (DataRow row in nameFields.Rows)
                         resTable.Rows.Add(row.ItemArray[0], row.ItemArray[1]);

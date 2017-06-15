@@ -12,14 +12,22 @@ namespace CollectionsProject
 {
     public partial class SearchingForm : Form
     {
-        public SearchingForm()
+        MainForm mf;
+        UserCollection collection;
+
+        public SearchingForm(MainForm mf, UserCollection collection)
         {
             InitializeComponent();
+            this.mf = mf;
+            this.collection = collection;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-
+            if (collection != null)
+                mf.SearchItems(tbSearchText.Text, collection);
+            else
+                mf.SearchItems(tbSearchText.Text);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

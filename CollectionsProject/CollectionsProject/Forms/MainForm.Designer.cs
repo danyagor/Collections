@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Коллекции");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Результаты поиска");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.collectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,12 +147,9 @@
             treeNode1.ContextMenuStrip = this.collectionsCMS;
             treeNode1.Name = "collectionsNode";
             treeNode1.Text = "Коллекции";
-            treeNode2.Name = "searchResults";
-            treeNode2.Text = "Результаты поиска";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            this.treeView.Size = new System.Drawing.Size(174, 437);
+            treeNode1});
+            this.treeView.Size = new System.Drawing.Size(174, 490);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -161,7 +157,7 @@
             // 
             this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.mainSplitContainer.Location = new System.Drawing.Point(0, 77);
+            this.mainSplitContainer.Location = new System.Drawing.Point(0, 24);
             this.mainSplitContainer.Name = "mainSplitContainer";
             // 
             // mainSplitContainer.Panel1
@@ -171,7 +167,7 @@
             // mainSplitContainer.Panel2
             // 
             this.mainSplitContainer.Panel2.Controls.Add(this.innerSplitContailer);
-            this.mainSplitContainer.Size = new System.Drawing.Size(1204, 437);
+            this.mainSplitContainer.Size = new System.Drawing.Size(1204, 490);
             this.mainSplitContainer.SplitterDistance = 174;
             this.mainSplitContainer.TabIndex = 2;
             // 
@@ -189,8 +185,8 @@
             // innerSplitContailer.Panel2
             // 
             this.innerSplitContailer.Panel2.Controls.Add(this.ItemInformation);
-            this.innerSplitContailer.Size = new System.Drawing.Size(1026, 437);
-            this.innerSplitContailer.SplitterDistance = 274;
+            this.innerSplitContailer.Size = new System.Drawing.Size(1026, 490);
+            this.innerSplitContailer.SplitterDistance = 307;
             this.innerSplitContailer.TabIndex = 0;
             // 
             // dgvItems
@@ -208,7 +204,7 @@
             this.dgvItems.MultiSelect = false;
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.ReadOnly = true;
-            this.dgvItems.Size = new System.Drawing.Size(1026, 274);
+            this.dgvItems.Size = new System.Drawing.Size(1026, 307);
             this.dgvItems.TabIndex = 1;
             this.dgvItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellClick);
             this.dgvItems.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditItem_Click);
@@ -256,7 +252,7 @@
             // ItemInformation.Panel2
             // 
             this.ItemInformation.Panel2.Controls.Add(this.rtbItemDescription);
-            this.ItemInformation.Size = new System.Drawing.Size(1026, 159);
+            this.ItemInformation.Size = new System.Drawing.Size(1026, 179);
             this.ItemInformation.SplitterDistance = 342;
             this.ItemInformation.TabIndex = 1;
             // 
@@ -270,7 +266,7 @@
             this.tcPhotos.Location = new System.Drawing.Point(0, 0);
             this.tcPhotos.Name = "tcPhotos";
             this.tcPhotos.SelectedIndex = 0;
-            this.tcPhotos.Size = new System.Drawing.Size(342, 159);
+            this.tcPhotos.Size = new System.Drawing.Size(342, 179);
             this.tcPhotos.TabIndex = 0;
             // 
             // photo1
@@ -278,7 +274,7 @@
             this.photo1.Controls.Add(this.pbPhoto1);
             this.photo1.Location = new System.Drawing.Point(4, 22);
             this.photo1.Name = "photo1";
-            this.photo1.Size = new System.Drawing.Size(334, 133);
+            this.photo1.Size = new System.Drawing.Size(334, 153);
             this.photo1.TabIndex = 0;
             this.photo1.Text = "Фото 1";
             this.photo1.UseVisualStyleBackColor = true;
@@ -290,7 +286,7 @@
             this.pbPhoto1.Location = new System.Drawing.Point(0, 0);
             this.pbPhoto1.Margin = new System.Windows.Forms.Padding(0);
             this.pbPhoto1.Name = "pbPhoto1";
-            this.pbPhoto1.Size = new System.Drawing.Size(334, 133);
+            this.pbPhoto1.Size = new System.Drawing.Size(334, 153);
             this.pbPhoto1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPhoto1.TabIndex = 0;
             this.pbPhoto1.TabStop = false;
@@ -300,7 +296,7 @@
             this.photo2.Controls.Add(this.pbPhoto2);
             this.photo2.Location = new System.Drawing.Point(4, 22);
             this.photo2.Name = "photo2";
-            this.photo2.Size = new System.Drawing.Size(334, 133);
+            this.photo2.Size = new System.Drawing.Size(334, 153);
             this.photo2.TabIndex = 1;
             this.photo2.Text = "Фото 2";
             this.photo2.UseVisualStyleBackColor = true;
@@ -312,7 +308,7 @@
             this.pbPhoto2.Location = new System.Drawing.Point(0, 0);
             this.pbPhoto2.Margin = new System.Windows.Forms.Padding(0);
             this.pbPhoto2.Name = "pbPhoto2";
-            this.pbPhoto2.Size = new System.Drawing.Size(334, 133);
+            this.pbPhoto2.Size = new System.Drawing.Size(334, 153);
             this.pbPhoto2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPhoto2.TabIndex = 1;
             this.pbPhoto2.TabStop = false;
@@ -322,7 +318,7 @@
             this.photo3.Controls.Add(this.pbPhoto3);
             this.photo3.Location = new System.Drawing.Point(4, 22);
             this.photo3.Name = "photo3";
-            this.photo3.Size = new System.Drawing.Size(334, 133);
+            this.photo3.Size = new System.Drawing.Size(334, 153);
             this.photo3.TabIndex = 2;
             this.photo3.Text = "Фото 3";
             this.photo3.UseVisualStyleBackColor = true;
@@ -333,7 +329,7 @@
             this.pbPhoto3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbPhoto3.Location = new System.Drawing.Point(0, 0);
             this.pbPhoto3.Name = "pbPhoto3";
-            this.pbPhoto3.Size = new System.Drawing.Size(334, 133);
+            this.pbPhoto3.Size = new System.Drawing.Size(334, 153);
             this.pbPhoto3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPhoto3.TabIndex = 1;
             this.pbPhoto3.TabStop = false;
@@ -343,7 +339,7 @@
             this.photo4.Controls.Add(this.pbPhoto4);
             this.photo4.Location = new System.Drawing.Point(4, 22);
             this.photo4.Name = "photo4";
-            this.photo4.Size = new System.Drawing.Size(334, 133);
+            this.photo4.Size = new System.Drawing.Size(334, 153);
             this.photo4.TabIndex = 3;
             this.photo4.Text = "Фото 4";
             this.photo4.UseVisualStyleBackColor = true;
@@ -354,7 +350,7 @@
             this.pbPhoto4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbPhoto4.Location = new System.Drawing.Point(0, 0);
             this.pbPhoto4.Name = "pbPhoto4";
-            this.pbPhoto4.Size = new System.Drawing.Size(334, 133);
+            this.pbPhoto4.Size = new System.Drawing.Size(334, 153);
             this.pbPhoto4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPhoto4.TabIndex = 1;
             this.pbPhoto4.TabStop = false;
@@ -366,7 +362,7 @@
             this.rtbItemDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.rtbItemDescription.Location = new System.Drawing.Point(0, 0);
             this.rtbItemDescription.Name = "rtbItemDescription";
-            this.rtbItemDescription.Size = new System.Drawing.Size(680, 159);
+            this.rtbItemDescription.Size = new System.Drawing.Size(680, 179);
             this.rtbItemDescription.TabIndex = 0;
             this.rtbItemDescription.Text = "";
             // 
@@ -502,6 +498,7 @@
             this.tsmiSearchItem.Name = "tsmiSearchItem";
             this.tsmiSearchItem.Size = new System.Drawing.Size(250, 22);
             this.tsmiSearchItem.Text = "Поиск предмета";
+            this.tsmiSearchItem.Click += new System.EventHandler(this.tsmiSearchItem_Click);
             // 
             // tsmiView
             // 
@@ -664,6 +661,7 @@
             this.toolStrip.Stretch = true;
             this.toolStrip.TabIndex = 4;
             this.toolStrip.Text = "toolStrip1";
+            this.toolStrip.Visible = false;
             // 
             // tsbCreateBase
             // 
