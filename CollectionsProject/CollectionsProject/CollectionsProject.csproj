@@ -77,6 +77,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\CollectionIcon2.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -107,7 +110,7 @@
     <Compile Include="CustomComponents\TextField.Designer.cs">
       <DependentUpon>TextField.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database.cs" />
+    <Compile Include="Misc\Database.cs" />
     <Compile Include="Forms\Items\SearchingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,11 +171,11 @@
     <Compile Include="Forms\Misc\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Localization.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Misc\Localization.cs" />
+    <Compile Include="Misc\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="XmlHelper.cs" />
+    <Compile Include="Misc\Settings.cs" />
+    <Compile Include="Misc\XmlHelper.cs" />
     <EmbeddedResource Include="CustomComponents\TextField.resx">
       <DependentUpon>TextField.cs</DependentUpon>
     </EmbeddedResource>
@@ -229,7 +232,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Collection1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Collection2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\CollectionIcon2.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Коллекции");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Коллекции");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.collectionsCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsCreateCollection = new System.Windows.Forms.ToolStripMenuItem();
@@ -144,11 +144,11 @@
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
-            treeNode1.ContextMenuStrip = this.collectionsCMS;
-            treeNode1.Name = "collectionsNode";
-            treeNode1.Text = "Коллекции";
+            treeNode3.ContextMenuStrip = this.collectionsCMS;
+            treeNode3.Name = "collectionsNode";
+            treeNode3.Text = "Коллекции";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode3});
             this.treeView.Size = new System.Drawing.Size(174, 490);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -538,6 +538,7 @@
             this.tsmiIconsPanel.Name = "tsmiIconsPanel";
             this.tsmiIconsPanel.Size = new System.Drawing.Size(187, 22);
             this.tsmiIconsPanel.Text = "Панель иконок";
+            this.tsmiIconsPanel.Visible = false;
             this.tsmiIconsPanel.Click += new System.EventHandler(this.tsmiIconsPanel_Click);
             // 
             // tsmiForeignTables
@@ -766,7 +767,9 @@
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.statusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Коллекции";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.collectionsCMS.ResumeLayout(false);

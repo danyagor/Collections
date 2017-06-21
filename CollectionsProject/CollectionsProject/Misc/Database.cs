@@ -17,19 +17,13 @@ namespace CollectionsProject
 
         #region Свойства
 
-        /// <summary>
-        /// Путь до файла базы данных
-        /// </summary>
+        // Путь до файла базы данных
         public string BasePath { get { return basePath; } }
 
-        /// <summary>
-        /// Имя базы данных с расширением
-        /// </summary>
+        // Имя базы данных с расширением
         public string BaseName { get { return baseName; } }
 
-        /// <summary>
-        /// Подсоединена ли программа к базе
-        /// </summary>
+        // Подсоединена ли программа к базе
         public bool Connected
         {
             get
@@ -47,21 +41,13 @@ namespace CollectionsProject
 
         #region Конструкторы
 
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
+        // Конструктор по умолчанию
         public Database()
         {
 
         }
 
-        /// <summary>
-        /// Конструктор для создания базы данных
-        /// </summary>
-        /// <param name="path">Путь до базы данных</param>
-        /// <param name="userName">Имя пользователя базы данных</param>
-        /// <param name="userEmail">Почтовый адрес пользователя базы данных</param>
-        /// <param name="password">Пароль</param>
+        // Конструктор для создания базы данных
         public Database(string path, string userName, string userEmail, string password = "")
         {
             CreateDatabase(path, userName, userEmail, password);
@@ -73,10 +59,7 @@ namespace CollectionsProject
 
         #region Запросы
 
-        /// <summary>
-        /// Простой SQL запрос (INSERT, UPDATE, DELETE...)
-        /// </summary>
-        /// <param name="query">Строка запроса</param>
+        // Простой SQL запрос (INSERT, UPDATE, DELETE...)
         private void SqlQuery(string query)
         {
             try
@@ -99,11 +82,7 @@ namespace CollectionsProject
             }
         }
 
-        /// <summary>
-        /// SQL запрос с возвратом таблицы данных 
-        /// </summary>
-        /// <param name="query">Строка запроса</param>
-        /// <returns>Возвращает DataTable с данными, который вернул запрос</returns>
+        // SQL запрос с возвратом таблицы данных 
         private DataTable SqlQueryDataTable(string query)
         {
             try
@@ -129,11 +108,7 @@ namespace CollectionsProject
             }
         }
 
-        /// <summary>
-        /// SQL запрос с возвратом объекта с данными первой строки первого столбца
-        /// </summary>
-        /// <param name="query">Строка запроса</param>
-        /// <returns>Возвращает объект с данными первой строки первого столбца</returns>
+        // SQL запрос с возвратом объекта с данными первой строки первого столбца
         private object SqlQueryScalar(string query)
         {
             try
@@ -157,11 +132,7 @@ namespace CollectionsProject
             }
         }
 
-        /// <summary>
-        /// SQL запрос с возвратом коллекции всех строчек
-        /// </summary>
-        /// <param name="query">Строка запроса</param>
-        /// <returns>Коллекция строчек, которые вернул запрос</returns>
+        // SQL запрос с возвратом коллекции всех строчек
         private DataRowCollection SqlQueryRows(string query)
         {
             try
@@ -193,13 +164,7 @@ namespace CollectionsProject
 
         #region Работа с базой
 
-        /// <summary>
-        /// Создание базы данных
-        /// </summary>
-        /// <param name="path">Путь до файла базы, который будет создан</param>
-        /// <param name="userName">Имя пользователя этой базы данных</param>
-        /// <param name="userEmail">Почтовый адрес пользователя этой базы данных</param>
-        /// <param name="password">Пароль</param>
+        // Создание базы данных
         private void CreateDatabase(string path, string userName, string userEmail, string password = "")
         {
             try
@@ -275,12 +240,7 @@ namespace CollectionsProject
             }
         }
 
-        /// <summary>
-        /// Подсоединение к базе данных
-        /// </summary>
-        /// <param name="path">Путь до базы</param>
-        /// <param name="password">Пароль</param>
-        /// <returns>Возвращает true если посдоединение прошло успешно, иначе false</returns>
+        // Подсоединение к базе данных
         public bool ConnectToDatabase(string path, string password = "")
         {
             try
@@ -327,11 +287,7 @@ namespace CollectionsProject
 
         #region Работа с коллекциями
 
-        /// <summary>
-        /// Создание коллекции определенного типа и имени
-        /// </summary>
-        /// <param name="name">Имя коллекции</param>
-        /// <param name="collectionId">Идентификатор типа коллекции</param>
+        // Создание коллекции определенного типа и имени
         public void CreateCollection(string name, int collectionId)
         {
             // Получение количества созданных коллекций + 1
@@ -355,21 +311,14 @@ namespace CollectionsProject
             SqlQuery("INSERT INTO Collections(baseName, programName, typeId) VALUES('" + CollectionTypes.GetCollection(collectionId).MainTable.BaseName + "_" + numberOfCreatedCollections + "', '" + name + "', " + collectionId + ")");
         }
 
-        /// <summary>
-        /// Переименование коллекции
-        /// </summary>
-        /// <param name="name">Имя коллекции</param>
-        /// <param name="newName">Новое имя коллекции</param>
+        // Переименование коллекции
         public void RenameCollection(string name, string newName)
         {
             int collectionId = int.Parse(SqlQueryScalar("SELECT id FROM Collections WHERE(programName = '" + name + "')").ToString());
             SqlQuery("UPDATE Collections SET programName = '" + newName + "' WHERE(id = " + collectionId + ")");
         }
 
-        /// <summary>
         /// Удаление коллекции
-        /// </summary>
-        /// <param name="name">Имя коллекции</param>
         public void DeleteCollection(string name)
         {
             DataRow dr = SqlQueryDataTable("SELECT id, typeId, baseName FROM Collections WHERE(programName = '" + name + "')").Rows[0];
@@ -393,14 +342,7 @@ namespace CollectionsProject
 
         #region Работа с предметами
 
-        /// <summary>
-        /// Добавление предмета в указанную коллекцию
-        /// </summary>
-        /// <param name="collectionType">Тип коллекции</param>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="fields">Значения полей для добавления</param>
-        /// <param name="note">Описание предмета</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
+        // Добавление предмета в указанную коллекцию
         public void AddItem(int collectionType, string[] fields, string note, string collectionName = "", string foreignTable = "", ItemImage[] images = null)
         {
             Field[] tableFields;
@@ -477,15 +419,7 @@ namespace CollectionsProject
             }
         }
 
-        /// <summary>
-        /// Обновление данных о предмете
-        /// </summary>
-        /// <param name="collectionType">Тип коллекции</param>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="itemId">Идентификатор предмета для обновления данных</param>
-        /// <param name="fields">Значения полей для обновления данных</param>
-        /// <param name="note">Описание предмета</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
+        // Обновление данных о предмете
         public void UpdateItem(int collectionType, int itemId, string[] fields, string note, string collectionName = "", string foreignTable = "", ItemImage[] images = null)
         {
             Field[] tableFields;
@@ -553,13 +487,7 @@ namespace CollectionsProject
             }
         }
 
-        /// <summary>
-        /// Удаление предмета
-        /// </summary>
-        /// <param name="collectionType">Тип коллекции</param>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="itemId">Идентификатор предмета для удаления</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
+        // Удаление предмета
         public void DeleteItem(int collectionType, int itemId, string collectionName = "", string foreignTable = "")
         {
             if (foreignTable == "")
@@ -572,10 +500,7 @@ namespace CollectionsProject
         }
 
 
-        /// <summary>
-        /// Возвращает все предметы из всех коллекций
-        /// </summary>
-        /// <returns>DataTable с данными о всех предметах из всех коллекций</returns>
+        // Возвращает все предметы из всех коллекций
         public DataTable GetAllItemsFromAllCollections()
         {
             DataRowCollection collectionsInfo = SqlQueryRows("SELECT baseName, programName, typeId FROM Collections");
@@ -613,14 +538,7 @@ namespace CollectionsProject
         }
 
 
-        /// <summary>
-        /// Возвращает предмет из коллекции по определенному ID
-        /// </summary>
-        /// <param name="collectionType">Тип коллекции</param>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="itemId">Идентификатор предмета</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
-        /// <returns>DataRow с предметом</returns>
+        // Возвращает предмет из коллекции по определенному ID
         public DataRow GetItemFromCollection(int collectionType, int itemId, string collectionName = "", string foreignTable = "")
         {
             DataTable dt;
@@ -635,13 +553,7 @@ namespace CollectionsProject
             return dt.Rows[0];
         }
 
-        /// <summary>
-        /// Возвращает предметы из коллекции по ее имени
-        /// </summary>
-        /// <param name="collectionType">Тип коллекции</param>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
-        /// <returns>DataTable со строками из коллекции</returns>
+        // Возвращает предметы из коллекции по ее имени
         public DataTable GetItemsFromCollection(int collectionType, string collectionName = "", string foreignTable = "")
         {
             if (foreignTable == "")
@@ -654,14 +566,7 @@ namespace CollectionsProject
         }
 
 
-        /// <summary>
-        /// Возвращает описание из предмета
-        /// </summary>
-        /// <param name="collectionType">Тип коллекции</param>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <param name="itemId">Идентификатор предмета</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
-        /// <returns>Строку описания предмета</returns>
+        // Возвращает описание из предмета
         public string GetNoteFromItem(int collectionType, int itemId, string collectionName = "", string foreignTable = "")
         {
             if (foreignTable == "")
@@ -704,13 +609,7 @@ namespace CollectionsProject
 
         #region Работа с предметами из внешних таблиц NAMEFIELD
 
-        /// <summary>
-        /// Возвращает строку предмета, соедененную по аттрибуту "nameField" из внешней таблицы
-        /// </summary>
-        /// <param name="collectionType">Идентификатор типа коллекции</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
-        /// <param name="itemId">Идентификатор предмета</param>
-        /// <returns>Строка предмета, соедененная по аттрибуту "nameField"</returns>
+        // Возвращает строку предмета, соедененную по аттрибуту "nameField" из внешней таблицы
         public string GetNameFieldItem(int collectionType, string foreignTable, int itemId)
         {
             if (itemId == 0)
@@ -733,12 +632,7 @@ namespace CollectionsProject
             return res;
         }
 
-        /// <summary>
-        /// Возвращает все строки, соедененные по аттрибуту "nameField" из внешней таблицы
-        /// </summary>
-        /// <param name="collectionType">Идентификатор типа коллекции</param>
-        /// <param name="foreignTable">Имя внешней таблицы</param>
-        /// <returns>Строки, соедененные по аттрибуту "nameField"</returns>
+        // Возвращает все строки, соедененные по аттрибуту "nameField" из внешней таблицы
         public DataTable GetNameFields(int collectionType, string foreignTable)
         {
             DataTable dt = new DataTable();
@@ -771,10 +665,7 @@ namespace CollectionsProject
 
         #region Вспомогательные методы
 
-        /// <summary>
-        /// Возвращает имена всех коллекций, которые есть в текущей базе данных
-        /// </summary>
-        /// <returns>Имена всех коллекций</returns>
+        // Возвращает имена всех коллекций, которые есть в текущей базе данных
         public string[] GetAllCollectionsProgramNamesInCurrentDB()
         {
             DataTable dt = SqlQueryDataTable("SELECT programName FROM Collections");
@@ -797,10 +688,7 @@ namespace CollectionsProject
             return collections;
         }
 
-        /// <summary>
-        /// Возвращает идентификатор типа всех коллекций, которые есть в текущей базе данных
-        /// </summary>
-        /// <returns>Идентификатор типа всех коллекций</returns>
+        // Возвращает идентификатор типа всех коллекций, которые есть в текущей базе данных
         public int[] GetAllCollectionsTypesIdInCurrentDB()
         {
             DataTable dt = SqlQueryDataTable("SELECT typeId FROM Collections");
@@ -812,11 +700,7 @@ namespace CollectionsProject
             return types;
         }
 
-        /// <summary>
-        /// Проверяет, существует ли коллекция с данным именем в базе
-        /// </summary>
-        /// <param name="name">Имя коллекции</param>
-        /// <returns>Возвращает true коллекция с таким именем существует в базе, иначе false</returns>
+        // Проверяет, существует ли коллекция с данным именем в базе
         public bool CollectionExists(string name)
         {
             DataTable collectionsDt = SqlQueryDataTable("SELECT programName FROM Collections");
@@ -827,11 +711,7 @@ namespace CollectionsProject
             return false;
         }
 
-        /// <summary>
-        /// Возвращает номер коллекции по её имени
-        /// </summary>
-        /// <param name="collectionName">Имя коллекции</param>
-        /// <returns>Номер коллекции</returns>
+        // Возвращает номер коллекции по её имени
         public int GetCollectionNumber(string collectionName)
         {
             string collectionNumber = SqlQueryScalar("SELECT baseName FROM Collections WHERE(programName = '" + collectionName + "')").ToString();

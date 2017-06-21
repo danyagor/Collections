@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.cbLanguage = new System.Windows.Forms.ComboBox();
             this.cbPhotosSize = new System.Windows.Forms.ComboBox();
             this.cbIconsSize = new System.Windows.Forms.ComboBox();
@@ -59,10 +60,11 @@
             // 
             this.cbIconsSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIconsSize.FormattingEnabled = true;
-            this.cbIconsSize.Location = new System.Drawing.Point(15, 105);
+            this.cbIconsSize.Location = new System.Drawing.Point(15, 187);
             this.cbIconsSize.Name = "cbIconsSize";
             this.cbIconsSize.Size = new System.Drawing.Size(177, 21);
             this.cbIconsSize.TabIndex = 2;
+            this.cbIconsSize.Visible = false;
             // 
             // label1
             // 
@@ -85,15 +87,16 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 89);
+            this.label3.Location = new System.Drawing.Point(12, 171);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Размер иконок";
+            this.label3.Visible = false;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(117, 139);
+            this.btnOk.Location = new System.Drawing.Point(117, 92);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 6;
@@ -106,7 +109,7 @@
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(204, 171);
+            this.ClientSize = new System.Drawing.Size(204, 126);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -115,6 +118,7 @@
             this.Controls.Add(this.cbPhotosSize);
             this.Controls.Add(this.cbLanguage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

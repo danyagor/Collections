@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateCollectionForm));
             this.label2 = new System.Windows.Forms.Label();
             this.cbCollectionType = new System.Windows.Forms.ComboBox();
             this.btnCreate = new System.Windows.Forms.Button();
@@ -111,6 +112,7 @@
             this.Controls.Add(this.cbCollectionType);
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CreateCollectionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Создание новой коллекции";
