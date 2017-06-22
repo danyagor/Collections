@@ -48,5 +48,7 @@ namespace CollectionsProject
         public static string SETTINGS { get { return GetValue("SETTINGS"); } }
         public static string HELP { get { return GetValue("HELP"); } }
         public static string ABOUT { get { return GetValue("ABOUT"); } }
+        public static string PHOTO { get { return GetValue("PHOTO"); } }
+        public static string DESCRIPTION { get { return GetValue("DESCRIPTION"); } }
     }
 }

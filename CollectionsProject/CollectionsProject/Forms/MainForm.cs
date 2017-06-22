@@ -348,7 +348,7 @@ namespace CollectionsProject
             pbPhoto3.Image = null;
             pbPhoto4.Image = null;
 
-            string description = "Описание: \n";
+            string description = Localization.DESCRIPTION + ":\n";
             description += CurrentDatabase.GetNoteFromItem(collection.CollectionType.Id, itemId, collection.Name) + "\n";
             rtbItemDescription.Text = description;
 
@@ -555,6 +555,14 @@ namespace CollectionsProject
             // Справка
             tsmiHelp.Text = Localization.HELP;
             tsmiAbout.Text = Localization.ABOUT;
+
+            // TabControl Фотографии
+            tcPhotos.TabPages[0].Text = Localization.PHOTO + " 1";
+            tcPhotos.TabPages[1].Text = Localization.PHOTO + " 2";
+            tcPhotos.TabPages[2].Text = Localization.PHOTO + " 3";
+            tcPhotos.TabPages[3].Text = Localization.PHOTO + " 4";
+
+            treeView.Nodes[0].Text = Localization.COLLECTIONS;
         }
 
         #endregion Вспомогательные методы
@@ -599,7 +607,7 @@ namespace CollectionsProject
         private void RenameCollection_Click(object sender, EventArgs e)
         {
             if (treeView.SelectedNode.Parent != null)
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                     RenameCollection(treeView.SelectedNode.Text);
         }
 
@@ -607,7 +615,7 @@ namespace CollectionsProject
         private void DeleteCollection_Click(object sender, EventArgs e)
         {
             if (treeView.SelectedNode.Parent != null)
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                     DeleteCollection(treeView.SelectedNode.Text);
         }
 
@@ -619,7 +627,7 @@ namespace CollectionsProject
         private void AddItem_Click(object sender, EventArgs e)
         {
             if (treeView.SelectedNode.Parent != null)
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                     AddItem((UserCollection)treeView.SelectedNode.Tag);
         }
 
@@ -627,7 +635,7 @@ namespace CollectionsProject
         private void EditItem_Click(object sender, EventArgs e)
         {
             if (treeView.SelectedNode.Parent != null && dgvItems.SelectedCells.Count != 0)
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                     EditItem((UserCollection)treeView.SelectedNode.Tag, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
@@ -635,7 +643,7 @@ namespace CollectionsProject
         private void DeleteItem_Click(object sender, EventArgs e)
         {
             if (treeView.SelectedNode.Parent != null && dgvItems.SelectedCells.Count != 0)
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                     DeleteItem((UserCollection)treeView.SelectedNode.Tag, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
         }
 
@@ -644,7 +652,7 @@ namespace CollectionsProject
         // Клик на ячейку DataGridView
         private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (treeView.SelectedNode.Text != "Коллекции")
+            if (treeView.SelectedNode.Text != Localization.COLLECTIONS)
                 FormDescriptionOfItem((UserCollection)treeView.SelectedNode.Tag, int.Parse(dgvItems.CurrentRow.Tag.ToString()));
             else
                 ClearItemInformation();
@@ -658,7 +666,7 @@ namespace CollectionsProject
                 UpdateListViewColumns((UserCollection)treeView.SelectedNode.Tag);
 
             // Обновление ListView для отображения всех предметов из всех коллекций
-            if (treeView.SelectedNode.Text == "Коллекции" && CurrentDatabase != null)
+            if (treeView.SelectedNode.Text == Localization.COLLECTIONS && CurrentDatabase != null)
             {
                 if (treeView.SelectedNode.Nodes.Count != 0)
                 {
@@ -681,7 +689,7 @@ namespace CollectionsProject
 
             // Обновление строк в ListView
             if (treeView.SelectedNode.Parent != null)
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                     UpdateDataGridView((UserCollection)treeView.SelectedNode.Tag);
         }
 
@@ -698,7 +706,7 @@ namespace CollectionsProject
         // Редактор внешних таблиц
         private void ForeignTablesEditor_Click(object sender, EventArgs e)
         {
-            if (treeView.SelectedNode.Text == "Коллекции")
+            if (treeView.SelectedNode.Text == Localization.COLLECTIONS)
             {
                 ForeignTableForm ftf = new ForeignTableForm(this, new UserCollection(null, ""));
                 ftf.ShowDialog();
@@ -706,7 +714,7 @@ namespace CollectionsProject
 
             if (treeView.SelectedNode.Parent != null)
             {
-                if (treeView.SelectedNode.Parent.Text == "Коллекции")
+                if (treeView.SelectedNode.Parent.Text == Localization.COLLECTIONS)
                 {
                     ForeignTableForm ftf = new ForeignTableForm(this, (UserCollection)treeView.SelectedNode.Tag);
                     ftf.ShowDialog();
