@@ -448,6 +448,7 @@ namespace CollectionsProject
         // Проверка на зашифрованность файла базы
         public bool FileEncrypted(string path)
         {
+            File.ReadAllBytes(path);
             using (StreamReader sr = new StreamReader(path))
             {
                 string str = sr.ReadLine();

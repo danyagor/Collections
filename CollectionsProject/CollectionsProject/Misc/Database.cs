@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Data.SQLite;
+using Devart.Data.SQLite;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
@@ -169,8 +169,8 @@ namespace CollectionsProject
         {
             try
             {
-                if (connection != null)
-                    connection.Shutdown();
+                //if (connection != null)
+                //    connection.Shutdown();
 
                 // Создание файла
                 SQLiteConnection.CreateFile(path);
@@ -179,13 +179,14 @@ namespace CollectionsProject
                 SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder();
                 connectionString.DataSource = path;
                 connectionString.Version = 3;
+                connectionString.Encryption = EncryptionMode.SQLiteCrypt;
                 connectionString.Password = password;
 
                 // Подсоеденение к базе
                 connection = new SQLiteConnection(connectionString.ConnectionString);
                 connection.Open();
 
-                basePath = connection.FileName;
+                basePath = connection.DataSource;
                 baseName = Path.GetFileName(basePath);
 
                 // Смена пароля
@@ -245,16 +246,16 @@ namespace CollectionsProject
         {
             try
             {
-                if (connection != null)
-                    connection.Shutdown();
+                //if (connection != null)
+                //    connection.Shutdown();
 
                 SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder();
                 connectionString.DataSource = path;
                 connectionString.Version = 3;
+                connectionString.Locking = LockingMode.Exclusive;
                 connectionString.Password = password;
 
                 connection = new SQLiteConnection(connectionString.ConnectionString);
-
                 // Проверка правильно ли введен пароль, если нет, то выведет сообщение
                 SQLiteCommand command = new SQLiteCommand("SELECT * FROM UserInfo", connection);
                 connection.Open();
@@ -268,7 +269,7 @@ namespace CollectionsProject
             }
             catch (SQLiteException ex)
             {
-                if (ex.ErrorCode == 26)
+                if (ex.ErrorCode == SQLiteErrorCode.NotADatabase)
                     MessageBox.Show("Неправильный пароль");
                 else
                     MessageBox.Show(ex.Message);
